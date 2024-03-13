@@ -2,3 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Variables */
+:root{
+    --color-green1: #026937;
+    --color-background: #E7ECEF;
+}

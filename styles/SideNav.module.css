@@ -1,6 +1,6 @@
 .nav {
-	@apply mx-3 fixed max-w-md bg-greenOne h-full
-    rounded-3xl shadow-md  space-y-6 pb-3;
+	@apply w-[200px] max-w-md h-full space-y-6 pb-3 flex flex-col items-center;
+	background-color: var(--color-green1);
 }
 
 .nav :where(.li, .link) {
@@ -11,22 +11,22 @@
 }
 
 .logoContainer {
-	@apply w-[20] top-0 flex flex-col items-center;
+	@apply w-[60%] flex flex-col items-center;
 }
 .containerLogoTitle {
 	@apply font-bold text-3xl text-whiteBonds;
 }
 .ul{
-	@apply list-none space-y-6;
+	@apply list-none space-y-5;
 }
 
 .li {
-	@apply w-full text-base;
+	@apply w-full text-base z-[2];
 }
 
 .link {
-	@apply space-x-2 p-2 w-full flex justify-center flex-col items-center  text-whiteMilk
-	transition duration-150 ease-out md:ease-in hover:text-greenDirty 
+	@apply space-x-2 p-2 w-full flex flex-row items-center  text-whiteMilk
+	transition duration-150 ease-out md:ease-in hover:text-greenDirty
 	cursor-default;
 }
 
@@ -34,7 +34,8 @@
 .li::before,
 .li::after {
 	content: '';
-	@apply absolute w-full h-5 bg-greenOne;
+	@apply absolute w-full h-5;
+	background-color: var(--color-green1);
 }
 
 .active::before {
@@ -79,7 +80,8 @@
 .link::before,
 .active .link::after {
 	content: '';
-	@apply absolute  bg-whiteBonds -z-[1];
+	@apply absolute -z-[1];
+	background-color: var(--color-background);
 }
 
 .active .link::before {

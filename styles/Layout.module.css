@@ -1,7 +1,9 @@
 .bodyContainer{
-    @apply h-[87%] w-full  flex flex-row bg-whiteBonds h-screen overflow-hidden; 
+    @apply h-[87%] w-full  flex flex-row bg-whiteBonds h-screen overflow-hidden;
+    background-color: var(--color-green1); 
 }
 .mainContainer{
-    @apply w-[96%]  flex items-center justify-center;
+    @apply w-[100%] mr-3 my-3 rounded-md flex items-center justify-center;
+    background-color: var(--color-background);
 }
 
