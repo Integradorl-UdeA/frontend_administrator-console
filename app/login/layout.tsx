@@ -1,7 +1,9 @@
 /* eslint-disable react/react-in-jsx-scope */
 'use client';
+
 import '@/styles/globals.css';
 import { Inter } from 'next/font/google';
+import styles from '@/styles/Login/Layout.module.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -15,7 +17,7 @@ const LoginLayout = ({ children }: RootLayoutProps) => {
 			<head>
 				<title>Consola de Administrador</title>
 			</head>
-			<body>
+			<body className={`${styles.body} ${inter.className}`}> 
 				{children}
 			</body>
 		</html>

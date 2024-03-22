@@ -2,26 +2,28 @@
 import React from 'react';
 import { FaUser } from 'react-icons/fa';
 import InputPassword from '../common/InputPassword';
+import styles from '@/styles/Login/Login.module.css';
+import commonStyles from '@/styles/common/Inputs.module.css';
 
-
+const
+style = {color:'green'}
+console.log(styles.userIcon)
 function LoginForm() {
 	return (
-		<section>
-			<div>
-				<i>
-					<FaUser />
-				</i>
-			</div>
-			<span>¡Bienvenid@!</span>
-			<span>Inicia sesión o registrate</span>
-			<form>
-				<div>
-					<input type='text' name='' id='' placeholder='Username' />
+		<section className={styles.formContainer}>
+				<span className={styles.userIconContainer}>
+					<FaUser className={styles.userIcon}/>
+				</span>
+			<span className={styles.welcome}>¡Bienvenid@!</span>
+			<span className={styles.label}>Inicia sesión o registrate</span>
+			<form className={styles.form}>
+				<div className={styles.formSection}>
+					<input className={commonStyles.inputText}type='text' name='' id='' placeholder='Username' />
 				</div>
-				<div>
+				<div className={styles.formSection}>
 					<InputPassword></InputPassword>
 				</div>
-				<button type='submit'>Ingresar</button>
+				<button className={commonStyles.btnSubmit} type='submit'>Ingresar</button>
 			</form>
 		</section>
 	);

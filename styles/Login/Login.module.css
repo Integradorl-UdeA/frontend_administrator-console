@@ -1,0 +1,38 @@
+.container{
+    @apply h-full w-full flex flex-row 
+}
+
+.sideImgContainer{
+    @apply w-2/4;
+}
+
+.formContainer{
+    @apply flex flex-col h-full w-2/4 items-center justify-center;
+    background-color: var(--color-background)
+}
+
+.userIconContainer{
+    @apply px-[0.3rem] py-[0.2rem] rounded-3xl;
+    background-color: #7E869E40;
+}
+
+.userIcon{
+    @apply mb-1 text-2xl;
+    color: var(--color-green3);
+}
+
+.welcome{
+    @apply font-medium text-2xl mb-4;
+}
+
+.label{
+    @apply text-base text-[#666687];
+}
+
+.form{
+    @apply my-3  w-2/4;
+}
+
+.formSection{
+    @apply my-3;
+}
