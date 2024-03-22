@@ -16,7 +16,7 @@ const LoginLayout = ({ children }: RootLayoutProps) => {
 				<title>Consola de Administrador</title>
 			</head>
 			<body>
-				<main >{children}</main>
+				{children}
 			</body>
 		</html>
 	);
