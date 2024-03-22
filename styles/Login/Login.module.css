@@ -3,7 +3,12 @@
 }
 
 .sideImgContainer{
-    @apply w-2/4;
+    @apply w-2/4 h-screen bg-cover relative;
+    background-image: url('/images/login-background.png');
+}
+
+.sistemasLogoContainer{
+    @apply absolute w-1/2 bottom-[5%] left-[3%];
 }
 
 .formContainer{
