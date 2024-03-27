@@ -1,11 +1,15 @@
 import React, { useState } from 'react';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
 import commonStyles from '@/styles/common/Inputs.module.css';
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 
-function InputPassword() {
+
+type Props = {
+	register: UseFormRegister<FieldValues>
+}
+function InputPassword({ register }: Props) {
 	const [visiblePass, setVisiblePass] = useState(false);
 	const onClick = () => {
-		console.log(visiblePass);
 		setVisiblePass(() => !visiblePass);
 	};
 	return (
@@ -13,8 +17,7 @@ function InputPassword() {
 			<input
 				className={commonStyles.inputPassword}
 				type={visiblePass ? 'text' : 'password'}
-				name=''
-				id=''
+				{ ...register("password") }
 				placeholder='Password'
 			/>
 			<button
