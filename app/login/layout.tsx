@@ -1,6 +1,7 @@
 /* eslint-disable react/react-in-jsx-scope */
 'use client';
 
+import React from 'react'
 import '@/styles/globals.css';
 import { Inter } from 'next/font/google';
 import styles from '@/styles/Login/Layout.module.css';

@@ -5,9 +5,6 @@ import InputPassword from '../common/InputPassword';
 import styles from '@/styles/Login/Login.module.css';
 import commonStyles from '@/styles/common/Inputs.module.css';
 
-const
-style = {color:'green'}
-console.log(styles.userIcon)
 function LoginForm() {
 	return (
 		<section className={styles.formContainer}>
@@ -16,6 +13,7 @@ function LoginForm() {
 				</span>
 			<span className={styles.welcome}>¡Bienvenid@!</span>
 			<span className={styles.label}>Inicia sesión o registrate</span>
+
 			<form className={styles.form}>
 				<div className={styles.formSection}>
 					<input className={commonStyles.inputText}type='text' name='' id='' placeholder='Username' />
