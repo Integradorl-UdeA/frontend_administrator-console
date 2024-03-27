@@ -1,0 +1,22 @@
+.inputText , .inputPassword{
+    @apply rounded-xl py-3 px-2 text-sm m-0.5 w-full;
+}
+
+.inputText{
+}
+
+.passwordContainer{
+    @apply relative;
+
+}
+
+.inputPassword{
+}
+
+.viewPasswordToggler{
+    @apply absolute top-1/2 translate-y-[-50%] right-3 text-lg text-[#96999C];
+}
+
+.btnSubmit{
+    @apply bg-[var(--color-green3)] w-full py-3 rounded-xl text-white;
+}

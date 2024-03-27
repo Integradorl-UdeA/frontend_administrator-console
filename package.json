@@ -8,7 +8,6 @@
     "start": "next start",
     "lint-next": "next lint",
     "format": "prettier --write ."
-
   },
   "dependencies": {
     "next": "14.0.3",
