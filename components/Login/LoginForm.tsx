@@ -1,17 +1,19 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"
 import React, { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 import InputPassword from '../common/InputPassword';
 import styles from '@/styles/Login/Login.module.css';
 import commonStyles from '@/styles/common/Inputs.module.css';
-import { FieldValue, FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
+import type { FieldValues, SubmitHandler } from "react-hook-form";
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 
 
 function LoginForm() {
 	const router = useRouter();
-	const [errors, setErrors] = useState([])
+	const [errors, setErrors] = useState<Array<string | null>>([])
 	const { register, handleSubmit } = useForm()
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const responseNextAuth = await signIn("credentials", {
@@ -19,9 +21,9 @@ function LoginForm() {
 			password: data.password,
 			redirect: false,
 		});
-		if (responseNextAuth?.error) {
-			setErrors(responseNextAuth?.error);
-			return;
+		if (responseNextAuth?.error !== undefined) {
+			setErrors([responseNextAuth?.error]);
+			return
 		}
 		router.push("/")
 	}
