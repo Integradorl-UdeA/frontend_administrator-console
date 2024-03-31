@@ -14,7 +14,6 @@ import { useRouter } from 'next/navigation';
 function LoginForm() {
 	const router = useRouter();
 	const [errors, setErrors] = useState<Array<string | null | undefined>>([])
-	console.log("al principio",errors)
 	const { register, handleSubmit } = useForm()
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const responseNextAuth = await signIn("credentials", {
@@ -24,7 +23,6 @@ function LoginForm() {
 		});
 		console.log('error', responseNextAuth?.error)
 		if (responseNextAuth?.error !== null && responseNextAuth?.error !== undefined) {
-			console.log("pasa por el error")
 			setErrors([responseNextAuth?.error]);
 			console.log(errors === undefined)
 			return
