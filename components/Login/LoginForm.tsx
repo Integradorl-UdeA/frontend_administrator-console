@@ -14,6 +14,7 @@ import { useRouter } from 'next/navigation';
 function LoginForm() {
 	const router = useRouter();
 	const [errors, setErrors] = useState<Array<string | null | undefined>>([])
+	console.log("al principio",errors)
 	const { register, handleSubmit } = useForm()
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const responseNextAuth = await signIn("credentials", {
@@ -25,9 +26,9 @@ function LoginForm() {
 		if (responseNextAuth?.error !== null && responseNextAuth?.error !== undefined) {
 			console.log("pasa por el error")
 			setErrors([responseNextAuth?.error]);
+			console.log(errors === undefined)
 			return
 		}
-		console.log("pasa por acá")
 		router.push("/")
 	}
 	return (
@@ -45,6 +46,12 @@ function LoginForm() {
 				<div className={styles.formSection}>
 					<InputPassword register={register}></InputPassword>
 				</div>
+				{
+					errors.length !== 0 && (
+						<p className={commonStyles.error}>El usuario o la contraseña han sido ingresados incorrectamente.</p>
+					)
+
+				}
 				<button className={commonStyles.btnSubmit} type='submit'>Ingresar</button>
 			</form>
 		</section>
