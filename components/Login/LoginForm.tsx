@@ -21,7 +21,6 @@ function LoginForm() {
 			password: data.password,
 			redirect: false,
 		});
-		console.log('error', responseNextAuth?.error)
 		if (responseNextAuth?.error !== null && responseNextAuth?.error !== undefined) {
 			setErrors([responseNextAuth?.error]);
 			console.log(errors === undefined)
@@ -48,7 +47,6 @@ function LoginForm() {
 					errors.length !== 0 && (
 						<p className={commonStyles.error}>Credenciales incorrectas</p>
 					)
-
 				}
 				<button className={commonStyles.btnSubmit} type='submit'>Ingresar</button>
 			</form>
