@@ -20,3 +20,8 @@
 .btnSubmit{
     @apply bg-[var(--color-green3)] w-full py-3 rounded-xl text-white;
 }
+
+.error{
+    @apply text-xs pb-2;
+    color: rgb(191, 0, 0);
+}

@@ -11,4 +11,17 @@
     @apply w-16;
 }
 
+.iconSignOut{
+    @apply mb-1 text-2xl;
+}
+
+.btnSignOut{
+    @apply rounded-lg py-1 px-2 text-center flex items-center justify-center;
+    background-color: rgb(210, 210, 210);
+}
+
+.btnSignOut:hover{
+    background-color: rgb(180, 180, 180);
+}
+
 
