@@ -13,7 +13,7 @@ import { useRouter } from 'next/navigation';
 
 function LoginForm() {
 	const router = useRouter();
-	const [errors, setErrors] = useState<Array<string | null>>([])
+	const [errors, setErrors] = useState<Array<string | null | undefined>>([])
 	const { register, handleSubmit } = useForm()
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		const responseNextAuth = await signIn("credentials", {
@@ -21,10 +21,13 @@ function LoginForm() {
 			password: data.password,
 			redirect: false,
 		});
-		if (responseNextAuth?.error !== undefined) {
+		console.log('error', responseNextAuth?.error)
+		if (responseNextAuth?.error !== null && responseNextAuth?.error !== undefined) {
+			console.log("pasa por el error")
 			setErrors([responseNextAuth?.error]);
 			return
 		}
+		console.log("pasa por acá")
 		router.push("/")
 	}
 	return (
@@ -42,7 +45,6 @@ function LoginForm() {
 				<div className={styles.formSection}>
 					<InputPassword register={register}></InputPassword>
 				</div>
-				<span>Error: {errors}</span>
 				<button className={commonStyles.btnSubmit} type='submit'>Ingresar</button>
 			</form>
 		</section>
