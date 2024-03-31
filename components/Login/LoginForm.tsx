@@ -46,7 +46,7 @@ function LoginForm() {
 				</div>
 				{
 					errors.length !== 0 && (
-						<p className={commonStyles.error}>El usuario o la contraseña han sido ingresados incorrectamente.</p>
+						<p className={commonStyles.error}>Credenciales incorrectas</p>
 					)
 
 				}
