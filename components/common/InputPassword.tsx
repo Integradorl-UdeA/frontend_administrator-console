@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { FaRegEye, FaRegEyeSlash } from 'react-icons/fa6';
 import commonStyles from '@/styles/common/Inputs.module.css';
-import { FieldValues, UseFormRegister } from 'react-hook-form';
+import type { FieldValues, UseFormRegister } from 'react-hook-form';
 
 
-type Props = {
+interface Props{
 	register: UseFormRegister<FieldValues>
 }
 function InputPassword({ register }: Props) {
