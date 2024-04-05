@@ -1,11 +1,27 @@
-import React from 'react';
+import React from 'next';
+import Table from '@/components/common/Table';
 
 const InventoryPage = () => {
-	return (
-		<main>
-			<h1>pagina inventario</h1>
-		</main>
-	);
+  const headers = ['Inventario', 'Nombre', 'Fecha'];
+  const data = [
+    {
+      Inventario: '001',
+      Nombre: 'LIS',
+	  Fecha: '13/10/2023',
+    },
+    {
+      Inventario: '002',
+      Nombre: 'TELEMÁTICA',      
+	  Fecha: '13/10/2023',
+    },
+  ];
+
+  return (
+    <div>
+      <h1 style={{ color: 'green' }}>Gestión de inventario</h1>
+      <Table headers={headers} data={data} />
+    </div>
+  );
 };
 
 export default InventoryPage;
