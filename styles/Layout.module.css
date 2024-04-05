@@ -2,9 +2,21 @@
     @apply h-[87%] w-full  flex flex-row bg-whiteBonds h-screen overflow-hidden;
     background-color: var(--color-green1); 
 }
-.mainContainer{
+.mainContainer {
     @apply w-[100%] mr-3 my-3 rounded-md flex items-center justify-center;
-    background-color: var(--color-background);
+    position: relative;
+    overflow: hidden; 
+    background-clip: padding-box; 
+    background-origin: border-box;
 }
-
-
+.mainContainer::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.60), rgba(255, 255, 255, 0.60)), url('/images/login-background.png');
+    background-size: cover;
+    z-index: -1;
+}

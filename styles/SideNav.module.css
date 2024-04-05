@@ -81,7 +81,7 @@
 .active .link::after {
 	content: '';
 	@apply absolute -z-[1];
-	background-color: var(--color-background);
+	background-image: linear-gradient(rgba(255, 255, 255, 0.60), rgba(255, 255, 255, 0.60)), url('/images/login-background.png');
 }
 
 .active .link::before {
