@@ -8,7 +8,6 @@ const NavLinks = () => {
 	const links = getLinks();
 	const pathName = usePathname();
 	const [activeLink, setActiveLink] = useState('');
-	const active = false
 
 	useEffect(() => {
 		// Actualiza el estado de activeLink cuando cambia la ruta
