@@ -4,19 +4,21 @@
 }
 
 .container{
-    @apply relative bg-white flex flex-col overflow-hidden w-fit rounded-lg
+    @apply relative bg-white flex flex-col overflow-hidden w-fit rounded-lg pt-7 pb-4 px-14 max-w-[70%];
 }
 
 .header{
-    @apply relative top-[0] left-[0] pl-5 pr-2   py-2 flex;
-    background-color: var(--color-green1);
+    @apply flex justify-center;
 }
 .body{
-    @apply m-10
+
 }
 .title{
-    @apply text-white text-lg font-bold
+    @apply  text-lg font-bold mb-3;
+    color: var(--color-text)
 }
 .closeButton{
-    @apply ml-10
+    @apply text-white ml-10 absolute top-[0] right-[0] mt-2 rounded-md;
+    transform: translateX(-50%);
+    background-color: var(--color-red);
 }
