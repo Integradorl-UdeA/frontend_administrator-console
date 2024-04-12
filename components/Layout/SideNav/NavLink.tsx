@@ -1,10 +1,10 @@
 import Link from 'next/link';
 import React from 'react';
-import { IconType } from 'react-icons';
+import type { IconType } from 'react-icons';
 import styles from '@/styles/SideNav.module.css'
 
 
-type Props = {
+interface Props{
     route: string,
     label: string,
     icon: IconType
