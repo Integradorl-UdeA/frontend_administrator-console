@@ -1,0 +1,32 @@
+
+.container{
+    @apply flex items-center m-2
+
+}
+.label{
+    @apply mx-2 hover:cursor-pointer text-lg
+}
+.switchContainer{
+    background-color: var(--color-green1);
+    @apply w-14 rounded-full p-1;
+    transition: 0.2s;
+}
+
+.active{
+    background-color: var(--color-green3);
+}
+
+.slider{
+    @apply w-6 h-6 m-[1px] bg-white rounded-full justify-center;
+    transition: 0.2s;
+}
+
+.checkbox{
+    @apply hidden
+}
+
+.active .slider{
+    @apply ml-[100%];
+    transform: translateX(-100%);
+}
+
