@@ -1,24 +1,25 @@
 'use client'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styInputSwitch from '@/styles/common/InputSwitch.module.css'
-import type { FieldValues, UseFormRegister } from 'react-hook-form'
+import { useController, type Control, type FieldValues } from 'react-hook-form'
 
 interface Props {
   label: string
-  register: UseFormRegister<FieldValues>
+  name: string,
+  control: Control<FieldValues, any>
 }
-const InputSwitch = ({ label, register }: Props) => {
-  const [checkedInput, setCheckedInput] = useState(false)
-
+const InputSwitch = ({ label, name, control }: Props) => {
+  const [isChecked, setIsChecked] = useState(false)
+  const { field } = useController({ name, control, defaultValue: false })
   const toggle = () => {
-    setCheckedInput((prev) => !prev)
+    setIsChecked(prev => !prev)
   }
 
-  const handleChange = () => {
-    setCheckedInput(prev => prev)
-  }
-
-  const containerClasses = checkedInput ? `${styInputSwitch.switchContainer} ${styInputSwitch.active}` : `${styInputSwitch.switchContainer}`
+  useEffect(() => {
+    field.onChange(isChecked)  
+  }, [isChecked])
+  
+  const containerClasses = isChecked ? `${styInputSwitch.switchContainer} ${styInputSwitch.active}` : `${styInputSwitch.switchContainer}`
   return (
     <div className={styInputSwitch.container}>
       <label className={styInputSwitch.label} htmlFor='toggle'>{label}</label>
@@ -27,7 +28,7 @@ const InputSwitch = ({ label, register }: Props) => {
 
         </div>
       </button>
-      <input className={styInputSwitch.checkbox} type="checkbox" checked={checkedInput} {...register("switch")} onChange={handleChange}/>
+      <input className={styInputSwitch.checkbox} type="checkbox" {...field} />
     </div>
   )
 }

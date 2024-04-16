@@ -1,5 +1,7 @@
 export { default } from "next-auth/middleware"
 
 export const config = {
-    matcher: ['/((?!login|images).*)']
+    // matcher: ['/((?!login|images).*)']
+    matcher: []
+
 }
