@@ -6,28 +6,17 @@ import InputSwitch from '@/components/common/InputSwitch';
 import { useForm } from 'react-hook-form'
 import type { FieldValues, SubmitHandler } from 'react-hook-form'
 import CreateFieldForm from './CreateFieldForm';
+import type { TfieldInfo } from '@/types/formTypes';
 
 const CategoryForm = () => {
-    // const [inputsInfo, setInputsInfo] = useState([])
-
-    // const inputsInfo = [
-    //     {
-    //         name: "MAC",
-    //         type: 0
-    //     },
-    //     {
-    //         name: "Brand",
-    //         type: 1,
-    //         list: ["Lenovo", "Asus", "popo", "popow"]
-    //     },
-    // ]
 
     const { register, handleSubmit, control } = useForm()
     const onSubmit: SubmitHandler<FieldValues> = (data) => {
         console.log(data)
     }
 
-    const [fieldFormState, setFormFieldState] = useState(0)
+    const [fieldsInfo, setFieldsInfo] = useState<TfieldInfo[]>([])
+    const [fieldFormState, setFormFieldState] = useState<0 | 1 | 2>(0)
 
     const handleChangeText = () => {
         if (fieldFormState === 1) return
@@ -51,26 +40,15 @@ const CategoryForm = () => {
             </div>
             <div className={sForms.formSection}>
                 {
-                    fieldFormState === 0 && (
-                        <>
-                            <button type="button" onClick={handleChangeText}>Crear nuevo campo de texto</button>
-                            <button type="button" onClick={handleChangeList}>Crear nuevo campo de lista</button>
-                        </>
-                    )
-                }
-                {
-                    fieldFormState !== 0 && (
-                        <CreateFieldForm fieldFormState={fieldFormState} setFieldFormState={setFormFieldState}/>
-                    )
-                }
-                {/* <div>
+                    fieldsInfo.length !== 0 && (
+                        <div>
                     {
-                        inputsInfo.map((input, index) => (
+                        fieldsInfo.map((input, index) => (
                             <div key={index}>
-                                {input.type === 0 && (
+                                {input.type === 1 && (
                                         <input type="text" {...register(input.name)} placeholder={input.name} />
                                 )}
-                                {input.type === 1 && (
+                                {input.type === 2 && (
                                         <select {...register(input.name)} id="">
                                             {
                                                 input.list?.map( (item, index) => (
@@ -82,7 +60,22 @@ const CategoryForm = () => {
                             </div>
                         ))
                     }
-                </div> */}
+                </div>
+                    )
+                }
+                {
+                    fieldFormState === 0 && (
+                        <>
+                            <button type="button" onClick={handleChangeText}>Crear nuevo campo de texto</button>
+                            <button type="button" onClick={handleChangeList}>Crear nuevo campo de lista</button>
+                        </>
+                    )
+                }
+                {
+                    fieldFormState !== 0 && (
+                        <CreateFieldForm fieldFormState={fieldFormState} setFieldFormState={setFormFieldState} setFieldsInfo={setFieldsInfo} fieldsInfo={fieldsInfo}/>
+                    )
+                }
             </div>
             <button type='submit'>
                 Enviar
