@@ -18,8 +18,9 @@ const InventoryPage = () => {
 
   return (
     <div>
-      <h1 style={{ color: 'green' }}>Gestión de inventario</h1>
-      <Table headers={headers} data={data} />
+      <h1 className='my-8 font-bold' style={{ color: 'green' }}>Gestión de inventario</h1>
+      <Table />
+      {/*<Table headers={headers} data={data} />*/}
     </div>
   );
 };
