@@ -56,7 +56,7 @@ const TableRowInventory = ({ inventory }: Readonly<TableRowProps>) => {
 					<p className="text-gray-500 dark:text-gray-400">{inventory.atributos} </p>
 				</div>
 			</td>
-			<IconsActions onDelete={MdOutlineDelete} onEdit={BiEdit}></IconsActions>
+			<IconsActions></IconsActions>
 		</>
 	);
 
