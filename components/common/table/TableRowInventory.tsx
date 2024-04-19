@@ -1,9 +1,9 @@
 import { BiEdit } from 'react-icons/bi';
 import React from 'react';
 import { MdOutlineDelete } from 'react-icons/md';
-import IconsActions from './IconsActions';
 import Label from './Label';
 import LabelState from './LabelState';
+import ActionButton from './ActionButton';
 
 interface TableRowProps {
 	inventory: {
@@ -37,7 +37,6 @@ const TableRowInventory = ({ inventory }: Readonly<TableRowProps>) => {
 					text={inventory.categoria}
 					textColor={'rose-500'}
 					bgColor={'rose-100'}
-					darkMode={"gray-800"}
 				></Label>
 			</td>
 			<td className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
@@ -45,18 +44,20 @@ const TableRowInventory = ({ inventory }: Readonly<TableRowProps>) => {
 					text={inventory.wallet}
 					textColor={'orange-500'}
 					bgColor={'orange-100'}
-					darkMode={'gray-800'}
 				></Label>
 			</td>
 			<td className='px-4 py-4 text-sm whitespace-nowrap'>
 				<div>
 					<h4 className='text-gray-700 dark:text-gray-200'>
-						{inventory.quantizable ? 'Cuantizable' : 'No cuantizable'}
+						{inventory.quantizable ? 'Cuantificable' : 'No cuantificable'}
 					</h4>
 					<p className="text-gray-500 dark:text-gray-400">{inventory.atributos} </p>
 				</div>
 			</td>
-			<IconsActions></IconsActions>
+			<td className="pl-4 pr-4 text-center">
+				<ActionButton icon={BiEdit} onClick={() => {console.log("Edit", inventory.id)}} className="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-1 px-2 rounded mr-2"/>
+				<ActionButton icon={MdOutlineDelete} onClick={() => {console.log("Delete", inventory.id)}} className="bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded"/>
+			</td>
 		</>
 	);
 

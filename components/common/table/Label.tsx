@@ -5,17 +5,15 @@ interface LabelProps{
     text: string;
     textColor: string;
     bgColor: string;
-    darkMode: string;
     
 }
-const Label = ({ text, textColor, bgColor, darkMode }: LabelProps) => {
+const Label = ({ text, textColor, bgColor }: LabelProps) => {
     // Determinar las clases CSS basadas en las propiedades recibidas
     const textColorClass = `text-${textColor}`;
     const bgColorClass = `bg-${bgColor}/60`;
-    const darkModeClass =  `dark:bg-${darkMode}` ; // Solo aplicar clase dark si darkMode es verdadero
   
     return (
-      <div className={`${styles.labelTable} ${textColorClass} ${bgColorClass} ${darkModeClass}`}>
+      <div className={`${styles.labelTable} ${textColorClass} ${bgColorClass}`}>
         {text}
       </div>
     );

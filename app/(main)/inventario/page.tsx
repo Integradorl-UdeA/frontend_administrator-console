@@ -16,7 +16,7 @@ const InventoryPage = () => {
 					Gestión de inventario
 				</h1>
 				<div className='sm:flex sm:items-center sm:justify-between'>
-					<HeaderInfoTablePage title={"Elementos"} quantity={"6"}></HeaderInfoTablePage>
+					<HeaderInfoTablePage title={"Elementos"} quantity={"6"} text='elementos' description='Estos elementos se han añadido en los últimos 6 meses.'></HeaderInfoTablePage>
 					<div className='flex items-center mt-4 gap-x-3'>
 						<AddButton text={'Añadir elemento'}></AddButton>
 					</div>

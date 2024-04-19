@@ -3,8 +3,10 @@ import React from 'react';
 interface HeaderInfoTablePageProps {
 	title: string;
 	quantity: string;
+	text: string;
+	description: string;
 }
-const HeaderInfoTablePage = ({ title, quantity }: HeaderInfoTablePageProps) => {
+const HeaderInfoTablePage = ({ title, quantity, text, description }: HeaderInfoTablePageProps) => {
 	return (
 		<div>
 			<div className='flex items-center gap-x-3'>
@@ -13,12 +15,12 @@ const HeaderInfoTablePage = ({ title, quantity }: HeaderInfoTablePageProps) => {
 				</h2>
 
 				<span className='px-3 py-1 text-xs text-blue-600 bg-blue-100 rounded-full dark:bg-gray-800 dark:text-blue-400'>
-					{quantity} elementos
+					{quantity} {text}
 				</span>
 			</div>
 
 			<p className='mt-1 text-md text-gray-500 dark:text-white'>
-				Estos elementos se han añadido en los últimos 6 meses.
+				{description}
 			</p>
 		</div>
 	);

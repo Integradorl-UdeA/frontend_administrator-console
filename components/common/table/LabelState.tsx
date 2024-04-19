@@ -5,7 +5,6 @@ interface LabelStateProps {
     text: string;
 }
 
-
 const LabelState = ({ text }:LabelStateProps) => {
   let className = '';
 
@@ -28,10 +27,18 @@ const LabelState = ({ text }:LabelStateProps) => {
     case 'lended':
       className = styles.labelColorLended;
       break;
+    case 'activo':
+      className = styles.labelColorRepairing;
+      break;
+    case 'vencido':
+      className = styles.labelColorBroken;
+      break;
+    case 'devuelto':
+      className = styles.labelColorLost;
+      break;
     default:
       className = '';
   }
-
 
   return (
     <div className={`${className} ${styles.labelTable}`}>
@@ -41,4 +48,3 @@ const LabelState = ({ text }:LabelStateProps) => {
 };
 
 export default LabelState;
-
