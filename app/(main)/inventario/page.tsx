@@ -22,19 +22,7 @@ const InventoryPage = () => {
 					</div>
 				</div>
 				<div className='mt-6 md:flex md:items-center md:justify-between'>
-					<div className="inline-flex overflow-hidden bg-white border divide-x rounded-lg rtl:flex-row-reverse">
-						<button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 bg-gray-100 sm:text-sm">
-							Ver todo
-						</button>
-
-						<button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm hover:bg-gray-100">
-							Disponible
-						</button>
-
-						<button className="px-5 py-2 text-xs font-medium text-gray-600 transition-colors duration-200 sm:text-sm hover:bg-gray-100">
-							No disponible
-						</button>
-					</div>
+					<FilterOptions options={options}></FilterOptions>
 					<SearchInput></SearchInput>
 				</div>
 				<TableInventory />

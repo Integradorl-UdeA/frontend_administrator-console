@@ -20,7 +20,7 @@ const ImageLabel = ({ text, textColor, bgColor, images }: LabelProps) => {
               key={index}
               className="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full shrink-0"
               src={imageUrl}
-              alt=""
+              alt="cualquier cosa"
             />
           ))}
           <h4 className='px-2'>{text}</h4>

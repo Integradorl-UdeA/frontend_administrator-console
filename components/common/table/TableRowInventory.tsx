@@ -35,15 +35,15 @@ const TableRowInventory = ({ inventory }: Readonly<TableRowProps>) => {
 			<td className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
 				<Label
 					text={inventory.categoria}
-					textColor={'rose-500'}
-					bgColor={'rose-100'}
+					textColor='yellow-500'
+					bgColor='yellow-100'
 				></Label>
 			</td>
 			<td className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
-            <Label
+            	<Label
 					text={inventory.wallet}
-					textColor={'orange-500'}
-					bgColor={'orange-100'}
+					textColor='orange-500'
+					bgColor='orange-100'
 				></Label>
 			</td>
 			<td className='px-4 py-4 text-sm whitespace-nowrap'>

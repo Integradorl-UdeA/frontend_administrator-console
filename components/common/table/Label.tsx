@@ -8,9 +8,10 @@ interface LabelProps{
     
 }
 const Label = ({ text, textColor, bgColor }: LabelProps) => {
-    // Determinar las clases CSS basadas en las propiedades recibidas
+
+  
     const textColorClass = `text-${textColor}`;
-    const bgColorClass = `bg-${bgColor}/60`;
+    const bgColorClass = `bg-${bgColor}`;
   
     return (
       <div className={`${styles.labelTable} ${textColorClass} ${bgColorClass}`}>
