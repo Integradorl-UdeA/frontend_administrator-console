@@ -26,18 +26,16 @@ const TableRowLoan = ({ loan }: Readonly<TableRowProps>) => {
 	return (
 		<>
 			<td className='px-4 text-sm font-medium whitespace-nowrap'>
-				<div>
-					<h2 className='font-medium text-gray-800'>
+					<p className='font-medium text-gray-800'>
 						{loan.id}
-					</h2>
-				</div>
+					</p>
 			</td>
 
 			<td className='px-12 text-sm font-medium whitespace-nowrap'>
 				<Label
 					text={loan.elemento}
-					textColor={'orange-500'}
-					bgColor={'orange-100'}
+					textColor={'text-orange-500'}
+					bgColor={'bg-orange-100'}
 				></Label>
 			</td>
 
@@ -48,24 +46,21 @@ const TableRowLoan = ({ loan }: Readonly<TableRowProps>) => {
 			</td>
 
 			<td className='px-4 text-sm font-medium whitespace-nowrap'>
-				<div className={`${styles.labelTable} text-back bg-white`}>
-					<h4 className='px-2'>{loan.usuario} </h4>
+				<div className={`${styles.labelTable} text-gray-700 bg-white`}>
+					<p className='px-2 '>{loan.usuario}</p>
 				</div>
 			</td>
 
-			<td className='px-4 text-sm font-medium whitespace-nowrap'>
-				<h2 className='font-medium text-gray-800'>
+			<td className='px-4 text-sm whitespace-nowrap'>
+				<p className='text-gray-700'>
 					{loan.fechaPrestamo}
-				</h2>
-
+				</p>
 			</td>
 
-			<td className='px-4 text-sm font-medium whitespace-nowrap'>
-				<div>
-					<h2 className='font-medium text-gray-800'>
-						{loan.fechaDevolucion}
-					</h2>
-				</div>
+			<td className='px-4 text-sm whitespace-nowrap'>
+				<p className='text-gray-700'>
+					{loan.fechaDevolucion}
+				</p>
 			</td>
 
 			<td className="pl-4 pr-4 text-center">

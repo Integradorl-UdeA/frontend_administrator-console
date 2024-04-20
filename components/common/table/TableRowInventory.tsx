@@ -32,25 +32,25 @@ const TableRowInventory = ({ inventory }: Readonly<TableRowProps>) => {
 					text={inventory.estado}
 				></LabelState>
 			</td>
-			<td className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
+			<td className='px-4 py-4 text-sm whitespace-nowrap'>
 				<Label
 					text={inventory.categoria}
-					textColor='yellow-500'
-					bgColor='yellow-100'
+					textColor='text-rose-500'
+					bgColor='bg-rose-100'
 				></Label>
 			</td>
-			<td className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
+			<td className='px-4 py-4 text-sm whitespace-nowrap'>
             	<Label
 					text={inventory.wallet}
-					textColor='orange-500'
-					bgColor='orange-100'
+					textColor='text-orange-500'
+					bgColor='bg-orange-100'
 				></Label>
 			</td>
 			<td className='px-4 py-4 text-sm whitespace-nowrap'>
 				<div>
-					<h4 className='text-gray-700'>
+					<p className='text-gray-700'>
 						{inventory.quantizable ? 'Cuantificable' : 'No cuantificable'}
-					</h4>
+					</p>
 					<p className="text-gray-500">{inventory.atributos} </p>
 				</div>
 			</td>
