@@ -36,7 +36,7 @@ const TableLoan = () => {
 				<div className='flex flex-col mt-6'>
 					<div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
 						<div className='inline-block min-w-full py-2 align-middle md:px-6 lg:px-8'>
-							<div className='overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg'>
+							<div className='overflow-hidden border border-gray-200 md:rounded-lg'>
 								<Table column={column}>
 									{currentItems.map((item, index) => (
 										<tr key={item.id}>
@@ -50,9 +50,9 @@ const TableLoan = () => {
 				</div>
 
 				<div className='mt-6 sm:flex sm:items-center sm:justify-between '>
-					<div className='text-sm text-gray-500 dark:text-gray-400'>
+					<div className='text-sm text-gray-500'>
 						Página{' '}
-						<span className='font-medium text-gray-700 dark:text-gray-100'>
+						<span className='font-medium text-gray-700'>
 							{currentPage} de {Math.ceil(loan.length / itemsPerPage)}
 						</span>
 					</div>

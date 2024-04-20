@@ -1,7 +1,7 @@
 
 'use client';
 import React, { useState } from 'react';
-import styles from '@/styles/Table/table.module.css';
+import styles from '@/styles/Table/Table.module.css';
 
 interface FilterButtonsProps{
     options: string[]

@@ -36,7 +36,7 @@ const TableRowLoan = ({ loan }: Readonly<TableRowProps>) => {
 		<>
 			<td className='px-4 text-sm font-medium whitespace-nowrap'>
 				<div>
-					<h2 className='font-medium text-gray-800 dark:text-white'>
+					<h2 className='font-medium text-gray-800'>
 						{loan.id}
 					</h2>
 				</div>
@@ -67,7 +67,7 @@ const TableRowLoan = ({ loan }: Readonly<TableRowProps>) => {
 
 			<td className='px-4 text-sm font-medium whitespace-nowrap'>
 				<div>
-					<h2 className='font-medium text-gray-800 dark:text-white'>
+					<h2 className='font-medium text-gray-800'>
 						{loan.fechaPrestamo}
 					</h2>
 				</div>
@@ -75,7 +75,7 @@ const TableRowLoan = ({ loan }: Readonly<TableRowProps>) => {
 
 			<td className='px-4 text-sm font-medium whitespace-nowrap'>
 				<div>
-					<h2 className='font-medium text-gray-800 dark:text-white'>
+					<h2 className='font-medium text-gray-800'>
 						{loan.fechaDevolucion}
 					</h2>
 				</div>

@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '@/styles/Table/table.module.css';
+import styles from '@/styles/Table/Table.module.css';
 
 const SearchInput = () => {
   return (
@@ -11,7 +11,7 @@ const SearchInput = () => {
           viewBox="0 0 24 24"
           strokeWidth="1.5"
           stroke="currentColor"
-          className="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600"
+          className="w-5 h-5 mx-3 text-gray-400"
         >
           <path
             strokeLinecap="round"

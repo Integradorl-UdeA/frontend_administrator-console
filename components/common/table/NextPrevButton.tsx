@@ -1,6 +1,6 @@
 // Button.js
 import React from 'react';
-import styles from '@/styles/Table/table.module.css';
+import styles from '@/styles/Table/Table.module.css';
 
 interface NextPrevButtonProps {
     onClick: (arg: any) => void;

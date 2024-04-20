@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '@/styles/Table/table.module.css';
+import styles from '@/styles/Table/Table.module.css';
 
 interface LabelProps{
     text: string;
@@ -18,7 +18,7 @@ const ImageLabel = ({ text, textColor, bgColor, images }: LabelProps) => {
           {images.map((imageUrl, index) => (
             <img
               key={index}
-              className="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full dark:border-gray-700 shrink-0"
+              className="object-cover w-6 h-6 -mx-1 border-2 border-white rounded-full shrink-0"
               src={imageUrl}
               alt=""
             />

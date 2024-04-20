@@ -21,7 +21,7 @@ const TableRowInventory = ({ inventory }: Readonly<TableRowProps>) => {
 		<>
 			<td className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
 				<div>
-					<h2 className='font-medium text-gray-800 dark:text-white'>
+					<h2 className='font-medium text-gray-800'>
 						{inventory.id}
 					</h2>
 				</div>
@@ -48,10 +48,10 @@ const TableRowInventory = ({ inventory }: Readonly<TableRowProps>) => {
 			</td>
 			<td className='px-4 py-4 text-sm whitespace-nowrap'>
 				<div>
-					<h4 className='text-gray-700 dark:text-gray-200'>
+					<h4 className='text-gray-700'>
 						{inventory.quantizable ? 'Cuantificable' : 'No cuantificable'}
 					</h4>
-					<p className="text-gray-500 dark:text-gray-400">{inventory.atributos} </p>
+					<p className="text-gray-500">{inventory.atributos} </p>
 				</div>
 			</td>
 			<td className="pl-4 pr-4 text-center">
