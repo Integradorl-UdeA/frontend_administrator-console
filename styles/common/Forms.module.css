@@ -1,3 +1,7 @@
-.formSection{
-    @apply flex items-center justify-center;
+.formSectionRow{
+    @apply flex items-center justify-center my-3;
+}
+
+.fieldFormListSection{
+    @apply flex my-3 flex-col
 }

@@ -22,8 +22,8 @@ const InputSwitch = ({ label, name, control }: Props) => {
   const containerClasses = isChecked ? `${styInputSwitch.switchContainer} ${styInputSwitch.active}` : `${styInputSwitch.switchContainer}`
   return (
     <div className={styInputSwitch.container}>
-      <label className={styInputSwitch.label} htmlFor='toggle'>{label}</label>
-      <button type='button' onClick={toggle} className={containerClasses} id='toggle'>
+      <label className={styInputSwitch.label} htmlFor={name}>{label}</label>
+      <button type='button' onClick={toggle} className={containerClasses} id={name}>
         <div className={`${styInputSwitch.slider} `}>
 
         </div>

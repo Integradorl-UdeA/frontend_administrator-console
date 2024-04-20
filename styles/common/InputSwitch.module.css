@@ -1,10 +1,10 @@
 
 .container{
-    @apply flex items-center my-2
+    @apply flex items-center my-2 text-xl
 
 }
 .label{
-    @apply mx-2 hover:cursor-pointer text-lg
+    @apply mx-2 hover:cursor-pointer
 }
 .switchContainer{
     background-color: var(--color-green1);
