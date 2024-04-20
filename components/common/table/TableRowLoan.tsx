@@ -3,7 +3,6 @@ import React from 'react';
 import { MdOutlineDelete } from 'react-icons/md';
 import Label from './Label';
 import LabelState from './LabelState';
-import ImageLabel from './ImageLabel';
 import ActionButton from './ActionButton';
 import styles from '@/styles/Table/Table.module.css';
 
@@ -17,9 +16,6 @@ interface TableRowProps {
 		fechaDevolucion: string;
 	};
 }
-
-
-// Función para seleccionar aleatoriamente una imagen
 
 
 const TableRowLoan = ({ loan }: Readonly<TableRowProps>) => {
