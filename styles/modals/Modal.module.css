@@ -1,0 +1,24 @@
+.overlay{
+    @apply bg-black absolute h-screen w-screen flex items-center justify-center top-0 left-0 z-10;
+    background-color: rgba(0, 0, 0, 0.437); 
+}
+
+.container{
+    @apply relative bg-white flex flex-col overflow-hidden w-fit rounded-lg pt-7 pb-4 px-14 max-w-[70%];
+}
+
+.header{
+    @apply flex justify-center;
+}
+.body{
+
+}
+.title{
+    @apply  text-lg font-bold mb-3;
+    color: var(--color-text)
+}
+.closeButton{
+    @apply text-white ml-10 absolute top-[0] right-[0] mt-2 rounded-md;
+    transform: translateX(-50%);
+    background-color: var(--color-red);
+}

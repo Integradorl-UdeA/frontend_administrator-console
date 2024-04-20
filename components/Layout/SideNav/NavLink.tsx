@@ -4,7 +4,7 @@ import type { IconType } from 'react-icons';
 import styles from '@/styles/SideNav.module.css'
 
 
-interface Props  {
+interface Props{
     route: string,
     label: string,
     icon: IconType
