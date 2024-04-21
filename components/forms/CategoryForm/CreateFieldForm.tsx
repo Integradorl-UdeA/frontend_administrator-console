@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import type { TfieldInfo } from '@/types/formTypes';
+import type { IfieldInfo } from '@/types/categoryTypes';
 import styForm from '@/styles/common/Forms.module.css';
 
 interface Props {
 	fieldFormState: 0 | 1 | 2;
 	setFieldFormState: React.Dispatch<React.SetStateAction<0 | 2 | 1>>;
-	setFieldsInfo: React.Dispatch<React.SetStateAction<TfieldInfo[]>>;
-	fieldsInfo: TfieldInfo[];
+	setFieldsInfo: React.Dispatch<React.SetStateAction<IfieldInfo[]>>;
+	fieldsInfo: IfieldInfo[];
 }
 
 const CreateFieldForm = ({
@@ -15,11 +15,11 @@ const CreateFieldForm = ({
 	setFieldsInfo,
 	fieldsInfo,
 }: Props) => {
-	const defaultFormData: TfieldInfo = {
+	const defaultFormData: IfieldInfo = {
 		name: '',
 		type: 0,
 	};
-	const [formData, setFormData] = useState<TfieldInfo>(defaultFormData);
+	const [formData, setFormData] = useState<IfieldInfo>(defaultFormData);
 	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		let { name, value }: { name: string; value: string | string[] } = e.target;
 		if (name === 'list')

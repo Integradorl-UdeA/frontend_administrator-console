@@ -6,7 +6,7 @@ import InputSwitch from '@/components/common/InputSwitch';
 import { useForm } from 'react-hook-form';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import CreateFieldForm from './CreateFieldForm';
-import type { TfieldInfo } from '@/types/formTypes';
+import type { IfieldInfo } from '@/types/categoryTypes';
 
 const CategoryForm = () => {
 	const { register, handleSubmit, control } = useForm();
@@ -14,7 +14,7 @@ const CategoryForm = () => {
 		console.log(data);
 	};
 
-	const [fieldsInfo, setFieldsInfo] = useState<TfieldInfo[]>([]);
+	const [fieldsInfo, setFieldsInfo] = useState<IfieldInfo[]>([]);
 	const [fieldFormState, setFormFieldState] = useState<0 | 1 | 2>(0);
 
 	const handleChangeText = () => {
