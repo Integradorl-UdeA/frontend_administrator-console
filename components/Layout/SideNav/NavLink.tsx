@@ -10,7 +10,7 @@ interface Props{
     icon: IconType
 }
 
-function NavLink({route, label, icon: Icon}: Props) {
+function NavLink({route, label, icon: Icon}: Props ) {
 	return (
         <Link href={route} className={styles.link}>
             {Boolean(Icon) && <Icon />}
