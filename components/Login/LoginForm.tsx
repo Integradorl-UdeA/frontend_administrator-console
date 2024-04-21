@@ -28,6 +28,7 @@ function LoginForm() {
 		}
 		router.push("/")
 	}
+	
 	return (
 		<section className={styles.formContainer}>
 			<span className={styles.userIconContainer}>

@@ -4,7 +4,8 @@
 }
 
 .container{
-    @apply relative bg-white flex flex-col overflow-hidden w-fit rounded-lg pt-7 pb-4 px-14 max-w-[70%];
+    @apply relative flex flex-col overflow-hidden w-fit rounded-lg pt-7 pb-4 px-14 max-w-[70%];
+    background-color: var(--color-background)
 }
 
 .header{
@@ -14,7 +15,7 @@
 
 }
 .title{
-    @apply  text-lg font-bold mb-3;
+    @apply  text-2xl font-bold mb-3;
     color: var(--color-text)
 }
 .closeButton{
