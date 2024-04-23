@@ -1,44 +1,71 @@
 import React, { useState } from 'react';
-import type { IfieldInfo } from '@/types/categoryTypes';
 import styForm from '@/styles/common/Forms.module.css';
+import type { IAdditionalAttr, IListAttr } from '@/types/categoryTypes';
 
 interface Props {
-	fieldFormState: 0 | 1 | 2;
-	setFieldFormState: React.Dispatch<React.SetStateAction<0 | 2 | 1>>;
-	setFieldsInfo: React.Dispatch<React.SetStateAction<IfieldInfo[]>>;
-	fieldsInfo: IfieldInfo[];
+	additionalAttr: IAdditionalAttr 
+	setAdditionalAttr: React.Dispatch<React.SetStateAction<IAdditionalAttr>>;
 }
 
-const CreateFieldForm = ({
-	fieldFormState,
-	setFieldFormState,
-	setFieldsInfo,
-	fieldsInfo,
-}: Props) => {
-	const defaultFormData: IfieldInfo = {
-		name: '',
-		type: 0,
-	};
-	const [formData, setFormData] = useState<IfieldInfo>(defaultFormData);
-	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		let { name, value }: { name: string; value: string | string[] } = e.target;
+const CreateFieldForm = ({additionalAttr, setAdditionalAttr}: Props) => {
+
+	
+	const [attribute, setAttribute] = useState<string>("")
+	const [listAttribute, setListAttribute] = useState<IListAttr>({name: '', list: []})
+
+
+	const handleAttrChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
+		const { value } = e.target
+		setAttribute(value)
+	}
+	const handleAttrListChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		let {name, value}: { name: string; value: string | string[] } = e.target
 		if (name === 'list')
-			value = value
-				.trim()
-				.replace(/\s*,\s*/g, ',')
-				.split(',');
-		setFormData({
-			...formData,
-			[name]: value,
-			type: fieldFormState,
-		});
+					value = value
+						.trim()
+						.replace(/\s*,\s*/g, ',')
+						.split(',');
+		setListAttribute({
+			...listAttribute,
+			[name]: value
+		})
+
+	}
+	const [fieldFormState, setFieldFormState] = useState<0 | 1 | 2>(0);
+
+	const changeFieldFormState = (state: 0 | 1 | 2) => {
+		setFieldFormState(state);
 	};
 
+	// const {field: attributesField} = useController({name: 'attributes'})
+	// const {field: listAttributesField} = useController({name: 'listAttributes'})
+
+
 	const handleCreateField = () => {
-		setFormData({ ...formData, type: 1 });
-		setFieldFormState(0);
-		console.log(formData);
-		setFieldsInfo((prev) => [...prev, formData]);
+		fieldFormState === 1 && (
+			setAdditionalAttr(prev => {
+				return {
+					...prev,
+					attributes:  [...prev.attributes, attribute]
+				}
+			})
+		)
+		fieldFormState === 2 && (
+			setAdditionalAttr(prev => {
+				return {
+					...prev,
+					listAttributes: [
+							...prev.listAttributes, 
+							{
+								name: listAttribute.name,
+								list: listAttribute.list
+							}
+						]
+				}
+			})
+		)
+		changeFieldFormState(0)
+		console.log("additionalAttr: ", additionalAttr)
 	};
 
 	const formFieldText = (
@@ -50,8 +77,8 @@ const CreateFieldForm = ({
 				className='block w-full'
 				type='text'
 				placeholder='Nuevo campo'
-				name='name'
-				onChange={handleOnChange}
+				name='attribute'
+				onChange={handleAttrChange}
 			/>
 		</div>
 	);
@@ -66,7 +93,7 @@ const CreateFieldForm = ({
 					type='text'
 					placeholder='Nuevo campo'
 					name='name'
-					onChange={handleOnChange}
+					onChange={handleAttrListChange}
 				/>
 			</div>
 			<div className={styForm.fieldFormListSection}>
@@ -78,34 +105,60 @@ const CreateFieldForm = ({
 					type='text'
 					placeholder='Ej: Manzana, Narnaja, Mandarina ...'
 					name='list'
-					onChange={handleOnChange}
+					onChange={handleAttrListChange}
 				/>
 			</div>
 		</div>
 	);
 
 	return (
-		<div className='bg-slate-300 p-5 rounded-lg'>
-			{fieldFormState === 1 && formFieldText}
-			{fieldFormState === 2 && formFieldList}
-			<div className='flex justify-between mt-4'>
-				<button
-					className='py-1 px-3 bg-red-600 text-white font-semibold rounded-xl mx-3'
-					onClick={() => {
-						setFieldFormState(0);
-					}}
-				>
-					Cancelar
-				</button>
-				<button
-					className='py-1 px-3 bg-green-600 text-white font-semibold rounded-xl mx-3'
-					type='button'
-					onClick={handleCreateField}
-				>
-					Crear
-				</button>
+		<>
+			{fieldFormState === 0 && (
+				<div className='flex my-2'>
+					<button
+						className='border-2 border-green-600 border-solid rounded-xl px-3 py-1 rounded-r-none bg-green-600 text-white font-bold'
+						type='button'
+						onClick={() => {
+							changeFieldFormState(1);
+						}}
+					>
+						Crear nuevo campo de texto
+					</button>
+					<button
+						className='border-2 border-green-600 border-solid rounded-xl px-3 py-1 rounded-l-none bg-white text-green-600 font-bold'
+						type='button'
+						onClick={() => {
+							changeFieldFormState(2);
+						}}
+					>
+						Crear nuevo campo de lista
+					</button>
+				</div>
+			)}
+			<div className='bg-slate-300 rounded-lg'>
+				{fieldFormState === 1 && formFieldText}
+				{fieldFormState === 2 && formFieldList}
+				{fieldFormState !== 0 && (
+					<div className='flex justify-between mt-4'>
+						<button
+							className='py-1 px-3 bg-red-600 text-white font-semibold rounded-xl mx-3'
+							onClick={() => {
+								setFieldFormState(0);
+							}}
+						>
+							Cancelar
+						</button>
+						<button
+							className='py-1 px-3 bg-green-600 text-white font-semibold rounded-xl mx-3'
+							type='button'
+							onClick={handleCreateField}
+						>
+							Crear
+						</button>
+					</div>
+				)}
 			</div>
-		</div>
+		</>
 	);
 };
 

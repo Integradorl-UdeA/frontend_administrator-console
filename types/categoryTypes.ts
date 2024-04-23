@@ -8,11 +8,16 @@ export interface ICategory{
     categoryName: string
     quantizable: string
     attributes: string[]
-    listAttributes: IListAttribute[]
+    listAttributes: IListAttr[]
 }
 
-export interface IListAttribute{
+export interface IAdditionalAttr {
+	attributes: string[];
+	listAttributes: IListAttr[];
+}
+
+export interface IListAttr{
     name: string
-    values: string[]
+    list: string[]
 }
 
