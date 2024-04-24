@@ -1,14 +1,17 @@
 import React from 'react';
 import type { IAdditionalAttr } from '@/types/categoryTypes';
 import CreateFieldForm from './CreateFieldForm';
+import type { Control, FieldValues } from 'react-hook-form';
 
 interface Props {
 	additionalAttr: IAdditionalAttr;
 	setAdditionalAttr: React.Dispatch<React.SetStateAction<IAdditionalAttr>>;
+	control: Control<FieldValues, any>
 }
 const AdditionalCatAttributes = ({
 	additionalAttr,
 	setAdditionalAttr,
+	control
 }: Props) => {
 	const { attributes, listAttributes } = additionalAttr;
 	
@@ -27,6 +30,7 @@ const AdditionalCatAttributes = ({
 					</p>
 				))}
 			<CreateFieldForm
+				control={control}
 				additionalAttr={additionalAttr}
 				setAdditionalAttr={setAdditionalAttr}
 			/>

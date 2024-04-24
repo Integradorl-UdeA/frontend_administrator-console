@@ -48,7 +48,7 @@ const CategoryForm = () => {
 					/>
 					<InputSwitch label='Prestable' control={control} name='prestable' />
 				</div>
-				<AdditionalCatAttributes
+				<AdditionalCatAttributes control={control}
 					additionalAttr={additionalAttr}
 					setAdditionalAttr={setAdditionalAttr}
 				/>

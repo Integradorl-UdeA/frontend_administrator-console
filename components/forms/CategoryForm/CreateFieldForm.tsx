@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styForm from '@/styles/common/Forms.module.css';
 import type { IAdditionalAttr, IListAttr } from '@/types/categoryTypes';
+import { useController, type Control, type FieldValues } from 'react-hook-form';
 
 interface Props {
 	additionalAttr: IAdditionalAttr 
 	setAdditionalAttr: React.Dispatch<React.SetStateAction<IAdditionalAttr>>;
+	control: Control<FieldValues, any>
 }
 
-const CreateFieldForm = ({additionalAttr, setAdditionalAttr}: Props) => {
+const CreateFieldForm = ({additionalAttr, setAdditionalAttr, control}: Props) => {
 
 	
 	const [attribute, setAttribute] = useState<string>("")
 	const [listAttribute, setListAttribute] = useState<IListAttr>({name: '', list: []})
-
+	const {field: attributesField} = useController({name: 'attributes', control})
+	const {field: listAttributeField} = useController({name: 'listAttributes', control})
+	
 
 	const handleAttrChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
 		const { value } = e.target
@@ -37,20 +41,16 @@ const CreateFieldForm = ({additionalAttr, setAdditionalAttr}: Props) => {
 		setFieldFormState(state);
 	};
 
-	// const {field: attributesField} = useController({name: 'attributes'})
-	// const {field: listAttributesField} = useController({name: 'listAttributes'})
-
-
 	const handleCreateField = () => {
-		fieldFormState === 1 && (
+		if(fieldFormState === 1) {
 			setAdditionalAttr(prev => {
 				return {
 					...prev,
 					attributes:  [...prev.attributes, attribute]
 				}
 			})
-		)
-		fieldFormState === 2 && (
+		}
+		if(fieldFormState === 2) {
 			setAdditionalAttr(prev => {
 				return {
 					...prev,
@@ -63,10 +63,16 @@ const CreateFieldForm = ({additionalAttr, setAdditionalAttr}: Props) => {
 						]
 				}
 			})
-		)
+			
+		}
 		changeFieldFormState(0)
-		console.log("additionalAttr: ", additionalAttr)
 	};
+
+	useEffect(() => {
+		attributesField.onChange(additionalAttr.attributes)
+		listAttributeField.onChange(additionalAttr.listAttributes)
+	}, [additionalAttr])
+	
 
 	const formFieldText = (
 		<div className={styForm.formSectionCol}>
