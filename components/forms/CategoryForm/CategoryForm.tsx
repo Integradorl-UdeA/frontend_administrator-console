@@ -1,31 +1,37 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React, { useState } from 'react';
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import React, { useEffect } from 'react';
 import commonStyles from '@/styles/common/Inputs.module.css';
 import sForms from '@/styles/common/Forms.module.css';
 import InputSwitch from '@/components/common/InputSwitch';
-import { useForm } from 'react-hook-form';
+import { useController, useForm } from 'react-hook-form';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
-import CreateFieldForm from './CreateFieldForm';
-import type { TfieldInfo } from '@/types/formTypes';
+import AdditionalCatAttributes from './AdditionalCatAttributes';
+import { useCategoryForm } from '@/store/categoryFormStore';
 
 const CategoryForm = () => {
+	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
 	const { register, handleSubmit, control } = useForm();
+
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
 	};
 
-	const [fieldsInfo, setFieldsInfo] = useState<TfieldInfo[]>([]);
-	const [fieldFormState, setFormFieldState] = useState<0 | 1 | 2>(0);
+	// Creating the controllers for the additional attributes fields
+	const { field: attributesField } = useController({
+		name: 'attributes',
+		control,
+	});
+	const { field: listAttributeField } = useController({
+		name: 'listAttributes',
+		control,
+	});
 
-	const handleChangeText = () => {
-		if (fieldFormState === 1) return;
-		setFormFieldState(1);
-	};
-
-	const handleChangeList = () => {
-		if (fieldFormState === 2) return;
-		setFormFieldState(2);
-	};
+	// Updating the field when additionalAttr state changes
+	useEffect(() => {
+		attributesField.onChange(additionalAttr.attributes);
+		listAttributeField.onChange(additionalAttr.listAttributes);
+	}, [additionalAttr]);
 
 	return (
 		<div className='flex flex-col items-center justify-center'>
@@ -52,51 +58,14 @@ const CategoryForm = () => {
 					/>
 					<InputSwitch label='Prestable' control={control} name='prestable' />
 				</div>
-				<div className="my-2">
-					{fieldsInfo.length !== 0 && (
-						<div className='bg-slate-300 p-3 rounded-lg'>
-							<h3 className='font-bold my-2 '>Atributos adicionales</h3>
-							{fieldsInfo.map((field, index) => (
-								<div key={index}>
-									{field.type === 1 && (
-										<p>{field.name} - Texto</p>
-									)}
-									{field.type === 2 && (
-										<p>{field.name} - {field.list?.join(", ")}</p>
-									)}
-								</div>
-							))}
-						</div>
-					)}
-					{fieldFormState === 0 && (
-						<div className='flex my-2'>
-							<button
-								className='border-2 border-green-600 border-solid rounded-xl px-3 py-1 rounded-r-none bg-green-600 text-white font-bold'
-								type='button'
-								onClick={handleChangeText}
-							>
-								Crear nuevo campo de texto
-							</button>
-							<button
-								className='border-2 border-green-600 border-solid rounded-xl px-3 py-1 rounded-l-none bg-white text-green-600 font-bold'
-								type='button'
-								onClick={handleChangeList}
-							>
-								Crear nuevo campo de lista
-							</button>
-						</div>
-					)}
-					{fieldFormState !== 0 && (
-						<CreateFieldForm
-							fieldFormState={fieldFormState}
-							setFieldFormState={setFormFieldState}
-							setFieldsInfo={setFieldsInfo}
-							fieldsInfo={fieldsInfo}
-						/>
-					)}
-				</div>
+				<AdditionalCatAttributes control={control} />
 				<div className='flex'>
-					<button className=" flex bg-green-600 text-white px-3 py-1 rounded-lg font-semibold m-2 ml-auto" type='submit'>Enviar</button>
+					<button
+						className=' flex bg-green-600 text-white px-3 py-1 rounded-lg font-semibold m-2 ml-auto'
+						type='submit'
+					>
+						Enviar
+					</button>
 				</div>
 			</form>
 		</div>
