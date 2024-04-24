@@ -1,11 +1,13 @@
 import { useCategoryForm } from '@/store/categoryFormStore';
 import React from 'react';
 
-interface Props{
-    handleCreateField: () => void
+interface Props {
+	handleCreateField: () => void;
 }
-const CreateFieldButtons = ({handleCreateField}: Props) => {
-    const setFieldFormStatus = useCategoryForm(state => state.setFormFieldStatus)
+const CreateFieldButtons = ({ handleCreateField }: Props) => {
+	const setFieldFormStatus = useCategoryForm(
+		(state) => state.setFormFieldStatus,
+	);
 
 	return (
 		<div className='flex justify-between mt-4'>

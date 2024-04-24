@@ -22,7 +22,7 @@ const AdditionalCatAttributes = ({ control }: Props) => {
 						{listAttr.name} - {listAttr.list?.join(', ')}
 					</p>
 				))}
-			<CreateFieldForm/>
+			<CreateFieldForm />
 		</>
 	);
 };

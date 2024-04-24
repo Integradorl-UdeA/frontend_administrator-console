@@ -5,18 +5,20 @@ import { useCategoryForm } from '@/store/categoryFormStore';
 
 const CreateTextField = () => {
 	const [attribute, setAttribute] = useState<string>('');
-    const setFormFieldStatus = useCategoryForm(state => state.setFormFieldStatus)
-    const addAttribute = useCategoryForm(state => state.addAttribute)
-	
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+	const setFormFieldStatus = useCategoryForm(
+		(state) => state.setFormFieldStatus,
+	);
+	const addAttribute = useCategoryForm((state) => state.addAttribute);
+
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		setAttribute(value);
 	};
-    
-    const handleCreateField = () =>{
-        addAttribute(attribute)
-        setFormFieldStatus(0)
-    }
+
+	const handleCreateField = () => {
+		addAttribute(attribute);
+		setFormFieldStatus(0);
+	};
 
 	return (
 		<>
@@ -32,7 +34,7 @@ const CreateTextField = () => {
 					onChange={handleChange}
 				/>
 			</div>
-            <CreateFieldButtons handleCreateField={handleCreateField} />
+			<CreateFieldButtons handleCreateField={handleCreateField} />
 		</>
 	);
 };

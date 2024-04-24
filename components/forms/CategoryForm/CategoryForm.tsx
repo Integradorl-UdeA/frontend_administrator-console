@@ -17,6 +17,7 @@ const CategoryForm = () => {
 		console.log(data);
 	};
 
+	// Creating the controllers for the additional attributes fields
 	const { field: attributesField } = useController({
 		name: 'attributes',
 		control,
@@ -26,6 +27,7 @@ const CategoryForm = () => {
 		control,
 	});
 
+	// Updating the field when additionalAttr state changes
 	useEffect(() => {
 		attributesField.onChange(additionalAttr.attributes);
 		listAttributeField.onChange(additionalAttr.listAttributes);

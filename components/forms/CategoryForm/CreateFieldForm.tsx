@@ -4,7 +4,6 @@ import CreateTextField from './CreateTextField';
 import CreateListField from './CreateListField';
 
 const CreateFieldForm = () => {
-
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
 	const setFieldFormStatus = useCategoryForm(
 		(state) => state.setFormFieldStatus,
@@ -35,8 +34,8 @@ const CreateFieldForm = () => {
 				</div>
 			)}
 			<div className='bg-slate-300 rounded-lg'>
-				{fieldFormStatus === 1 && <CreateTextField/>}
-				{fieldFormStatus === 2 && <CreateListField/>}
+				{fieldFormStatus === 1 && <CreateTextField />}
+				{fieldFormStatus === 2 && <CreateListField />}
 			</div>
 		</>
 	);
