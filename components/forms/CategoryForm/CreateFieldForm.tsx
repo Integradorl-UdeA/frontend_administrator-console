@@ -1,34 +1,14 @@
-import React, { useEffect } from 'react';
-import { useController, type Control, type FieldValues } from 'react-hook-form';
+import React from 'react';
 import { useCategoryForm } from '@/store/categoryFormStore';
 import CreateTextField from './CreateTextField';
 import CreateListField from './CreateListField';
 
-interface Props {
-	control: Control<FieldValues, any>;
-}
-
-const CreateFieldForm = ({ control }: Props) => {
-
-	const { field: attributesField } = useController({
-		name: 'attributes',
-		control,
-	});
-	const { field: listAttributeField } = useController({
-		name: 'listAttributes',
-		control,
-	});
+const CreateFieldForm = () => {
 
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
 	const setFieldFormStatus = useCategoryForm(
 		(state) => state.setFormFieldStatus,
 	);
-	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
-
-	useEffect(() => {
-		attributesField.onChange(additionalAttr.attributes);
-		listAttributeField.onChange(additionalAttr.listAttributes);
-	}, [additionalAttr]);
 
 	return (
 		<>

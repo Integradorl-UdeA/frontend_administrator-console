@@ -1,18 +1,36 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import React from 'react';
+import React, { useEffect } from 'react';
 import commonStyles from '@/styles/common/Inputs.module.css';
 import sForms from '@/styles/common/Forms.module.css';
 import InputSwitch from '@/components/common/InputSwitch';
-import { useForm } from 'react-hook-form';
+import { useController, useForm } from 'react-hook-form';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import AdditionalCatAttributes from './AdditionalCatAttributes';
+import { useCategoryForm } from '@/store/categoryFormStore';
 
 const CategoryForm = () => {
+	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
 	const { register, handleSubmit, control } = useForm();
+
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
 	};
+
+	const { field: attributesField } = useController({
+		name: 'attributes',
+		control,
+	});
+	const { field: listAttributeField } = useController({
+		name: 'listAttributes',
+		control,
+	});
+
+	useEffect(() => {
+		attributesField.onChange(additionalAttr.attributes);
+		listAttributeField.onChange(additionalAttr.listAttributes);
+	}, [additionalAttr]);
+
 	return (
 		<div className='flex flex-col items-center justify-center'>
 			<p className='text-lg mb-5'>
