@@ -1,22 +1,15 @@
 import React from 'react';
-import type { IAdditionalAttr } from '@/types/categoryTypes';
 import CreateFieldForm from './CreateFieldForm';
 import type { Control, FieldValues } from 'react-hook-form';
+import { useCategoryForm } from '@/store/categoryFormStore';
 
 interface Props {
-	additionalAttr: IAdditionalAttr;
-	setAdditionalAttr: React.Dispatch<React.SetStateAction<IAdditionalAttr>>;
-	control: Control<FieldValues, any>
+	control: Control<FieldValues, any>;
 }
-const AdditionalCatAttributes = ({
-	additionalAttr,
-	setAdditionalAttr,
-	control
-}: Props) => {
-	const { attributes, listAttributes } = additionalAttr;
-	
-	console.log("additionalAttributes: ", additionalAttr)
+const AdditionalCatAttributes = ({ control }: Props) => {
+	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
 
+	const { attributes, listAttributes } = additionalAttr;
 	return (
 		<>
 			{attributes.length !== 0 &&
@@ -29,11 +22,7 @@ const AdditionalCatAttributes = ({
 						{listAttr.name} - {listAttr.list?.join(', ')}
 					</p>
 				))}
-			<CreateFieldForm
-				control={control}
-				additionalAttr={additionalAttr}
-				setAdditionalAttr={setAdditionalAttr}
-			/>
+			<CreateFieldForm control={control} />
 		</>
 	);
 };

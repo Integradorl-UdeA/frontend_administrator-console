@@ -1,78 +1,73 @@
 import React, { useEffect, useState } from 'react';
 import styForm from '@/styles/common/Forms.module.css';
-import type { IAdditionalAttr, IListAttr } from '@/types/categoryTypes';
+import type { IListAttr } from '@/types/categoryTypes';
 import { useController, type Control, type FieldValues } from 'react-hook-form';
+import { useCategoryForm } from '@/store/categoryFormStore';
 
 interface Props {
-	additionalAttr: IAdditionalAttr 
-	setAdditionalAttr: React.Dispatch<React.SetStateAction<IAdditionalAttr>>;
-	control: Control<FieldValues, any>
+	control: Control<FieldValues, any>;
 }
 
-const CreateFieldForm = ({additionalAttr, setAdditionalAttr, control}: Props) => {
-
+const CreateFieldForm = ({ control }: Props) => {
+	const [attribute, setAttribute] = useState<string>('');
+	const [listAttribute, setListAttribute] = useState<IListAttr>({
+		name: '',
+		list: [],
+	});
 	
-	const [attribute, setAttribute] = useState<string>("")
-	const [listAttribute, setListAttribute] = useState<IListAttr>({name: '', list: []})
-	const {field: attributesField} = useController({name: 'attributes', control})
-	const {field: listAttributeField} = useController({name: 'listAttributes', control})
-	
+	const { field: attributesField } = useController({
+		name: 'attributes',
+		control,
+	});
+	const { field: listAttributeField } = useController({
+		name: 'listAttributes',
+		control,
+	});
 
-	const handleAttrChange = (e: React.ChangeEvent<HTMLInputElement>) =>{
-		const { value } = e.target
-		setAttribute(value)
-	}
+	const handleAttrChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const { value } = e.target;
+		setAttribute(value);
+	};
 	const handleAttrListChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		let {name, value}: { name: string; value: string | string[] } = e.target
+		let { name, value }: { name: string; value: string | string[] } = e.target;
 		if (name === 'list')
-					value = value
-						.trim()
-						.replace(/\s*,\s*/g, ',')
-						.split(',');
+			value = value
+				.trim()
+				.replace(/\s*,\s*/g, ',')
+				.split(',');
 		setListAttribute({
 			...listAttribute,
-			[name]: value
-		})
-
-	}
-	const [fieldFormState, setFieldFormState] = useState<0 | 1 | 2>(0);
-
-	const changeFieldFormState = (state: 0 | 1 | 2) => {
-		setFieldFormState(state);
+			[name]: value,
+		});
 	};
 
+	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
+	const setFieldFormStatus = useCategoryForm(
+		(state) => state.setFormFieldStatus,
+	);
+	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
+
+	const changeFieldFormState = (state: 0 | 1 | 2) => {
+		setFieldFormStatus(state);
+	};
+
+	const addAttribute = useCategoryForm((state) => state.addAttribute);
+	const addListAttribute = useCategoryForm((state) => state.addListAttribute);
+
 	const handleCreateField = () => {
-		if(fieldFormState === 1) {
-			setAdditionalAttr(prev => {
-				return {
-					...prev,
-					attributes:  [...prev.attributes, attribute]
-				}
-			})
+		if (fieldFormStatus === 1) {
+			addAttribute(attribute);
 		}
-		if(fieldFormState === 2) {
-			setAdditionalAttr(prev => {
-				return {
-					...prev,
-					listAttributes: [
-							...prev.listAttributes, 
-							{
-								name: listAttribute.name,
-								list: listAttribute.list
-							}
-						]
-				}
-			})
-			
+		if (fieldFormStatus === 2) {
+			addListAttribute(listAttribute);
 		}
-		changeFieldFormState(0)
+		changeFieldFormState(0);
 	};
 
 	useEffect(() => {
-		attributesField.onChange(additionalAttr.attributes)
-		listAttributeField.onChange(additionalAttr.listAttributes)
-	}, [additionalAttr])
-	
+		attributesField.onChange(additionalAttr.attributes);
+		listAttributeField.onChange(additionalAttr.listAttributes);
+	}, [additionalAttr]);
 
 	const formFieldText = (
 		<div className={styForm.formSectionCol}>
@@ -119,7 +114,7 @@ const CreateFieldForm = ({additionalAttr, setAdditionalAttr, control}: Props) =>
 
 	return (
 		<>
-			{fieldFormState === 0 && (
+			{fieldFormStatus === 0 && (
 				<div className='flex my-2'>
 					<button
 						className='border-2 border-green-600 border-solid rounded-xl px-3 py-1 rounded-r-none bg-green-600 text-white font-bold'
@@ -142,14 +137,14 @@ const CreateFieldForm = ({additionalAttr, setAdditionalAttr, control}: Props) =>
 				</div>
 			)}
 			<div className='bg-slate-300 rounded-lg'>
-				{fieldFormState === 1 && formFieldText}
-				{fieldFormState === 2 && formFieldList}
-				{fieldFormState !== 0 && (
+				{fieldFormStatus === 1 && formFieldText}
+				{fieldFormStatus === 2 && formFieldList}
+				{fieldFormStatus !== 0 && (
 					<div className='flex justify-between mt-4'>
 						<button
 							className='py-1 px-3 bg-red-600 text-white font-semibold rounded-xl mx-3'
 							onClick={() => {
-								setFieldFormState(0);
+								setFieldFormStatus(0);
 							}}
 						>
 							Cancelar
