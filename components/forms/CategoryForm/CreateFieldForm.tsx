@@ -2,6 +2,7 @@ import React from 'react';
 import { useCategoryForm } from '@/store/categoryFormStore';
 import CreateTextField from './CreateTextField';
 import CreateListField from './CreateListField';
+import { FaPlus } from 'react-icons/fa6';
 
 const CreateFieldForm = () => {
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
@@ -12,31 +13,34 @@ const CreateFieldForm = () => {
 	return (
 		<>
 			{fieldFormStatus === 0 && (
-				<div className='flex my-2'>
-					<button
-						className='border-2 border-green-600 border-solid rounded-xl px-3 py-1 rounded-r-none bg-green-600 text-white font-bold'
-						type='button'
-						onClick={() => {
-							setFieldFormStatus(1);
-						}}
-					>
-						Crear nuevo campo de texto
-					</button>
-					<button
-						className='border-2 border-green-600 border-solid rounded-xl px-3 py-1 rounded-l-none bg-white text-green-600 font-bold'
-						type='button'
-						onClick={() => {
-							setFieldFormStatus(2);
-						}}
-					>
-						Crear nuevo campo de lista
-					</button>
-				</div>
+				<>
+					<p className='text-lg font-semibold'>Crear campos adicionales: </p>
+					<div className='flex my-2 justify-center'>
+						<button
+							className='flex items-center justify-center px-3 py-1 mx-3 text-white font-medium rounded-xl bg-greenThree'
+							type='button'
+							onClick={() => {
+								setFieldFormStatus(1);
+							}}
+						>
+							<FaPlus className='mr-2' />
+							Campo de texto
+						</button>
+						<button
+							className='flex items-center justify-center px-3 py-1 mx-3 text-white font-medium rounded-xl bg-greenThree'
+							type='button'
+							onClick={() => {
+								setFieldFormStatus(2);
+							}}
+						>
+							<FaPlus className='mr-2' />
+							Campo de Lista
+						</button>
+					</div>
+				</>
 			)}
-			<div className='bg-slate-300 rounded-lg'>
 				{fieldFormStatus === 1 && <CreateTextField />}
 				{fieldFormStatus === 2 && <CreateListField />}
-			</div>
 		</>
 	);
 };

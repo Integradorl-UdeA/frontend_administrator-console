@@ -32,32 +32,37 @@ const CreateListField = () => {
 		setFieldFormStatus(0);
 	};
 	return (
-		<div className='flex flex-col'>
-			<div className={styForm.fieldFormListSection}>
-				<label className='my-2' htmlFor=''>
-					Ingrese el nombre del nuevo campo
-				</label>
-				<input
-					type='text'
-					placeholder='Nuevo campo'
-					name='name'
-					onChange={handleChange}
-				/>
+		<>
+			<h3 className='font-semibold mb-4'>Crear campo de lista: </h3>
+			<div className='flex flex-col'>
+				<div className='flex items-center'>
+					<label className='my-2 flex-grow-0 mr-4' htmlFor=''>
+						Nombre del campo:
+					</label>
+					<input
+						className='flex-grow rounded-lg py-1 px-3 outline-greenThree'
+						type='text'
+						placeholder='Nuevo campo'
+						name='name'
+						onChange={handleChange}
+					/>
+				</div>
+				<div className={styForm.fieldFormListSection}>
+					<label className='my-2' htmlFor=''>
+						Escriba los valores que puede tomar el nuevo campo (Separados con
+						coma)
+					</label>
+					<input
+						className='flex-grow rounded-lg py-1 px-3 outline-greenThree'
+						type='text'
+						placeholder='Ej: Manzana, Narnaja, Mandarina ...'
+						name='list'
+						onChange={handleChange}
+					/>
+				</div>
+				<CreateFieldButtons handleCreateField={handleCreateField} />
 			</div>
-			<div className={styForm.fieldFormListSection}>
-				<label className='my-2' htmlFor=''>
-					Escriba los valores que puede tomar el nuevo campo (Separados con
-					coma)
-				</label>
-				<input
-					type='text'
-					placeholder='Ej: Manzana, Narnaja, Mandarina ...'
-					name='list'
-					onChange={handleChange}
-				/>
-			</div>
-			<CreateFieldButtons handleCreateField={handleCreateField} />
-		</div>
+		</>
 	);
 };
 

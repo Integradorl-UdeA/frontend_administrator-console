@@ -1,6 +1,6 @@
 
 .container{
-    @apply flex items-center my-2 text-xl
+    @apply flex items-center my-2 text-lg
 
 }
 .label{

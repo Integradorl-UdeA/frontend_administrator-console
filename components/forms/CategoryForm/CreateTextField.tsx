@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import styForm from '@/styles/common/Forms.module.css';
 import CreateFieldButtons from './CreateFieldButtons';
 import { useCategoryForm } from '@/store/categoryFormStore';
 
@@ -22,12 +21,13 @@ const CreateTextField = () => {
 
 	return (
 		<>
-			<div className={styForm.formSectionCol}>
-				<label htmlFor='' className='block w-full mb-3'>
-					Ingrese el nombre del nuevo campo:
+			<h3 className="font-semibold mb-4">Crear campo de texto: </h3>
+			<div className='flex items-center'>
+				<label htmlFor='' className='flex-grow-0 mr-5'>
+					Ingrese el nombre:
 				</label>
 				<input
-					className='block w-full'
+					className='flex-grow py-1 px-3 rounded-lg outline-greenThree'
 					type='text'
 					placeholder='Nuevo campo'
 					name='attribute'
