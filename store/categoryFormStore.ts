@@ -3,14 +3,16 @@ import { create } from 'zustand';
 
 interface IState {
 	additionalAttr: IAdditionalAttr;
-	formFieldStatus: 0 | 1 | 2;
-	setFormFieldStatus: (status: 0 | 1 | 2) => void;
+	formFieldStatus: 0 | 1 | 2 | 3 | 4;
+	editingAttribute: null | string | IListAttr;
+	setEditingAttribute: (value: null | string | IListAttr) => void;
+	setFormFieldStatus: (status: 0 | 1 | 2 | 3 | 4) => void;
 	addAttribute: (attribute: string) => void;
 	addListAttribute: (listAttr: IListAttr) => void;
-	deleteAttribute: (attrName: string) => void
+	deleteAttribute: (attrName: string) => void;
 }
 const defaultAdditionalAttr: IAdditionalAttr = {
-	attributes: ["hola", "chao","coma"],
+	attributes: ['hola', 'chao', 'coma'],
 	listAttributes: [],
 };
 
@@ -18,8 +20,15 @@ export const useCategoryForm = create<IState>((set, get) => {
 	return {
 		additionalAttr: defaultAdditionalAttr,
 		formFieldStatus: 0,
+		editingAttribute: null,
+		setEditingAttribute: (value) => {
+			set((state) => ({
+				...state,
+				editingAttribute: value,
+			}));
+		},
 
-		setFormFieldStatus: (status: 0 | 1 | 2) => {
+		setFormFieldStatus: (status: 0 | 1 | 2 | 3 | 4) => {
 			set((state) => ({
 				...state,
 				formFieldStatus: status,
@@ -50,33 +59,30 @@ export const useCategoryForm = create<IState>((set, get) => {
 		},
 
 		deleteAttribute: (attrName: string) => {
-			let isDeleted = false
-			const attributes  = get().additionalAttr
-			const updatesAttributes = {...attributes}
-			updatesAttributes.attributes.forEach( (item, index) => {
-				if(isDeleted) return
-				if(item === attrName){
-					updatesAttributes.attributes.splice(index, 1)
-					isDeleted = true
-				} 
-			} )
-			if(!isDeleted){
-				updatesAttributes.listAttributes.forEach( (item, index) => {
-					if(isDeleted) return
-					if(item.name === attrName){
-						updatesAttributes.listAttributes.splice(index, 1)
-						isDeleted = true
-					} 
-				} )
+			let isDeleted = false;
+			const attributes = get().additionalAttr;
+			const updatesAttributes = { ...attributes };
+			updatesAttributes.attributes.forEach((item, index) => {
+				if (isDeleted) return;
+				if (item === attrName) {
+					updatesAttributes.attributes.splice(index, 1);
+					isDeleted = true;
+				}
+			});
+			if (!isDeleted) {
+				updatesAttributes.listAttributes.forEach((item, index) => {
+					if (isDeleted) return;
+					if (item.name === attrName) {
+						updatesAttributes.listAttributes.splice(index, 1);
+						isDeleted = true;
+					}
+				});
 			}
 
 			set((state) => ({
 				...state,
 				additionalAttr: updatesAttributes,
 			}));
-
-			console.log(get().additionalAttr)
-			
-		}
+		},
 	};
 });

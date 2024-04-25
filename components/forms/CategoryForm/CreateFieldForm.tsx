@@ -11,6 +11,7 @@ const CreateFieldForm = () => {
 		(state) => state.setFormFieldStatus,
 	);
 	const addAttribute = useCategoryForm((state) => state.addAttribute);
+	const editingAttribute = useCategoryForm((state) => state.editingAttribute);
 
 	const handleCreateTextField = (attr: string) => {
 		addAttribute(attr);
@@ -58,6 +59,12 @@ const CreateFieldForm = () => {
 			)}
 			{fieldFormStatus === 2 && (
 				<ListFieldForm type={0} handleSubmit={handleCreateListField} />
+			)}
+			{fieldFormStatus === 3 && (
+				<TextFieldForm type={1} handleSubmit={handleCreateTextField} attr={editingAttribute} />
+			)}
+			{fieldFormStatus === 4 && (
+				<ListFieldForm type={1} handleSubmit={handleCreateListField} listAttr={editingAttribute}/>
 			)}
 		</>
 	);

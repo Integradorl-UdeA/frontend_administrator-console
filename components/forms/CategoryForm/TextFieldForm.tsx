@@ -1,13 +1,17 @@
 import React, { useState } from 'react';
 import CreateFieldButtons from './CreateFieldButtons';
+import type { IListAttr } from '@/types/categoryTypes';
 
 interface Props {
 	type: 0 | 1;
-	attr?: string;
+	attr?: null | string | IListAttr;
 	handleSubmit: (attr: string) => void;
 }
 const TextFieldForm = ({ type, attr, handleSubmit }: Props) => {
-	const [attribute, setAttribute] = useState<string>('');
+	const isEditing = () => type === 1;
+	const [attribute, setAttribute] = useState<string>(
+		isEditing() ? (attr as string) : '',
+	);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
@@ -16,16 +20,19 @@ const TextFieldForm = ({ type, attr, handleSubmit }: Props) => {
 
 	return (
 		<>
-			<h3 className='font-semibold mb-4'>Crear campo de texto: </h3>
+			<h3 className='font-semibold mb-4'>
+				{isEditing() ? 'Editar campo de texto' : 'Crear campo de texto: '}{' '}
+			</h3>
 			<div className='flex items-center'>
 				<label htmlFor='' className='flex-grow-0 mr-5'>
-					Ingrese el nombre:
+					{isEditing() ? 'Edite el nombre: ' : 'Ingrese el nombre:'}
 				</label>
 				<input
 					className='flex-grow py-1 px-3 rounded-lg outline-greenThree'
 					type='text'
 					placeholder='Nuevo campo'
 					name='attribute'
+					value={attribute}
 					onChange={handleChange}
 				/>
 			</div>
