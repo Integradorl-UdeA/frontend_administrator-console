@@ -7,13 +7,14 @@ interface IState {
 	setFormFieldStatus: (status: 0 | 1 | 2) => void;
 	addAttribute: (attribute: string) => void;
 	addListAttribute: (listAttr: IListAttr) => void;
+	deleteAttribute: (attrName: string) => void
 }
 const defaultAdditionalAttr: IAdditionalAttr = {
-	attributes: [],
+	attributes: ["hola", "chao","coma"],
 	listAttributes: [],
 };
 
-export const useCategoryForm = create<IState>((set) => {
+export const useCategoryForm = create<IState>((set, get) => {
 	return {
 		additionalAttr: defaultAdditionalAttr,
 		formFieldStatus: 0,
@@ -47,5 +48,35 @@ export const useCategoryForm = create<IState>((set) => {
 				},
 			}));
 		},
+
+		deleteAttribute: (attrName: string) => {
+			let isDeleted = false
+			const attributes  = get().additionalAttr
+			const updatesAttributes = {...attributes}
+			updatesAttributes.attributes.forEach( (item, index) => {
+				if(isDeleted) return
+				if(item === attrName){
+					updatesAttributes.attributes.splice(index, 1)
+					isDeleted = true
+				} 
+			} )
+			if(!isDeleted){
+				updatesAttributes.listAttributes.forEach( (item, index) => {
+					if(isDeleted) return
+					if(item.name === attrName){
+						updatesAttributes.listAttributes.splice(index, 1)
+						isDeleted = true
+					} 
+				} )
+			}
+
+			set((state) => ({
+				...state,
+				additionalAttr: updatesAttributes,
+			}));
+
+			console.log(get().additionalAttr)
+			
+		}
 	};
 });

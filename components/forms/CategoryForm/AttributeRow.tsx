@@ -1,4 +1,5 @@
 import ActionButton from '@/components/common/table/ActionButton';
+import { useCategoryForm } from '@/store/categoryFormStore';
 import React from 'react';
 import { BiEdit } from 'react-icons/bi';
 import { MdOutlineDelete } from 'react-icons/md';
@@ -8,8 +9,9 @@ interface Props {
 	value: string | string[];
 }
 
-
 const AttributeRow = ({ name, value }: Props) => {
+	const deleteAttribute = useCategoryForm((state) => state.deleteAttribute);
+
 	return (
 		<tr className='text-base h-10 align-middle'>
 			<td className='px-3 align-middle'>{name}</td>
@@ -26,7 +28,7 @@ const AttributeRow = ({ name, value }: Props) => {
 					icon={MdOutlineDelete}
 					className='bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded'
 					onClick={() => {
-						console.log('clicked delete');
+						deleteAttribute(name);
 					}}
 				/>
 			</td>

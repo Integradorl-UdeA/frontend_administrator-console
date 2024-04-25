@@ -58,10 +58,10 @@ const CategoryForm = ({ closeModal }: Props) => {
 						/>
 					</div>
 				</div>
-				<AdditionalCatAttributes/>
+				<AdditionalCatAttributes />
 				{fieldFormStatus === 0 && (
 					<>
-						<hr className='border border-greenFour/50 border-solid'/>
+						<hr className='border border-greenFour/50 border-solid' />
 						<div className=' flex justify-between mt-8'>
 							<button
 								className=' flex items-center justify-center bg-white w-max h-max py-2 px-3 rounded-full font-medium shadow-lg hover:bg-red-100'
