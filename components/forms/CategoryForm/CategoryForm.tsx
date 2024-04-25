@@ -8,13 +8,17 @@ import AdditionalCatAttributes from './AdditionalCatAttributes';
 import { useCategoryForm } from '@/store/categoryFormStore';
 import { FaPlus } from 'react-icons/fa6';
 
-const CategoryForm = () => {
+interface Props{
+	closeModal?: () => void
+}
+const CategoryForm = ({closeModal}: Props) => {
 	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
 	const { register, handleSubmit, control } = useForm();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
+		(closeModal != null) && closeModal()
 	};
 
 	// Creating the controllers for the additional attributes fields
@@ -35,10 +39,6 @@ const CategoryForm = () => {
 
 	return (
 		<div className='flex flex-col items-center justify-center text-textColorOne'>
-			{/* <p className='text-lg mb-5'>
-				{' '}
-				En este formulario podrá crear una nueva categoría.
-			</p> */}
 			<form className='text-lg' onSubmit={handleSubmit(onSubmit)}>
 				<div className='flex justify-between items-center mb-6'>
 						<label className='mr-5' htmlFor='name'>
