@@ -1,27 +1,22 @@
 import React, { useState } from 'react';
 import CreateFieldButtons from './CreateFieldButtons';
-import { useCategoryForm } from '@/store/categoryFormStore';
 
-const CreateTextField = () => {
+interface Props {
+	type: 0 | 1;
+	attr?: string;
+	handleSubmit: (attr: string) => void;
+}
+const TextFieldForm = ({ type, attr, handleSubmit }: Props) => {
 	const [attribute, setAttribute] = useState<string>('');
-	const setFormFieldStatus = useCategoryForm(
-		(state) => state.setFormFieldStatus,
-	);
-	const addAttribute = useCategoryForm((state) => state.addAttribute);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;
 		setAttribute(value);
 	};
 
-	const handleCreateField = () => {
-		addAttribute(attribute);
-		setFormFieldStatus(0);
-	};
-
 	return (
 		<>
-			<h3 className="font-semibold mb-4">Crear campo de texto: </h3>
+			<h3 className='font-semibold mb-4'>Crear campo de texto: </h3>
 			<div className='flex items-center'>
 				<label htmlFor='' className='flex-grow-0 mr-5'>
 					Ingrese el nombre:
@@ -34,9 +29,13 @@ const CreateTextField = () => {
 					onChange={handleChange}
 				/>
 			</div>
-			<CreateFieldButtons handleCreateField={handleCreateField} />
+			<CreateFieldButtons
+				handleCreateField={() => {
+					handleSubmit(attribute);
+				}}
+			/>
 		</>
 	);
 };
 
-export default CreateTextField;
+export default TextFieldForm;

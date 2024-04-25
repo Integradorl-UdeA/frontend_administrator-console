@@ -1,14 +1,20 @@
 import React from 'react';
 import { useCategoryForm } from '@/store/categoryFormStore';
-import CreateTextField from './CreateTextField';
 import CreateListField from './CreateListField';
 import { FaPlus } from 'react-icons/fa6';
+import TextFieldForm from './TextFieldForm';
 
 const CreateFieldForm = () => {
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
-	const setFieldFormStatus = useCategoryForm(
+	const setFormFieldStatus = useCategoryForm(
 		(state) => state.setFormFieldStatus,
 	);
+	const addAttribute = useCategoryForm((state) => state.addAttribute);
+
+	const handleCreateTextField = (attr: string) => {
+		addAttribute(attr);
+		setFormFieldStatus(0);
+	};
 
 	return (
 		<>
@@ -20,7 +26,7 @@ const CreateFieldForm = () => {
 							className='flex items-center justify-center px-3 py-1 mx-3 text-white font-medium rounded-xl bg-greenThree'
 							type='button'
 							onClick={() => {
-								setFieldFormStatus(1);
+								setFormFieldStatus(1);
 							}}
 						>
 							<FaPlus className='mr-2' />
@@ -30,7 +36,7 @@ const CreateFieldForm = () => {
 							className='flex items-center justify-center px-3 py-1 mx-3 text-white font-medium rounded-xl bg-greenThree'
 							type='button'
 							onClick={() => {
-								setFieldFormStatus(2);
+								setFormFieldStatus(2);
 							}}
 						>
 							<FaPlus className='mr-2' />
@@ -39,8 +45,10 @@ const CreateFieldForm = () => {
 					</div>
 				</>
 			)}
-				{fieldFormStatus === 1 && <CreateTextField />}
-				{fieldFormStatus === 2 && <CreateListField />}
+			{fieldFormStatus === 1 && (
+				<TextFieldForm type={0} handleSubmit={handleCreateTextField} />
+			)}
+			{fieldFormStatus === 2 && <CreateListField />}
 		</>
 	);
 };
