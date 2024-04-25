@@ -1,7 +1,9 @@
 import React from 'react';
 import CreateFieldForm from './CreateFieldForm';
 import { useCategoryForm } from '@/store/categoryFormStore';
-
+import { Table } from '@/components/common/table/Table';
+import type { IListAttr } from '@/types/categoryTypes';
+import AttributeRow from './AttributeRow';
 
 const AdditionalCatAttributes = () => {
 	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
@@ -11,34 +13,36 @@ const AdditionalCatAttributes = () => {
 		attributes.length !== 0 || listAttributes.length !== 0;
 
 	return (
-		<>
-			<div className='bg-greenFour/30 p-4 rounded-xl min-w-[45vw] mb-2'>
-				<CreateFieldForm />
-			</div>
-			<div className='bg-greenFour/30 flex justify-center flex-col items-center p-4 rounded-xl min-w-[45vw] mb-10'>
-				{hasAdditionalAttr() ? (
+		<div className='bg-greenFour/30 p-4 rounded-xl min-w-[45vw] mb-2'>
+			<CreateFieldForm />
+			{hasAdditionalAttr() ? (
+				<div className='flex flex-col justify-center items-center'>
 					<h3 className='text-lg font-semibold'>
 						Campos adicionales creados:{' '}
 					</h3>
-				):
-				(
+					<Table column={['Nombre', 'Valores', 'Acciones']}>
+						{attributes.length !== 0 &&
+							attributes.map((attr) => (
+								<AttributeRow key={attr} name={attr} value='Text' />
+							))}
+						{listAttributes.length !== 0 &&
+							listAttributes.map((attr: IListAttr) => (
+								<AttributeRow
+									key={attr.name}
+									name={attr.name}
+									value={attr.list?.join(', ')}
+								/>
+							))}
+					</Table>
+				</div>
+			) : (
+				<div className='flex justify-center'>
 					<span className='text-base font-semibold'>
 						No se ha creado ningún campo adicional
 					</span>
-				)
-				}
-				{attributes.length !== 0 &&
-					attributes.map((attr, index) => (
-						<p key={index + 'text'}>{attr} - Texto</p>
-					))}
-				{listAttributes.length !== 0 &&
-					listAttributes.map((listAttr, index) => (
-						<p key={index + 'list'}>
-							{listAttr.name} - {listAttr.list?.join(', ')}
-						</p>
-					))}
-			</div>
-		</>
+				</div>
+			)}
+		</div>
 	);
 };
 
