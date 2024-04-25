@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import styForm from '@/styles/common/Forms.module.css';
 import type { IListAttr } from '@/types/categoryTypes';
-import { useCategoryForm } from '@/store/categoryFormStore';
 import CreateFieldButtons from './CreateFieldButtons';
 
-const CreateListField = () => {
+interface Props {
+	type: 0 | 1;
+	listAttr?: IListAttr;
+	handleSubmit: (listAttr: IListAttr) => void;
+}
+const ListFieldForm = ({ type, listAttr, handleSubmit }: Props) => {
 	const [listAttribute, setListAttribute] = useState<IListAttr>({
 		name: '',
 		list: [],
 	});
-	const addListAttribute = useCategoryForm((state) => state.addListAttribute);
-	const setFieldFormStatus = useCategoryForm(
-		(state) => state.setFormFieldStatus,
-	);
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		let { name, value }: { name: string; value: string | string[] } = e.target;
@@ -27,10 +27,6 @@ const CreateListField = () => {
 		});
 	};
 
-	const handleCreateField = () => {
-		addListAttribute(listAttribute);
-		setFieldFormStatus(0);
-	};
 	return (
 		<>
 			<h3 className='font-semibold mb-4'>Crear campo de lista: </h3>
@@ -60,10 +56,14 @@ const CreateListField = () => {
 						onChange={handleChange}
 					/>
 				</div>
-				<CreateFieldButtons handleCreateField={handleCreateField} />
+				<CreateFieldButtons
+					handleCreateField={() => {
+						handleSubmit(listAttribute);
+					}}
+				/>
 			</div>
 		</>
 	);
 };
 
-export default CreateListField;
+export default ListFieldForm;

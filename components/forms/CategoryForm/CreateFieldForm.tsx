@@ -1,8 +1,9 @@
 import React from 'react';
 import { useCategoryForm } from '@/store/categoryFormStore';
-import CreateListField from './CreateListField';
 import { FaPlus } from 'react-icons/fa6';
 import TextFieldForm from './TextFieldForm';
+import type { IListAttr } from '@/types/categoryTypes';
+import ListFieldForm from './ListFieldForm';
 
 const CreateFieldForm = () => {
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
@@ -13,6 +14,13 @@ const CreateFieldForm = () => {
 
 	const handleCreateTextField = (attr: string) => {
 		addAttribute(attr);
+		setFormFieldStatus(0);
+	};
+
+	const addListAttribute = useCategoryForm((state) => state.addListAttribute);
+
+	const handleCreateListField = (listAttr: IListAttr) => {
+		addListAttribute(listAttr);
 		setFormFieldStatus(0);
 	};
 
@@ -48,7 +56,9 @@ const CreateFieldForm = () => {
 			{fieldFormStatus === 1 && (
 				<TextFieldForm type={0} handleSubmit={handleCreateTextField} />
 			)}
-			{fieldFormStatus === 2 && <CreateListField />}
+			{fieldFormStatus === 2 && (
+				<ListFieldForm type={0} handleSubmit={handleCreateListField} />
+			)}
 		</>
 	);
 };
