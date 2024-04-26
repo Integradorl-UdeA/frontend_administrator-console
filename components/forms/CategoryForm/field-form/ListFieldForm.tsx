@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styForm from '@/styles/common/Forms.module.css';
 import type { IListAttr } from '@/types/categoryTypes';
-import CreateFieldButtons from './CreateFieldButtons';
+import FieldFormButtons from './FieldFormButtons';
 import { useCategoryForm } from '@/store/categoryFormStore';
 
 interface Props {
@@ -80,7 +80,7 @@ const ListFieldForm = ({ type, listAttr}: Props) => {
 						onChange={handleChange}
 					/>
 				</div>
-				<CreateFieldButtons
+				<FieldFormButtons
 					handleCreateField={() => {
 						isValidSameNameAttr(listAttribute.name) && handleSubmit();
 					}}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CreateFieldButtons from './CreateFieldButtons';
+import FieldFormButtons from './FieldFormButtons';
 import type { IListAttr } from '@/types/categoryTypes';
 import { useCategoryForm } from '@/store/categoryFormStore';
 
@@ -51,7 +51,7 @@ const TextFieldForm = ({ type, attr}: Props) => {
 					onChange={handleChange}
 				/>
 			</div>
-			<CreateFieldButtons
+			<FieldFormButtons
 				handleCreateField={() => {
 					handleSubmit();
 				}}

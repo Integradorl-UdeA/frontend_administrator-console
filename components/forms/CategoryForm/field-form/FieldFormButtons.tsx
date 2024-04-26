@@ -7,7 +7,7 @@ import { MdEdit } from 'react-icons/md';
 interface Props {
 	handleCreateField: () => void;
 }
-const CreateFieldButtons = ({ handleCreateField }: Props) => {
+const FieldFormButtons = ({ handleCreateField }: Props) => {
 	const setFieldFormStatus = useCategoryForm(
 		(state) => state.setFormFieldStatus,
 	);
@@ -47,4 +47,4 @@ const CreateFieldButtons = ({ handleCreateField }: Props) => {
 	);
 };
 
-export default CreateFieldButtons;
+export default FieldFormButtons;
