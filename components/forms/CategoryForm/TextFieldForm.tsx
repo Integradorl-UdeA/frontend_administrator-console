@@ -16,18 +16,17 @@ const TextFieldForm = ({ type, attr}: Props) => {
 	const addTextAttribute = useCategoryForm((state) => state.addAttribute);
 	const editTextAttribute = useCategoryForm((state) => state.editTextAttribute);
 	const setFormFieldStatus = useCategoryForm((state) => state.setFormFieldStatus);
+	const isValidSameNameAttr = useCategoryForm((state) => state.isValidSameNameAttr);
 
-	const createTextField = () => {
-		addTextAttribute(attribute);
-		setFormFieldStatus(0);
-	};
 
-	const editTextField = () => {
-		editTextAttribute(attribute)
+	const handleSubmit = () => {
+		if(!isValidSameNameAttr(attribute)){
+			return 
+		}
+		type === 0 ? addTextAttribute(attribute) : editTextAttribute(attribute)
 		setFormFieldStatus(0)
 	}
 
-	const handleSubmit = type === 0 ? createTextField : editTextField
 
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const { value } = e.target;

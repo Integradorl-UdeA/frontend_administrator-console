@@ -19,18 +19,15 @@ const ListFieldForm = ({ type, listAttr}: Props) => {
 	const addListAttribute = useCategoryForm((state) => state.addListAttribute);
 	const editListAttribute = useCategoryForm((state) => state.editListAttribute);
 	const setFormFieldStatus = useCategoryForm((state) => state.setFormFieldStatus);
-	
-	const createListField = () => {
-		addListAttribute(listAttribute);
-		setFormFieldStatus(0);
-	};
+	const isValidSameNameAttr = useCategoryForm((state) => state.isValidSameNameAttr);
 
-	const editListField = () => {
-		editListAttribute(listAttribute);
-		setFormFieldStatus(0);
-	};
-
-	const handleSubmit = type === 0 ? createListField : editListField
+	const handleSubmit = () => {
+		if(!isValidSameNameAttr(listAttribute.name)){
+			return 
+		}
+		type === 0 ? addListAttribute(listAttribute) : editListAttribute(listAttribute)
+		setFormFieldStatus(0)
+	}
 
 	const listStringToArray = (list: string) =>
 		list
@@ -85,7 +82,7 @@ const ListFieldForm = ({ type, listAttr}: Props) => {
 				</div>
 				<CreateFieldButtons
 					handleCreateField={() => {
-						handleSubmit();
+						isValidSameNameAttr(listAttribute.name) && handleSubmit();
 					}}
 				/>
 			</div>

@@ -10,14 +10,16 @@ interface IState {
 	addAttribute: (attribute: string) => void;
 	addListAttribute: (listAttr: IListAttr) => void;
 	deleteAttribute: (attrName: string) => void;
-	editTextAttribute: (txtAttr: string) => void
-	editListAttribute: (listAttr: IListAttr) => void
+	editTextAttribute: (txtAttr: string) => void;
+	editListAttribute: (listAttr: IListAttr) => void;
+	isValidSameNameTextAttr: (attrName: string) => boolean
+	isValidSameNameListAttr: (attrName: string) => boolean
+	isValidSameNameAttr: (attrName: string) => boolean
 }
 const defaultAdditionalAttr: IAdditionalAttr = {
 	attributes: ['hola', 'chao', 'coma'],
 	listAttributes: [],
 };
-
 
 export const useCategoryForm = create<IState>((set, get) => {
 	return {
@@ -89,19 +91,42 @@ export const useCategoryForm = create<IState>((set, get) => {
 		},
 
 		editTextAttribute: (txtAttr: string) => {
-			const deleteAttribute = get().deleteAttribute
-			const addTextAttribute = get().addAttribute
-			deleteAttribute(get().editingAttribute as string)
-			addTextAttribute(txtAttr)
+			const deleteAttribute = get().deleteAttribute;
+			const addTextAttribute = get().addAttribute;
+			deleteAttribute(get().editingAttribute as string);
+			addTextAttribute(txtAttr);
 		},
 
 		editListAttribute: (listAttr: IListAttr) => {
-			const deleteAttribute = get().deleteAttribute
-			const addListAttribute = get().addListAttribute
-			console.log(get().editingAttribute)
-			deleteAttribute((get().editingAttribute as IListAttr).name)
-			addListAttribute(listAttr)
+			const deleteAttribute = get().deleteAttribute;
+			const addListAttribute = get().addListAttribute;
+			console.log(get().editingAttribute);
+			deleteAttribute((get().editingAttribute as IListAttr).name);
+			addListAttribute(listAttr);
 		},
-		
+
+		isValidSameNameTextAttr: (attrName: string) => {
+			const { attributes: textAttributes } = get().additionalAttr;
+			const attrNameLowerCase = attrName.toLowerCase();
+			const foundItem = textAttributes.find(
+				(attr) => attr.toLowerCase() === attrNameLowerCase,
+			);
+			return foundItem === undefined ;
+		},
+
+		isValidSameNameListAttr: (attrName: string) => {
+			console.log('Attr Name: ', attrName)
+			const { listAttributes } = get().additionalAttr;
+			const attrNameLowerCase = attrName.toLowerCase();
+			const foundItem = listAttributes.find(
+				(listAttr) => listAttr.name.toLowerCase() === attrNameLowerCase,
+			);
+			console.log('foundItem', foundItem)
+			return foundItem === undefined;
+		},
+
+		isValidSameNameAttr: (attrName: string) => {
+			return (get().isValidSameNameTextAttr(attrName) && get().isValidSameNameListAttr(attrName))
+		},
 	};
 });
