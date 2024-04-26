@@ -2,7 +2,6 @@ import React from 'react';
 import { useCategoryForm } from '@/store/categoryFormStore';
 import { FaPlus } from 'react-icons/fa6';
 import TextFieldForm from './TextFieldForm';
-import type { IListAttr } from '@/types/categoryTypes';
 import ListFieldForm from './ListFieldForm';
 
 const CreateFieldForm = () => {
@@ -10,21 +9,8 @@ const CreateFieldForm = () => {
 	const setFormFieldStatus = useCategoryForm(
 		(state) => state.setFormFieldStatus,
 	);
-	const addAttribute = useCategoryForm((state) => state.addAttribute);
+
 	const editingAttribute = useCategoryForm((state) => state.editingAttribute);
-
-	const handleCreateTextField = (attr: string) => {
-		addAttribute(attr);
-		setFormFieldStatus(0);
-	};
-
-	const addListAttribute = useCategoryForm((state) => state.addListAttribute);
-
-	const handleCreateListField = (listAttr: IListAttr) => {
-		addListAttribute(listAttr);
-		setFormFieldStatus(0);
-	};
-
 	return (
 		<>
 			{fieldFormStatus === 0 && (
@@ -55,16 +41,16 @@ const CreateFieldForm = () => {
 				</>
 			)}
 			{fieldFormStatus === 1 && (
-				<TextFieldForm type={0} handleSubmit={handleCreateTextField} />
+				<TextFieldForm type={0}/>
 			)}
 			{fieldFormStatus === 2 && (
-				<ListFieldForm type={0} handleSubmit={handleCreateListField} />
+				<ListFieldForm type={0}/>
 			)}
 			{fieldFormStatus === 3 && (
-				<TextFieldForm type={1} handleSubmit={handleCreateTextField} attr={editingAttribute} />
+				<TextFieldForm type={1} attr={editingAttribute} />
 			)}
 			{fieldFormStatus === 4 && (
-				<ListFieldForm type={1} handleSubmit={handleCreateListField} listAttr={editingAttribute}/>
+				<ListFieldForm type={1} listAttr={editingAttribute}/>
 			)}
 		</>
 	);

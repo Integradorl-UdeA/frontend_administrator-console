@@ -10,11 +10,14 @@ interface IState {
 	addAttribute: (attribute: string) => void;
 	addListAttribute: (listAttr: IListAttr) => void;
 	deleteAttribute: (attrName: string) => void;
+	editTextAttribute: (txtAttr: string) => void
+	editListAttribute: (listAttr: IListAttr) => void
 }
 const defaultAdditionalAttr: IAdditionalAttr = {
 	attributes: ['hola', 'chao', 'coma'],
 	listAttributes: [],
 };
+
 
 export const useCategoryForm = create<IState>((set, get) => {
 	return {
@@ -84,5 +87,21 @@ export const useCategoryForm = create<IState>((set, get) => {
 				additionalAttr: updatesAttributes,
 			}));
 		},
+
+		editTextAttribute: (txtAttr: string) => {
+			const deleteAttribute = get().deleteAttribute
+			const addTextAttribute = get().addAttribute
+			deleteAttribute(get().editingAttribute as string)
+			addTextAttribute(txtAttr)
+		},
+
+		editListAttribute: (listAttr: IListAttr) => {
+			const deleteAttribute = get().deleteAttribute
+			const addListAttribute = get().addListAttribute
+			console.log(get().editingAttribute)
+			deleteAttribute((get().editingAttribute as IListAttr).name)
+			addListAttribute(listAttr)
+		},
+		
 	};
 });

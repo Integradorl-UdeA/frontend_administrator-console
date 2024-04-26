@@ -2,19 +2,35 @@ import React, { useState } from 'react';
 import styForm from '@/styles/common/Forms.module.css';
 import type { IListAttr } from '@/types/categoryTypes';
 import CreateFieldButtons from './CreateFieldButtons';
+import { useCategoryForm } from '@/store/categoryFormStore';
 
 interface Props {
 	type: 0 | 1;
 	listAttr?: null | string | IListAttr;
-	handleSubmit: (listAttr: IListAttr) => void;
 }
-const ListFieldForm = ({ type, listAttr, handleSubmit }: Props) => {
+const ListFieldForm = ({ type, listAttr}: Props) => {
 	const isEditing = () => type === 1;
 	const defaultValue = isEditing()
 		? { name: (listAttr as IListAttr).name, list: (listAttr as IListAttr).list }
 		: { name: '', list: [] };
 
 	const [listAttribute, setListAttribute] = useState<IListAttr>(defaultValue);
+
+	const addListAttribute = useCategoryForm((state) => state.addListAttribute);
+	const editListAttribute = useCategoryForm((state) => state.editListAttribute);
+	const setFormFieldStatus = useCategoryForm((state) => state.setFormFieldStatus);
+	
+	const createListField = () => {
+		addListAttribute(listAttribute);
+		setFormFieldStatus(0);
+	};
+
+	const editListField = () => {
+		editListAttribute(listAttribute);
+		setFormFieldStatus(0);
+	};
+
+	const handleSubmit = type === 0 ? createListField : editListField
 
 	const listStringToArray = (list: string) =>
 		list
@@ -69,7 +85,7 @@ const ListFieldForm = ({ type, listAttr, handleSubmit }: Props) => {
 				</div>
 				<CreateFieldButtons
 					handleCreateField={() => {
-						handleSubmit(listAttribute);
+						handleSubmit();
 					}}
 				/>
 			</div>
