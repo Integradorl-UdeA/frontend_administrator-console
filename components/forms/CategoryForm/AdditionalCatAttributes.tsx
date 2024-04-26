@@ -1,5 +1,5 @@
 import React from 'react';
-import CreateFieldForm from './CreateFieldForm';
+import CreateFieldForm from './field-form/CreateFieldForm';
 import { useCategoryForm } from '@/store/categoryFormStore';
 import { Table } from '@/components/common/table/Table';
 import type { IListAttr } from '@/types/categoryTypes';
