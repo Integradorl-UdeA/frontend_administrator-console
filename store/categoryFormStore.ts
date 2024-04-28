@@ -115,13 +115,11 @@ export const useCategoryForm = create<IState>((set, get) => {
 		},
 
 		isValidSameNameListAttr: (attrName: string) => {
-			console.log('Attr Name: ', attrName)
 			const { listAttributes } = get().additionalAttr;
 			const attrNameLowerCase = attrName.toLowerCase();
 			const foundItem = listAttributes.find(
 				(listAttr) => listAttr.name.toLowerCase() === attrNameLowerCase,
 			);
-			console.log('foundItem', foundItem)
 			return foundItem === undefined;
 		},
 
