@@ -8,6 +8,7 @@ import AdditionalCatAttributes from './AdditionalCatAttributes';
 import { useCategoryForm } from '@/store/categoryFormStore';
 import { FaPlus } from 'react-icons/fa6';
 import { AiOutlineClose } from 'react-icons/ai';
+import FormError from '../errors-logs/FormError';
 
 interface Props {
 	closeModal?: () => void;
@@ -15,7 +16,12 @@ interface Props {
 const CategoryForm = ({ closeModal }: Props) => {
 	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
-	const { register, handleSubmit, control } = useForm();
+	const {
+		register,
+		handleSubmit,
+		control,
+		formState: { errors },
+	} = useForm();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
@@ -48,7 +54,12 @@ const CategoryForm = ({ closeModal }: Props) => {
 					<input
 						type=''
 						className='w-full rounded-lg py-1 px-3 text-lg focus:outline-greenTwo'
-						{...register('nombre')}
+						{...register('nombre', {
+							required: {
+								value: true,
+								message: 'Debe escribir el nombre de la categoría',
+							},
+						})}
 					/>
 					<div className='ml-10'>
 						<InputSwitch
@@ -59,6 +70,10 @@ const CategoryForm = ({ closeModal }: Props) => {
 					</div>
 				</div>
 				<AdditionalCatAttributes />
+				{(errors.nombre != null) && 
+					<div className='w-full flex items-center justify-center my-5'>
+						<FormError msg={errors.nombre?.message as string}/>
+					</div>}
 				{fieldFormStatus === 0 && (
 					<>
 						<hr className='border border-greenFour/50 border-solid' />
