@@ -3,22 +3,37 @@ import { create } from 'zustand';
 
 interface IState {
 	additionalAttr: IAdditionalAttr;
-	formFieldStatus: 0 | 1 | 2;
-	setFormFieldStatus: (status: 0 | 1 | 2) => void;
+	formFieldStatus: 0 | 1 | 2 | 3 | 4;
+	editingAttribute: null | string | IListAttr;
+	setEditingAttribute: (value: null | string | IListAttr) => void;
+	setFormFieldStatus: (status: 0 | 1 | 2 | 3 | 4) => void;
 	addAttribute: (attribute: string) => void;
 	addListAttribute: (listAttr: IListAttr) => void;
+	deleteAttribute: (attrName: string) => void;
+	editTextAttribute: (txtAttr: string) => void;
+	editListAttribute: (listAttr: IListAttr) => void;
+	isValidSameNameTextAttr: (attrName: string) => boolean
+	isValidSameNameListAttr: (attrName: string) => boolean
+	isValidSameNameAttr: (attrName: string) => boolean
 }
 const defaultAdditionalAttr: IAdditionalAttr = {
-	attributes: [],
+	attributes: ['hola', 'chao', 'coma'],
 	listAttributes: [],
 };
 
-export const useCategoryForm = create<IState>((set) => {
+export const useCategoryForm = create<IState>((set, get) => {
 	return {
 		additionalAttr: defaultAdditionalAttr,
 		formFieldStatus: 0,
+		editingAttribute: null,
+		setEditingAttribute: (value) => {
+			set((state) => ({
+				...state,
+				editingAttribute: value,
+			}));
+		},
 
-		setFormFieldStatus: (status: 0 | 1 | 2) => {
+		setFormFieldStatus: (status: 0 | 1 | 2 | 3 | 4) => {
 			set((state) => ({
 				...state,
 				formFieldStatus: status,
@@ -46,6 +61,70 @@ export const useCategoryForm = create<IState>((set) => {
 					],
 				},
 			}));
+		},
+
+		deleteAttribute: (attrName: string) => {
+			let isDeleted = false;
+			const attributes = get().additionalAttr;
+			const updatesAttributes = { ...attributes };
+			updatesAttributes.attributes.forEach((item, index) => {
+				if (isDeleted) return;
+				if (item === attrName) {
+					updatesAttributes.attributes.splice(index, 1);
+					isDeleted = true;
+				}
+			});
+			if (!isDeleted) {
+				updatesAttributes.listAttributes.forEach((item, index) => {
+					if (isDeleted) return;
+					if (item.name === attrName) {
+						updatesAttributes.listAttributes.splice(index, 1);
+						isDeleted = true;
+					}
+				});
+			}
+
+			set((state) => ({
+				...state,
+				additionalAttr: updatesAttributes,
+			}));
+		},
+
+		editTextAttribute: (txtAttr: string) => {
+			const deleteAttribute = get().deleteAttribute;
+			const addTextAttribute = get().addAttribute;
+			deleteAttribute(get().editingAttribute as string);
+			addTextAttribute(txtAttr);
+		},
+
+		editListAttribute: (listAttr: IListAttr) => {
+			const deleteAttribute = get().deleteAttribute;
+			const addListAttribute = get().addListAttribute;
+			console.log(get().editingAttribute);
+			deleteAttribute((get().editingAttribute as IListAttr).name);
+			addListAttribute(listAttr);
+		},
+
+		isValidSameNameTextAttr: (attrName: string) => {
+			const { attributes: textAttributes } = get().additionalAttr;
+			const attrNameLowerCase = attrName.toLowerCase();
+			const foundItem = textAttributes.find(
+				(attr) => attr.toLowerCase() === attrNameLowerCase,
+			);
+			return foundItem === undefined ;
+		},
+
+		isValidSameNameListAttr: (attrName: string) => {
+			const { listAttributes } = get().additionalAttr;
+			const attrNameLowerCase = attrName.toLowerCase();
+			const foundItem = listAttributes.find(
+				(listAttr) => listAttr.name.toLowerCase() === attrNameLowerCase,
+			);
+			return foundItem === undefined;
+		},
+
+		isValidSameNameAttr: (attrName: string) => {
+			return (get().isValidSameNameTextAttr(attrName) && get().isValidSameNameListAttr(attrName))
 		},
 	};
 });

@@ -4,7 +4,7 @@
 }
 
 .container{
-    @apply relative flex flex-col overflow-hidden w-fit rounded-lg pt-7 pb-4 px-14 max-w-[70%];
+    @apply relative flex flex-col overflow-hidden w-fit rounded-lg pt-7 pb-4 px-14;
     background-color: var(--color-background)
 }
 

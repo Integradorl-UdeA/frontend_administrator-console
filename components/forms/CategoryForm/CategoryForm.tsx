@@ -1,20 +1,31 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect } from 'react';
-import commonStyles from '@/styles/common/Inputs.module.css';
-import sForms from '@/styles/common/Forms.module.css';
 import InputSwitch from '@/components/common/InputSwitch';
 import { useController, useForm } from 'react-hook-form';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import AdditionalCatAttributes from './AdditionalCatAttributes';
 import { useCategoryForm } from '@/store/categoryFormStore';
+import { FaPlus } from 'react-icons/fa6';
+import { AiOutlineClose } from 'react-icons/ai';
+import FormError from '../errors-logs/FormError';
 
-const CategoryForm = () => {
+interface Props {
+	closeModal?: () => void;
+}
+const CategoryForm = ({ closeModal }: Props) => {
 	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
-	const { register, handleSubmit, control } = useForm();
+	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
+	const {
+		register,
+		handleSubmit,
+		control,
+		formState: { errors },
+	} = useForm();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
+		closeModal != null && closeModal();
 	};
 
 	// Creating the controllers for the additional attributes fields
@@ -34,39 +45,59 @@ const CategoryForm = () => {
 	}, [additionalAttr]);
 
 	return (
-		<div className='flex flex-col items-center justify-center'>
-			<p className='text-lg mb-5'>
-				{' '}
-				En este formulario podrá crear una nueva categoría.
-			</p>
-			<form className='text-xl' onSubmit={handleSubmit(onSubmit)}>
-				<div className={sForms.formSectionRow}>
+		<div className='flex flex-col items-center justify-center text-textColorOne'>
+			<form className='text-lg' onSubmit={handleSubmit(onSubmit)}>
+				<div className='flex justify-between items-center mb-6'>
 					<label className='mr-5' htmlFor='name'>
 						Nombre:{' '}
 					</label>
 					<input
 						type=''
-						className={commonStyles.inputText}
-						{...register('nombre')}
+						className='w-full rounded-lg py-1 px-3 text-lg focus:outline-greenTwo'
+						{...register('nombre', {
+							required: {
+								value: true,
+								message: 'Debe escribir el nombre de la categoría',
+							},
+						})}
 					/>
+					<div className='ml-10'>
+						<InputSwitch
+							label='Cuantificable'
+							control={control}
+							name='quantizable'
+						/>
+					</div>
 				</div>
-				<div className='my-3 flex justify-between items-center'>
-					<InputSwitch
-						label='Cuantizable'
-						control={control}
-						name='quantizable'
-					/>
-					<InputSwitch label='Prestable' control={control} name='prestable' />
-				</div>
-				<AdditionalCatAttributes control={control} />
-				<div className='flex'>
-					<button
-						className=' flex bg-green-600 text-white px-3 py-1 rounded-lg font-semibold m-2 ml-auto'
-						type='submit'
-					>
-						Enviar
-					</button>
-				</div>
+				<AdditionalCatAttributes />
+				{(errors.nombre != null) && 
+					<div className='w-full flex items-center justify-center my-5'>
+						<FormError msg={errors.nombre?.message as string}/>
+					</div>}
+				{fieldFormStatus === 0 && (
+					<>
+						<hr className='border border-greenFour/50 border-solid' />
+						<div className=' flex justify-between mt-8'>
+							<button
+								className=' flex items-center justify-center bg-white w-max h-max py-2 px-3 rounded-full font-medium shadow-lg hover:bg-red-100'
+								type='button'
+								onClick={() => {
+									closeModal != null && closeModal();
+								}}
+							>
+								<AiOutlineClose className='text-white bg-red-500 rounded-full p-1 mr-2 text-2xl' />
+								Cancelar
+							</button>
+							<button
+								className=' flex items-center justify-center bg-white py-2 px-3 rounded-full font-medium shadow-lg hover:bg-greenThree/10'
+								type='submit'
+							>
+								<FaPlus className='text-white bg-greenThree rounded-full p-1 mr-2 text-2xl' />
+								Crear Categoría
+							</button>
+						</div>
+					</>
+				)}
 			</form>
 		</div>
 	);

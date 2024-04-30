@@ -15,8 +15,12 @@ const config: Config = {
 			},
 			colors: {
 				// Agregar colores personalizados aquí
-				greenOne: '#69916E',
+				greenOne: '#026937',
+				greenTwo: '#35944B',
+				greenThree: '#43B649',
+				greenFour: '#8DC63F',
 				grayRaccoon: '#595151',
+				textColorOne: '#444444',
 				whiteBonds: '#E9E9E9',
 				whiteMilk: '#FFFFFF',
 				greenDirty: '#C3C3C3',

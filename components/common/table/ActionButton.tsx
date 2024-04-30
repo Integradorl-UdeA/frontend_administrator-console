@@ -9,7 +9,7 @@ interface Props {
 
 const ActionButton = ({ icon: Icon, onClick, className }: Props) => {
   return (
-    <button onClick={onClick} className={className}>
+    <button type='button' onClick={onClick} className={className}>
       <Icon size={16} />
     </button>
   );

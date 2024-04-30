@@ -11,8 +11,8 @@ const Home = () => {
 		<main>
 			{
 				modal && (
-					<ModalWindow title='Crear nueva categoría' close={closeModal}>
-						<CategoryForm/>
+					<ModalWindow title='Crear nueva categoría' close={closeModal} widthClass='w-fit'>
+						<CategoryForm closeModal={closeModal}/>
 					</ModalWindow>
 				)
 			}

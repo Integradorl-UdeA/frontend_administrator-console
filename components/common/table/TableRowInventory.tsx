@@ -1,6 +1,6 @@
 import { BiEdit } from 'react-icons/bi';
-import React from 'react';
 import { MdOutlineDelete } from 'react-icons/md';
+import React from 'react';
 import Label from './Label';
 import LabelState from './LabelState';
 import ActionButton from './ActionButton';

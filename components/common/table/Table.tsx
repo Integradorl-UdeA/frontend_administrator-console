@@ -15,7 +15,7 @@ const Table = ({ column, children }: GeneralTableProps) => {
 							scope='col'
 							className={`px-${
 								index === 1 ? '12' : '4'
-							} py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500`}
+							} py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 w-auto`}
 							key={index}
 						>
 							{column}
