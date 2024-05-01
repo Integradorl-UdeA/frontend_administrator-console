@@ -48,14 +48,14 @@ const handler = NextAuth({
 			return { ...token, ...user };
 		},
 		async session({ session, token }) {
-			const decodedJWT = jwtDecode<ILoginJWTPayload>(token.token as string);
-			console.log('decodedJWT: ', decodedJWT);
-			session.user.name = decodedJWT.name;
-			session.user.username = decodedJWT.username;
-			session.user.id = decodedJWT.id;
-			session.user.role = decodedJWT.role;
+			const {name, username, id, role} = jwtDecode<ILoginJWTPayload>(token.token as string);
+			session.user = {
+				name,
+				username,
+				id, 
+				role
+			}
 			session.token = token
-			console.log('session.', session);
 			return session;
 		},
 	},
