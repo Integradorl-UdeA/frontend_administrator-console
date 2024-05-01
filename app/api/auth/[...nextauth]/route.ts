@@ -1,6 +1,18 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
+
+interface ILoginJWTPayload {
+	id: string;
+	role: string;
+	name: string;
+	username: string;
+	sub: string;
+	iat: number;
+	exp: number;
+}
 
 const handler = NextAuth({
 	providers: [
@@ -36,13 +48,20 @@ const handler = NextAuth({
 			return { ...token, ...user };
 		},
 		async session({ session, token }) {
-			session.user = token as any;
+			const decodedJWT = jwtDecode<ILoginJWTPayload>(token.token as string);
+			console.log('decodedJWT: ', decodedJWT);
+			session.user.name = decodedJWT.name;
+			session.user.username = decodedJWT.username;
+			session.user.id = decodedJWT.id;
+			session.user.role = decodedJWT.role;
+			session.token = token
+			console.log('session.', session);
 			return session;
 		},
 	},
 	pages: {
-		signIn: "/login"
-	}
+		signIn: '/login',
+	},
 });
 
 export { handler as GET, handler as POST };

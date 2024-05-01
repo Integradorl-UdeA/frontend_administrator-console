@@ -5,8 +5,8 @@ import styles from '@/styles/TopBar.module.css'
 import { GoSignOut } from "react-icons/go";
 import { signOut } from 'next-auth/react';
 
-
 const inter = Inter({ subsets: ['latin'] });
+
 
 const TopBar = () => {
 	return ( 	
