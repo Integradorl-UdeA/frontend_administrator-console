@@ -12,7 +12,7 @@ module.exports = {
 				es2021: true,
 			},
 			parserOptions: {
-				project: './tsconfig.json', // Update the path to your tsconfig.json file
+				project: 'tsconfig.json', // Update the path to your tsconfig.json file
 				sourceType: 'module',
 			},
 		},
@@ -24,5 +24,6 @@ module.exports = {
 	plugins: ['react'],
 	rules: {
 		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/no-unused-vars': 'warn',
 	},
 };
