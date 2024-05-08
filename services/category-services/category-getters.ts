@@ -14,7 +14,28 @@ const categories:ICategory[] = [
         ]
     },
     {
-        id: 2,
+        id: 3,
+        categoryName: "Cable HDMI",
+        quantizable: true,
+        attributes: [],
+        listAttributes: []
+    },
+    {
+        id:4,
+        categoryName: "Cable HDMI",
+        quantizable: true,
+        attributes: [],
+        listAttributes: []
+    },
+    {
+        id: 5,
+        categoryName: "Cable HDMI",
+        quantizable: true,
+        attributes: [],
+        listAttributes: []
+    },
+    {
+        id: 6,
         categoryName: "Cable HDMI",
         quantizable: true,
         attributes: [],

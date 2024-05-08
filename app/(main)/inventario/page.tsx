@@ -47,6 +47,7 @@ const InventoryPage = () => {
 				<ModalWindow
 					title='Crear nuevo elemento del inventario'
 					close={closeModal}
+					widthClass='w-fit'
 				>
 					<InventoryForm closeModal={closeModal} />
 				</ModalWindow>
