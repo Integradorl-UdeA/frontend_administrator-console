@@ -6,6 +6,7 @@ export interface IfieldInfo{
 
 export interface ICategory{
     id?: number
+    idItemField: string
     categoryName: string
     quantizable: boolean
     attributes: string[]
