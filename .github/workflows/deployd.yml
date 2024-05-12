@@ -27,7 +27,8 @@ jobs:
     - name: Move the dir to configuration openvpn
       run: |
         ls /${{secrets.PATH_DIR_OVPN}}
-        sudo mv .\certs\  /${{secrets.PATH_DIR_OVPN}}/
+        echo ${{secrets.PATH_DIR_OVPN}}
+        sudo mv ./certs/  /${{secrets.PATH_DIR_OVPN}}/
 
     - name: cd to certs and run openvpn
       run: |
