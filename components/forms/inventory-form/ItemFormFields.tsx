@@ -16,9 +16,10 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 	const { attributes, listAttributes, idItemField, quantizable, categoryName } =
 		selectedCategory;
 
-	const { control, register } = useFormContext();
+	const { control, register,setValue } = useFormContext();
 
 	const hasDefaultItem = type === 'READONLY' || type === 'EDIT';
+	if(hasDefaultItem) setValue('wallet', defaultItem?.wallet)
 
 	return (
 		<>
