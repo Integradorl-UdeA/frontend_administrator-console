@@ -8,9 +8,11 @@ interface IInventoryStoreState{
     setSelectedCategory: (category: ICategory) => void
     formState: TFormState,
     setFormState: (formState: TFormState) => void
+    clearSelectedCategory: () => void
 }
 const defaultSeletedCategory:ICategory = {
     categoryName: '',
+    idItemField: '',
     quantizable: false,
     attributes: [],
     listAttributes: []
@@ -23,6 +25,12 @@ export const useInventoryForm = create<IInventoryStoreState>( (set) => {
             set( (state) => ({
                 ...state,
                 selectedCategory: category
+            }))
+        },
+        clearSelectedCategory: () =>{
+            set(state => ({
+                ...state,
+                selectedCategory: defaultSeletedCategory
             }))
         },
 

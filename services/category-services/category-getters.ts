@@ -21,10 +21,13 @@ const categories:ICategory[] = [
     {
         id: 3,
         categoryName: "Cable HDMI",
-        idItemField: "Cable_HDMI",
+        idItemField: "Cable HDMI",
         quantizable: true,
-        attributes: [],
-        listAttributes: []
+        attributes: ["Categoría"],
+        listAttributes: [{
+            name: "Longitud",
+            list: ["Grandeito ome", "Más bien mediado" , "Chitito"]
+        }]
     },
     {
         id:4,

@@ -21,7 +21,8 @@ export interface IItemAttributes{
 export interface IItemFormData{
     itemId: string
     categoryId: number
-    wallet: string
+    formWallet: string
     lendable: boolean
+    quantity?: 0
     attributes: Record<string, string>
 }

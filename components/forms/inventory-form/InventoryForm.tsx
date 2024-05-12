@@ -15,6 +15,7 @@ import {
 
 import { formUniqueItemToApiReq } from '@/lib/itemFormToApi';
 import type { IItemFormData } from '@/types/item-types';
+import QuantizableItemForm from './QuantizableItemForm';
 
 interface InventoryFormProps {
 	closeModal: () => void;
@@ -24,13 +25,20 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 	const setFormState = useInventoryForm((state) => state.setFormState);
 	const formState = useInventoryForm((state) => state.formState);
 	const selectedCategory = useInventoryForm((state) => state.selectedCategory);
-
-	const { register, handleSubmit, control } = useForm();
+	const defaultFormValues: IItemFormData = {
+		attributes: {},
+		categoryId: -1,
+		itemId: '',
+		lendable: false,
+		formWallet: '',
+		quantity: 0
+	}
+	const { register, handleSubmit, control, reset } = useForm({defaultValues: defaultFormValues as FieldValues});
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		console.log(data) 
-		const apiData = formUniqueItemToApiReq(data as IItemFormData)
-		console.log(apiData)
+		console.log(data);
+		const apiData = formUniqueItemToApiReq(data as IItemFormData);
+		console.log(apiData);
 		closeModal != null && closeModal();
 	};
 
@@ -38,6 +46,8 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 		name: 'categoryId',
 		control,
 	});
+
+	const clearSelectedCategory = useInventoryForm( state => state.clearSelectedCategory)
 
 	useEffect(() => {
 		categorySelectionId.onChange(selectedCategory.id);
@@ -75,13 +85,19 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 
 			{formState === 1 && (
 				<>
-					<UniqueItemForm register={register} control={control} />
+					{selectedCategory.quantizable ? (
+						<QuantizableItemForm register={register} control={control} />
+					) : (
+						<UniqueItemForm register={register} control={control} />
+					)}
 					<div className=' flex justify-between mt-8'>
 						<button
 							className=' flex items-center justify-center bg-white w-max h-max py-2 px-3 rounded-full font-medium shadow-lg hover:bg-red-100'
 							type='button'
 							onClick={() => {
 								setFormState(0);
+								clearSelectedCategory()
+								reset()
 							}}
 						>
 							<IoMdArrowRoundBack className='text-white bg-red-500 rounded-full p-1 mr-2 text-2xl' />

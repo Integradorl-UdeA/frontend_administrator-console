@@ -16,6 +16,7 @@ const CategoryCard = ({ category }: Props) => {
 		if (selectedCategory.id === category.id) {
 			setSelectedCategory({
 				categoryName: '',
+				idItemField: '',
 				quantizable: true,
 				attributes: [],
 				listAttributes: [],

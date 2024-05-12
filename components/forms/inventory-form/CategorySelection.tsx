@@ -6,7 +6,6 @@ import type { ICategory } from '@/types/categoryTypes';
 
 const CategorySelection = () => {
 	const selectedCategory = useInventoryForm((state) => state.selectedCategory);
-	console.log(selectedCategory);
 	const { categoryName, quantizable, attributes, listAttributes } =
 		selectedCategory;
 	const [allCategories, setAllCategories] = useState<ICategory[]>([]);
