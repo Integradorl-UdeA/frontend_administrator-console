@@ -2,34 +2,26 @@ import InputSwitch from '@/components/common/InputSwitch';
 import { getItemAttributeByName } from '@/lib/getItemAttributeByName';
 import { getWallets } from '@/services/item-service/wallet-service';
 import { useInventoryForm } from '@/store/inventoryFormStore';
-import type { IItem} from '@/types/item-types';
+import type { IItem } from '@/types/item-types';
 import React from 'react';
-import type { Control, FieldValues, UseFormRegister } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 
 interface UseFormProps {
-	control: Control<FieldValues, any>;
-	register: UseFormRegister<FieldValues>;
 	defaultItem?: IItem;
 	type: 'READONLY' | 'CREATE' | 'EDIT';
 }
 
-const ItemFormFields = ({
-	control,
-	register,
-	defaultItem,
-	type,
-}: UseFormProps) => {
+const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 	const selectedCategory = useInventoryForm((state) => state.selectedCategory);
 	const { attributes, listAttributes, idItemField, quantizable, categoryName } =
 		selectedCategory;
+
+	const { control, register } = useFormContext();
+
 	const hasDefaultItem = type === 'READONLY' || type === 'EDIT';
-	
-	
 
 	return (
 		<>
-			<p>Crear un {categoryName}</p>
-
 			<InputSwitch
 				control={control}
 				label='Prestable'

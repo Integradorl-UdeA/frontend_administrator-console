@@ -9,31 +9,26 @@ import { IoMdArrowRoundBack, IoMdArrowRoundForward } from 'react-icons/io';
 import {
 	type FieldValues,
 	type SubmitHandler,
-	useForm,
 	useController,
+	useFormContext,
 } from 'react-hook-form';
 
 import { formUniqueItemToApiReq } from '@/lib/itemFormToApi';
 import type { IItemFormData } from '@/types/item-types';
 import QuantizableItemForm from './QuantizableItemForm';
 
+
 interface InventoryFormProps {
 	closeModal: () => void;
 }
 
 const InventoryForm = ({ closeModal }: InventoryFormProps) => {
-	const setFormState = useInventoryForm((state) => state.setFormState);
-	const formState = useInventoryForm((state) => state.formState);
 	const selectedCategory = useInventoryForm((state) => state.selectedCategory);
-	const defaultFormValues: IItemFormData = {
-		attributes: {},
-		categoryId: -1,
-		itemId: '',
-		lendable: false,
-		formWallet: '',
-		quantity: 0
-	}
-	const { register, handleSubmit, control, reset } = useForm({defaultValues: defaultFormValues as FieldValues});
+	const formState = useInventoryForm((state) => state.formState);
+	const setFormState = useInventoryForm((state) => state.setFormState);
+	const clearSelectedCategory = useInventoryForm( state => state.clearSelectedCategory)
+	
+	const {control, handleSubmit , reset} = useFormContext()
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
@@ -42,13 +37,12 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 		closeModal != null && closeModal();
 	};
 
+
+	// TODO Passing the control creation fields to the form provider?
 	const { field: categorySelectionId } = useController({
 		name: 'categoryId',
 		control,
 	});
-
-	const clearSelectedCategory = useInventoryForm( state => state.clearSelectedCategory)
-
 	useEffect(() => {
 		categorySelectionId.onChange(selectedCategory.id);
 	}, [selectedCategory]);
@@ -86,9 +80,9 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 			{formState === 1 && (
 				<>
 					{selectedCategory.quantizable ? (
-						<QuantizableItemForm register={register} control={control} />
+						<QuantizableItemForm />
 					) : (
-						<UniqueItemForm register={register} control={control} />
+						<UniqueItemForm />
 					)}
 					<div className=' flex justify-between mt-8'>
 						<button

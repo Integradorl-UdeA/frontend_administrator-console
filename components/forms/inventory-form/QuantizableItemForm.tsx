@@ -1,17 +1,12 @@
-
 import React, { useState } from 'react';
-import type { Control, FieldValues, UseFormRegister } from 'react-hook-form';
+import { useFormContext } from 'react-hook-form';
 import ItemFormFields from './ItemFormFields';
 import type { IItem } from '@/types/item-types';
 import { getItemById } from '@/services/item-service/get-items';
 
-interface useFormProps {
-	control: Control<FieldValues, any>;
-	register: UseFormRegister<FieldValues>
-}
-
-const QuantizableItemForm = ({ control, register }: useFormProps) => {
+const QuantizableItemForm = () => {
 	const [itemExist, setItemExist] = useState(true);
+	const { register } = useFormContext();
 
 	const item: IItem = getItemById('cableHDMI');
 
@@ -20,12 +15,7 @@ const QuantizableItemForm = ({ control, register }: useFormProps) => {
 			{itemExist ? (
 				<>
 					<p>El item existe</p>
-					<ItemFormFields
-						control={control}
-						register={register}
-						type='READONLY'
-						defaultItem={item}
-					/>
+					<ItemFormFields type='READONLY' defaultItem={item} />
 					<div className='flex items-center my-4'>
 						<label className='mr-5' htmlFor='name'>
 							Cantidad a agregar:
@@ -44,7 +34,7 @@ const QuantizableItemForm = ({ control, register }: useFormProps) => {
 				</>
 			) : (
 				<>
-					<ItemFormFields control={control} register={register} type='CREATE' />
+					<ItemFormFields type='CREATE' />
 					<div className='flex items-center my-4'>
 						<label className='mr-5' htmlFor='name'>
 							Cantidad a agregar:

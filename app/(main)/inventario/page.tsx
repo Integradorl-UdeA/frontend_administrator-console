@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React, { useState } from 'react';
 import TableInventory from '@/components/common/TableInventory';
 import { AddButton } from '@/components/common/table/AddButton';
@@ -7,6 +7,7 @@ import FilterOptions from '@/components/common/table/FilterOptions';
 import { HeaderInfoTablePage } from '@/components/common/table/HeaderInfoTablePage';
 import ModalWindow from '@/components/common/ModalWindow';
 import InventoryForm from '@/components/forms/inventory-form/InventoryForm';
+import InventoryFormProvider from '@/components/forms/inventory-form/InventoryFormProvider';
 const options = ['Todos', 'Disponible', 'No disponible'];
 
 const InventoryPage = () => {
@@ -49,7 +50,9 @@ const InventoryPage = () => {
 					close={closeModal}
 					widthClass='w-fit'
 				>
-					<InventoryForm closeModal={closeModal} />
+					<InventoryFormProvider>
+						<InventoryForm closeModal={closeModal} />
+					</InventoryFormProvider>
 				</ModalWindow>
 			)}
 		</div>
