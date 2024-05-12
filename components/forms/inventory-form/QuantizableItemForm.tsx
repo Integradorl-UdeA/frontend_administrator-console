@@ -5,6 +5,7 @@ import type { IItem } from '@/types/item-types';
 import { getItemById } from '@/services/item-service/get-items';
 
 const QuantizableItemForm = () => {
+	// TODO Make this an API call
 	const [itemExist, setItemExist] = useState(true);
 	const { register } = useFormContext();
 

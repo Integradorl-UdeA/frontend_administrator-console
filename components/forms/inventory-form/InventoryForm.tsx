@@ -31,6 +31,7 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 	const {control, handleSubmit , reset} = useFormContext()
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+		console.log("clicked")
 		console.log(data);
 		const apiData = formUniqueItemToApiReq(data as IItemFormData);
 		console.log(apiData);

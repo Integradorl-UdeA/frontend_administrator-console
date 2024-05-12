@@ -1,17 +1,17 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import styInputSwitch from '@/styles/common/InputSwitch.module.css';
-import { useController, type Control, type FieldValues } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 
 interface Props {
 	label: string;
 	name: string;
-	control: Control<FieldValues, any>;
 	disabled?: boolean;
 	defaultVal?: boolean;
 }
-const InputSwitch = ({ label, name, control, defaultVal, disabled }: Props) => {
-	const [isChecked, setIsChecked] = useState(defaultVal);
+const InputSwitch = ({ label, name, defaultVal, disabled }: Props) => {
+	const {control, getValues} = useFormContext()
+	const [isChecked, setIsChecked] = useState(getValues(name) as boolean);
 	const { field } = useController({
 		name,
 		control,

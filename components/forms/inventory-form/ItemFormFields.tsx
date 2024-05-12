@@ -1,5 +1,6 @@
 import InputSwitch from '@/components/common/InputSwitch';
 import { getItemAttributeByName } from '@/lib/getItemAttributeByName';
+import { ItemApiToFormData } from '@/lib/itemFormToApi';
 import { getWallets } from '@/services/item-service/wallet-service';
 import { useInventoryForm } from '@/store/inventoryFormStore';
 import type { IItem } from '@/types/item-types';
@@ -16,18 +17,26 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 	const { attributes, listAttributes, idItemField, quantizable, categoryName } =
 		selectedCategory;
 
-	const { control, register,setValue } = useFormContext();
+	const { register, setValue } = useFormContext();
 
 	const hasDefaultItem = type === 'READONLY' || type === 'EDIT';
-	if(hasDefaultItem) setValue('wallet', defaultItem?.wallet)
+	if (hasDefaultItem) {
+		const defaultItemFormData = ItemApiToFormData(defaultItem as IItem);
+		Object.entries(defaultItemFormData).forEach(([key, value]) => {
+			if(key !== 'attributes' && key !== 'categoryId'){
+				setValue(key, value)
+			}
+		});
+		Object.entries(defaultItemFormData.attributes).forEach(([key, value]) => {
+			setValue(`attributes.${key}`, value)
+		})
+	}
 
 	return (
 		<>
 			<InputSwitch
-				control={control}
 				label='Prestable'
 				name='lendable'
-				defaultVal={hasDefaultItem ? defaultItem?.lendable : false}
 				disabled={type === 'READONLY'}
 			/>
 			{quantizable ? (
@@ -39,7 +48,6 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 						type='text'
 						className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
 						defaultValue={categoryName}
-						disabled
 						placeholder={categoryName}
 						{...register('itemId', {
 							required: {
@@ -57,7 +65,6 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 					<input
 						disabled={type === 'READONLY'}
 						type='text'
-						defaultValue={hasDefaultItem ? `${defaultItem?.itemId}` : ''}
 						className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
 						{...register('itemId', {
 							required: {
@@ -70,7 +77,6 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 			)}
 			<select
 				disabled={type === 'READONLY'}
-				defaultValue={hasDefaultItem ? `${defaultItem?.wallet}` : ''}
 				className='w-full rounded-lg py-2 px-3 text-base focus:outline-greenTwo'
 				{...register('wallet', {
 					required: {
@@ -95,12 +101,6 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 					</label>
 					<input
 						disabled={type === 'READONLY'}
-						defaultValue={
-							hasDefaultItem
-								? `${getItemAttributeByName(attr, defaultItem?.attributes)
-										?.value}`
-								: ''
-						}
 						type='text'
 						className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
 						{...register(`attributes.${attr}`, {
@@ -119,12 +119,6 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 					</label>
 					<select
 						disabled={type === 'READONLY'}
-						defaultValue={
-							hasDefaultItem
-								? `${getItemAttributeByName(attr.name, defaultItem?.attributes)
-										?.value}`
-								: ''
-						}
 						className='w-full rounded-lg py-2 px-3 text-base focus:outline-greenTwo'
 						{...register(`attributes.${attr.name}`, {
 							required: {
