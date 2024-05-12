@@ -13,7 +13,7 @@ import {
 	useFormContext,
 } from 'react-hook-form';
 
-import { formUniqueItemToApiReq } from '@/lib/itemFormToApi';
+import { formCuantiItemToApiPost, formUniqueItemToApiReq } from '@/lib/itemFormToApi';
 import type { IItemFormData } from '@/types/item-types';
 import QuantizableItemForm from './QuantizableItemForm';
 
@@ -31,9 +31,13 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 	const {control, handleSubmit , reset} = useFormContext()
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		console.log("clicked")
-		console.log(data);
-		const apiData = formUniqueItemToApiReq(data as IItemFormData);
+		let apiData = {}
+		if(selectedCategory.quantizable){
+			apiData = formCuantiItemToApiPost(data as IItemFormData)
+		}else{
+			apiData = formUniqueItemToApiReq(data as IItemFormData);
+		}
+		// TODO Reseting all when form submitted
 		console.log(apiData);
 		closeModal != null && closeModal();
 	};

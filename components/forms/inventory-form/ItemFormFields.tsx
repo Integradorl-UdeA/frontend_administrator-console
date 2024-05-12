@@ -1,5 +1,4 @@
 import InputSwitch from '@/components/common/InputSwitch';
-import { getItemAttributeByName } from '@/lib/getItemAttributeByName';
 import { ItemApiToFormData } from '@/lib/itemFormToApi';
 import { getWallets } from '@/services/item-service/wallet-service';
 import { useInventoryForm } from '@/store/inventoryFormStore';
@@ -21,6 +20,7 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 
 	const hasDefaultItem = type === 'READONLY' || type === 'EDIT';
 	if (hasDefaultItem) {
+		// TODO Maybe take this function and move it to the InventoryFormProvider
 		const defaultItemFormData = ItemApiToFormData(defaultItem as IItem);
 		Object.entries(defaultItemFormData).forEach(([key, value]) => {
 			if(key !== 'attributes' && key !== 'categoryId'){
@@ -31,6 +31,8 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 			setValue(`attributes.${key}`, value)
 		})
 	}
+
+	if (quantizable) setValue('itemId', categoryName)
 
 	return (
 		<>
@@ -47,8 +49,7 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 					<input
 						type='text'
 						className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
-						defaultValue={categoryName}
-						placeholder={categoryName}
+						disabled
 						{...register('itemId', {
 							required: {
 								value: true,
@@ -119,6 +120,7 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 					</label>
 					<select
 						disabled={type === 'READONLY'}
+						defaultValue=''
 						className='w-full rounded-lg py-2 px-3 text-base focus:outline-greenTwo'
 						{...register(`attributes.${attr.name}`, {
 							required: {

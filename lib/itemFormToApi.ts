@@ -44,6 +44,30 @@ export const ItemApiToFormData = (apiData: IItem) => {
 	return formData;
 };
 
+export const formCuantiItemToApiPost = (formData: IItemFormData) => {
+	const {
+		attributes: formDataAttributes,
+		categoryId,
+		lendable,
+		itemId,
+		wallet,
+		quantity,
+	} = formData;
+    const state = 'AVAILABLE'
+    const attributes = recordAttrToAttrInterface(formDataAttributes)
+    const apiData: IItem = {
+        attributes,
+        categoryId,
+        lendable,
+        itemId,
+        wallet,
+        quantity,
+        state
+    }
+
+    return apiData
+};
+
 const recordAttrToAttrInterface = (
 	recordAttributes: Record<string, string>,
 ) => {
@@ -51,7 +75,7 @@ const recordAttrToAttrInterface = (
 	for (const [name, value] of Object.entries(recordAttributes)) {
 		interfaceAttributes.push({
 			name,
-			value, 
+			value,
 		});
 	}
 	return interfaceAttributes;

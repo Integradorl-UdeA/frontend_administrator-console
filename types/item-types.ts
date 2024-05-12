@@ -9,7 +9,7 @@ export interface IItem{
     wallet: string
     lendable: boolean
     state: string
-    quantity: number
+    quantity: number | undefined
     attributes: IItemAttributes[]
 }
 
