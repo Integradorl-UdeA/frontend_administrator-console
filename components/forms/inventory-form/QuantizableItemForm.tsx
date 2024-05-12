@@ -6,7 +6,7 @@ import { getItemById } from '@/services/item-service/get-items';
 
 const QuantizableItemForm = () => {
 	// TODO Make this an API call
-	const [itemExist, setItemExist] = useState(true);
+	const [itemExist, setItemExist] = useState(false);
 	const { register } = useFormContext();
 
 	const item: IItem = getItemById('cableHDMI');

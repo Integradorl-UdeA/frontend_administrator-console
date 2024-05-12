@@ -28,7 +28,7 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 	const setFormState = useInventoryForm((state) => state.setFormState);
 	const clearSelectedCategory = useInventoryForm( state => state.clearSelectedCategory)
 	
-	const {control, handleSubmit , reset} = useFormContext()
+	const {control, handleSubmit , reset, formState: {isSubmitSuccessful}} = useFormContext()
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		let apiData = {}
@@ -37,8 +37,9 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 		}else{
 			apiData = formUniqueItemToApiReq(data as IItemFormData);
 		}
-		// TODO Reseting all when form submitted
 		console.log(apiData);
+		setFormState(0)
+		clearSelectedCategory()
 		closeModal != null && closeModal();
 	};
 
@@ -51,6 +52,10 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 	useEffect(() => {
 		categorySelectionId.onChange(selectedCategory.id);
 	}, [selectedCategory]);
+
+	useEffect(() => {
+		reset()
+	}, [reset, isSubmitSuccessful, formState])
 
 	return (
 		<>
