@@ -49,13 +49,7 @@ function LoginForm() {
 						className='w-14'
 					/>
 				</span>
-				<span>
-					<img
-						src='/images/name-app-logo.png'
-						alt='Logo letras hello lis'
-						className='w-50'
-					/>
-				</span>
+				<span className={styles.tipografyLogo}>&lt;hello lis/&gt;</span>
 				<span className={styles.label}>Inicia sesión o regístrate</span>
 
 				<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
@@ -82,10 +76,18 @@ function LoginForm() {
 					</button>
 				</form>
 				{loading && (
-                    <div className={styles.spinnerContainer} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
-                        <Spinner color={'gray-300'} />
-                    </div>
-                )}
+					<div
+						className={styles.spinnerContainer}
+						style={{
+							position: 'absolute',
+							top: '50%',
+							left: '50%',
+							transform: 'translate(-50%, -50%)',
+						}}
+					>
+						<Spinner color={'gray-300'} />
+					</div>
+				)}
 			</div>
 			<div className={styles.logosContainer}>
 				<div className={styles.sistemaslogoContainer}>

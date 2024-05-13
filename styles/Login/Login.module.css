@@ -1,3 +1,8 @@
+@font-face {
+    font-family: 'lisfont';
+    src: url('../../fonts/Pixellari.ttf') format('truetype');
+}
+
 .container{
     @apply h-full w-full flex flex-row 
 }
@@ -29,7 +34,11 @@
    
 
 }
+.tipografyLogo{
+    @apply font-bold text-5xl mt-2 text-[#112E4A];
+    font-family: 'lisfont';
 
+}
 .spinnerContainer{
     @apply flex  items-center justify-center;
 }
