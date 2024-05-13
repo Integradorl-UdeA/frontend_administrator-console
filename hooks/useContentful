@@ -1,0 +1,30 @@
+import { useEffect, useState } from 'react';
+import { Entry } from 'contentful';
+import client from '../utils/contentful';
+
+type QueryType = {
+  [key: string]: any;
+};
+
+const useContentful = <T>(query: QueryType): { data: Entry<T>[] | null; loading: boolean } => {
+  const [data, setData] = useState<Entry<T>[] | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await client.getEntries<T>(query);
+        setData(response.items);
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [query]);
+
+  return { data, loading };
+}
+
+export default useContentful;
