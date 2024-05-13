@@ -3,15 +3,24 @@ import CategoryCard from './CategoryCard';
 import { getAllCategories } from '@/services/category-services/category-getters';
 import { useInventoryForm } from '@/store/inventoryFormStore';
 import type { ICategory } from '@/types/categoryTypes';
+import { useGetCategories } from '@/api-hooks/category-api/useGetCategory';
+import { useSession } from 'next-auth/react';
 
 const CategorySelection = () => {
+	console.log('Rerenderizadooooo!!!!');
 	const selectedCategory = useInventoryForm((state) => state.selectedCategory);
 	const { categoryName, quantizable, attributes, listAttributes } =
 		selectedCategory;
+
+	const token = useSession().data?.token.token;
+
 	const [allCategories, setAllCategories] = useState<ICategory[]>([]);
+	const { categories, isLoading } = useGetCategories(token as string);
+	console.log(categories, isLoading);
+
 	useEffect(() => {
-		setAllCategories(getAllCategories());
-	}, []);
+		setAllCategories(categories as ICategory[]);
+	}, [isLoading]);
 
 	return (
 		<div className='flex '>
@@ -20,9 +29,13 @@ const CategorySelection = () => {
 					Seleccione la categoría:
 				</h2>
 				<div className='flex flex-col items-center h-full'>
-					{allCategories.map((cat) => (
-						<CategoryCard key={cat.id} category={cat} />
-					))}
+					{isLoading ? (
+						<p>Cargando</p>
+					) : (
+						allCategories?.map((cat) => (
+							<CategoryCard key={cat.id} category={cat} />
+						))
+					)}
 				</div>
 			</div>
 			<div className='p-3 flex flex-col items-center justify-center'>

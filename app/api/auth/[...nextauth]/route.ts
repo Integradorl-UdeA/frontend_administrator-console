@@ -56,6 +56,7 @@ const handler = NextAuth({
 				role
 			}
 			session.token = token
+			console.log(token.token)
 			return session;
 		},
 	},
