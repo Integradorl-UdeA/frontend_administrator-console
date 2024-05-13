@@ -8,36 +8,53 @@ import { useForm } from 'react-hook-form';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
+import { Spinner } from '@/components/common/Spinner';
 
 function LoginForm() {
 	const router = useRouter();
 	const [errors, setErrors] = useState<Array<string | null | undefined>>([]);
+	const [loading, setLoading] = useState(false);
 	const { register, handleSubmit } = useForm();
+
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+		setLoading(true);
 		const responseNextAuth = await signIn('credentials', {
 			username: data.username,
 			password: data.password,
 			redirect: false,
 		});
+
 		if (
 			responseNextAuth?.error !== null &&
 			responseNextAuth?.error !== undefined
 		) {
 			setErrors([responseNextAuth?.error]);
-			console.log(errors === undefined);
+			setLoading(false);
 			return;
 		}
+
 		router.push('/');
 	};
 
 	return (
 		<section className={styles.formContainer}>
-			<div className={styles.formContainerTwo}>
+			<div
+				className={styles.formContainerTwo}
+				style={{ opacity: loading ? 0.5 : 1 }}
+			>
 				<span className={styles.userIconContainer}>
-					<img src='/images/avatar_login.png' alt='avatar logo pinguino' className='w-14' />
+					<img
+						src='/images/avatar_login.png'
+						alt='avatar logo pinguino'
+						className='w-14'
+					/>
 				</span>
 				<span>
-					<img src='/images/name-app-logo.png' alt='Logo letras hello lis' className='w-50' />
+					<img
+						src='/images/name-app-logo.png'
+						alt='Logo letras hello lis'
+						className='w-50'
+					/>
 				</span>
 				<span className={styles.label}>Inicia sesión o regístrate</span>
 
@@ -56,18 +73,33 @@ function LoginForm() {
 					{errors.length !== 0 && (
 						<p className={commonStyles.error}>Credenciales incorrectas</p>
 					)}
-					<button className={commonStyles.btnSubmit} type='submit'>
+					<button
+						className={commonStyles.btnSubmit}
+						type='submit'
+						disabled={loading}
+					>
 						Ingresar
 					</button>
 				</form>
+				{loading && (
+                    <div className={styles.spinnerContainer} style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}>
+                        <Spinner color={'gray-300'} />
+                    </div>
+                )}
 			</div>
 			<div className={styles.logosContainer}>
 				<div className={styles.sistemaslogoContainer}>
-					<img src='/images/ig-sistemas.png' alt='Logo departamento ingeniería de sistemas' />
+					<img
+						src='/images/ig-sistemas.png'
+						alt='Logo departamento ingeniería de sistemas'
+					/>
 				</div>
 
 				<div className={styles.udealogoContainer}>
-					<img src='/images/ig-udea.png' alt='Logo horizontal Universidad de Antioquia' />
+					<img
+						src='/images/ig-udea.png'
+						alt='Logo horizontal Universidad de Antioquia'
+					/>
 				</div>
 			</div>
 		</section>

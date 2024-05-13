@@ -22,7 +22,7 @@
 }
 
 .formContainerTwo{
-    @apply flex flex-col backdrop-blur-xl py-8 h-auto w-2/6 items-center justify-center;
+    @apply flex flex-col backdrop-blur-xl py-8 h-2/4 w-2/6 items-center justify-center;
     border-radius: 10px;
     background:  rgba(255,255,255,0.30);
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
@@ -30,6 +30,9 @@
 
 }
 
+.spinnerContainer{
+    @apply flex  items-center justify-center;
+}
 
 .userIconContainer{
     @apply px-[0.3rem] py-[0.2rem] rounded-3xl;

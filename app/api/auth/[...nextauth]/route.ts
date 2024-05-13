@@ -37,7 +37,6 @@ const handler = NextAuth({
 						},
 					);
 					const user = response.data;
-					console.log("lo que sea");
 					if (user.error === true) throw user;
 					return user;
 				} catch (error: any) {
