@@ -18,28 +18,31 @@ const handler = NextAuth({
 	providers: [
 		CredentialsProvider({
 			name: 'Credentials',
-
 			credentials: {
 				username: { label: 'Username', type: 'text', placeholder: 'jsmith' },
 				password: { label: 'Password', type: 'password' },
 			},
 			async authorize(credentials, req) {
-				const response = await axios.post(
-					`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
-					{
-						username: credentials?.username,
-						password: credentials?.password,
-					},
-					{
-						headers: {
-							'Content-Type': 'application/json',
+				try {
+					const response = await axios.post(
+						`${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/login`,
+						{
+							username: credentials?.username,
+							password: credentials?.password,
 						},
-					},
-				);
-				const user = response.data;
-
-				if (user.error === true) throw user;
-				return user;
+						{
+							headers: {
+								'Content-Type': 'application/json',
+							},
+						},
+					);
+					const user = response.data;
+					console.log("lo que sea");
+					if (user.error === true) throw user;
+					return user;
+				} catch (error: any) {
+					throw (Boolean((error.response?.data))) || error.message;
+				}
 			},
 		}),
 	],
@@ -48,17 +51,18 @@ const handler = NextAuth({
 			return { ...token, ...user };
 		},
 		async session({ session, token }) {
-			const {name, username, id, role} = jwtDecode<ILoginJWTPayload>(token.token as string);
+			const { name, username, id, role } = jwtDecode<ILoginJWTPayload>(token.token as string);
 			session.user = {
 				name,
 				username,
-				id, 
+				id,
 				role
 			}
-			session.token = token
+			session.token = token;
 			return session;
 		},
 	},
+	secret: process.env.NEXTAUTH_SECRET,
 	pages: {
 		signIn: '/login',
 	},

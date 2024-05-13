@@ -2,23 +2,38 @@
     @apply h-full w-full flex flex-row 
 }
 
-.sideImgContainer{
-    @apply w-2/4 h-screen bg-cover relative;
+
+.logosContainer{
+    @apply flex items-center w-1/2 mt-6;
+}
+
+.sistemaslogoContainer{
+    @apply flex justify-end w-1/2 h-24;
+}
+
+.udealogoContainer{
+    @apply flex justify-start  w-1/2 h-24;
+}
+
+
+.formContainer{
+    @apply flex flex-col h-full w-full items-center justify-center;
     background-image: url('/images/login-background.png');
 }
 
-.sistemasLogoContainer{
-    @apply absolute w-1/2 bottom-[5%] left-[3%];
+.formContainerTwo{
+    @apply flex flex-col backdrop-blur-xl py-8 h-auto w-2/6 items-center justify-center;
+    border-radius: 10px;
+    background:  rgba(255,255,255,0.30);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+   
+
 }
 
-.formContainer{
-    @apply flex flex-col h-full w-2/4 items-center justify-center;
-    background-color: var(--color-background)
-}
 
 .userIconContainer{
     @apply px-[0.3rem] py-[0.2rem] rounded-3xl;
-    background-color: #7E869E40;
+   
 }
 
 .userIcon{
@@ -31,13 +46,15 @@
 }
 
 .label{
-    @apply text-base text-[#666687];
+    @apply mt-3 text-base text-[#666687];
 }
 
 .form{
-    @apply my-3  w-2/4;
+    @apply my-1  w-2/4;
 }
 
 .formSection{
     @apply my-3;
 }
+
+  
