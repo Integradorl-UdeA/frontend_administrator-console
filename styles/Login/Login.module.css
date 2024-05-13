@@ -35,7 +35,7 @@
 
 }
 .tipografyLogo{
-    @apply font-bold text-5xl mt-2 text-[#112E4A];
+    @apply font-bold text-[45px] mt-1 text-[#112E4A];
     font-family: 'lisfont';
 
 }
@@ -58,7 +58,7 @@
 }
 
 .label{
-    @apply mt-3 text-base text-[#666687];
+    @apply mt-1 text-base text-[#666687];
 }
 
 .form{

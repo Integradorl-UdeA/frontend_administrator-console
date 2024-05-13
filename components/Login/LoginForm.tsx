@@ -46,7 +46,7 @@ function LoginForm() {
 					<img
 						src='/images/avatar_login.png'
 						alt='avatar logo pinguino'
-						className='w-14'
+						className='w-16'
 					/>
 				</span>
 				<span className={styles.tipografyLogo}>&lt;hello lis/&gt;</span>
