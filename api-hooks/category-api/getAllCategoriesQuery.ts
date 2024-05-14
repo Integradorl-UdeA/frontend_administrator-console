@@ -6,7 +6,7 @@ import type { ICategory } from "@/types/categoryTypes";
 
 export const getAllCategories = (token: string) => {
     const getAllCategoriesQuery = useQuery({
-        queryKey: ['categories'],
+        queryKey: ['category'],
         queryFn: async () => {
             const data:ICategory[] = await (await getCategoryTemplate(token).get('')).data
             return data

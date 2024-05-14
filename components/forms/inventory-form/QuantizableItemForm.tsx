@@ -1,16 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import ItemFormFields from './ItemFormFields';
 import type { IItem } from '@/types/item-types';
-import { getItemById } from '@/services/item-service/get-items';
+import { useSession } from 'next-auth/react';
+import { getItemById } from '@/api-hooks/inventory-api/getItemByIdQuery';
+import { useInventoryForm } from '@/store/inventoryFormStore';
 
 const QuantizableItemForm = () => {
 	// TODO Make this an API call
 	const [itemExist, setItemExist] = useState(false);
+    const {categoryName} = useInventoryForm(state => state.selectedCategory)
+
+	const token = useSession().data?.token?.token
+	const {data: item, isLoading, error} = getItemById(token as string, "string")
+	console.log("Item exist: " , itemExist)
+	console.log("Item: ", item)
+	console.log("Error: ", error)
 	const { register } = useFormContext();
-
-	const item: IItem = getItemById('cableHDMI');
-
+	useEffect(() => {
+		setItemExist(item !== undefined)
+	}, [item])
+	if(isLoading) return <p>Is Loading...</p>
 	return (
 		<form>
 			{itemExist ? (

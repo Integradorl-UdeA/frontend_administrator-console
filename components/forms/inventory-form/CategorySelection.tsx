@@ -3,7 +3,7 @@ import CategoryCard from './CategoryCard';
 import { useInventoryForm } from '@/store/inventoryFormStore';
 import type { ICategory } from '@/types/categoryTypes';
 import { useSession } from 'next-auth/react';
-import { getAllCategories } from '@/api-hooks/category-api/getCategoriesQuery';
+import { getAllCategories } from '@/api-hooks/category-api/getAllCategoriesQuery';
 
 const CategorySelection = () => {
 	console.log('Rerenderizadooooo!!!!');
