@@ -1,26 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import CategoryCard from './CategoryCard';
-import { getAllCategories } from '@/services/category-services/category-getters';
 import { useInventoryForm } from '@/store/inventoryFormStore';
 import type { ICategory } from '@/types/categoryTypes';
-import { useGetCategories } from '@/api-hooks/category-api/useGetCategory';
 import { useSession } from 'next-auth/react';
+import { getAllCategories } from '@/api-hooks/category-api/getCategoriesQuery';
 
 const CategorySelection = () => {
 	console.log('Rerenderizadooooo!!!!');
 	const selectedCategory = useInventoryForm((state) => state.selectedCategory);
 	const { categoryName, quantizable, attributes, listAttributes } =
 		selectedCategory;
-
 	const token = useSession().data?.token.token;
-
+	const { data, isLoading } = getAllCategories(token as string);
 	const [allCategories, setAllCategories] = useState<ICategory[]>([]);
-	const { categories, isLoading } = useGetCategories(token as string);
-	console.log(categories, isLoading);
 
 	useEffect(() => {
-		setAllCategories(categories as ICategory[]);
-	}, [isLoading]);
+		setAllCategories(data as ICategory[])
+	}, [isLoading])
+
 
 	return (
 		<div className='flex '>
