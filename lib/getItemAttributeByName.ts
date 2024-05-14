@@ -1,4 +1,4 @@
-import type { IItem, IItemAttributes } from "@/types/item-types";
+import type { IItemAttributes } from "@/types/item-types";
 
 
 export const getItemAttributeByName = (name: string, attributes:IItemAttributes[] | undefined ) =>{
