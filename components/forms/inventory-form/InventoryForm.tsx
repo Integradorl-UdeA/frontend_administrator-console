@@ -52,7 +52,6 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 		} else {
 			item = formUniqueItemToApiReq(data as IItemFormData);
 		}
-		console.log(item);
 		createItem(item as IItem);
 
 		setFormState(0);
@@ -91,6 +90,7 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 							Cancelar
 						</button>
 						<button
+							disabled={selectedCategory.categoryName === ''} 
 							className=' flex items-center justify-center bg-white py-2 px-3 rounded-full font-medium shadow-lg hover:bg-greenThree/10'
 							type='button'
 							onClick={() => {

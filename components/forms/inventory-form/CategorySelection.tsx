@@ -10,14 +10,14 @@ const CategorySelection = () => {
 	const { categoryName, quantizable, attributes, listAttributes } =
 		selectedCategory;
 	const token = useSession().data?.token.token;
-	const { data, isLoading } = getAllCategories(token as string);
+	const { data, isLoading ,error, isError } = getAllCategories(token as string);
 	const [allCategories, setAllCategories] = useState<ICategory[]>([]);
 
 	useEffect(() => {
 		setAllCategories(data as ICategory[])
 	}, [isLoading])
 
-
+	if(isError) return <p>Error: {error.message}</p>
 	return (
 		<div className='flex '>
 			<div className='flex flex-col w-fit p-3 items-center'>
