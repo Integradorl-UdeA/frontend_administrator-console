@@ -6,20 +6,18 @@ import { getItemById } from '@/api-hooks/inventory-api/getItemByIdQuery';
 import { useInventoryForm } from '@/store/inventoryFormStore';
 
 const QuantizableItemForm = () => {
-	// TODO Make this an API call
 	const [itemExist, setItemExist] = useState(false);
     const {categoryName} = useInventoryForm(state => state.selectedCategory)
 
 	const token = useSession().data?.token?.token
-	const {data: item, isLoading, error} = getItemById(token as string, categoryName)
-	console.log("Item exist: " , itemExist)
-	console.log("Item: ", item)
-	console.log("Error: ", error)
+	const {data: item, isLoading, isError, error} = getItemById(token as string, categoryName)
 	const { register } = useFormContext();
 	useEffect(() => {
 		setItemExist(item !== undefined)
 	}, [item])
+
 	if(isLoading) return <p>Is Loading...</p>
+	if(isError) return <p>Error: {error.message}</p>
 	return (
 		<form>
 			{itemExist ? (

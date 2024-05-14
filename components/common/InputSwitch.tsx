@@ -2,8 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import styInputSwitch from '@/styles/common/InputSwitch.module.css';
 import {
-	type Control,
-	type FieldValues,
 	useController,
 	useFormContext,
 } from 'react-hook-form';

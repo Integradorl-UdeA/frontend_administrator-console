@@ -6,7 +6,6 @@ import { useSession } from 'next-auth/react';
 import { getAllCategories } from '@/api-hooks/category-api/getAllCategoriesQuery';
 
 const CategorySelection = () => {
-	console.log('Rerenderizadooooo!!!!');
 	const selectedCategory = useInventoryForm((state) => state.selectedCategory);
 	const { categoryName, quantizable, attributes, listAttributes } =
 		selectedCategory;
