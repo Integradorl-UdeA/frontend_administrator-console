@@ -8,6 +8,7 @@ import { TopBar } from '@/components/Layout/topBar/TopBar';
 import layoutStyles from '@/styles/Layout.module.css';
 import SessionAuthProvider from '@/context/SessionAuthProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,6 +24,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
 			</head>
 			<QueryClientProvider client={queryClient}>
 				<body className={`${inter.className} ${layoutStyles.bodyContainer}`}>
+				<ReactQueryDevtools initialIsOpen={false} />
 					<SessionAuthProvider>
 						<SideNav />
 						<TopBar />
