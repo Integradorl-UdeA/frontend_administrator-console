@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useFormContext } from 'react-hook-form';
 import ItemFormFields from './ItemFormFields';
-import type { IItem } from '@/types/item-types';
 import { useSession } from 'next-auth/react';
 import { getItemById } from '@/api-hooks/inventory-api/getItemByIdQuery';
 import { useInventoryForm } from '@/store/inventoryFormStore';
@@ -12,7 +11,7 @@ const QuantizableItemForm = () => {
     const {categoryName} = useInventoryForm(state => state.selectedCategory)
 
 	const token = useSession().data?.token?.token
-	const {data: item, isLoading, error} = getItemById(token as string, "string")
+	const {data: item, isLoading, error} = getItemById(token as string, categoryName)
 	console.log("Item exist: " , itemExist)
 	console.log("Item: ", item)
 	console.log("Error: ", error)

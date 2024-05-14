@@ -3,7 +3,7 @@ import { ItemApiToFormData } from '@/lib/itemFormToApi';
 import { getWallets } from '@/services/item-service/wallet-service';
 import { useInventoryForm } from '@/store/inventoryFormStore';
 import type { IItem } from '@/types/item-types';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
 
 interface UseFormProps {
@@ -19,19 +19,21 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 	const { register, setValue } = useFormContext();
 
 	const hasDefaultItem = type === 'READONLY' || type === 'EDIT';
-	if (hasDefaultItem) {
-		// TODO Maybe take this function and move it to the InventoryFormProvider
-		const defaultItemFormData = ItemApiToFormData(defaultItem as IItem);
-		Object.entries(defaultItemFormData).forEach(([key, value]) => {
-			if(key !== 'attributes' && key !== 'categoryId'){
-				setValue(key, value)
-			}
-		});
-		Object.entries(defaultItemFormData.attributes).forEach(([key, value]) => {
-			setValue(`attributes.${key}`, value)
-		})
-	}
-
+	useEffect(() => {
+		if (hasDefaultItem) {
+			// TODO Maybe take this function and move it to the InventoryFormProvider
+			const defaultItemFormData = ItemApiToFormData(defaultItem as IItem);
+			Object.entries(defaultItemFormData).forEach(([key, value]) => {
+				if(key !== 'attributes' && key !== 'categoryId'){
+					setValue(key, value)
+				}
+			});
+			Object.entries(defaultItemFormData.attributes).forEach(([key, value]) => {
+				setValue(`attributes.${key}`, value)
+			})
+		}
+	}, [])
+	
 	if (quantizable) setValue('itemId', categoryName)
 
 	return (
