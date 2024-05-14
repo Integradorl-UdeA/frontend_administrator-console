@@ -1,14 +1,25 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import TableInventory from '@/components/common/TableInventory';
 import { AddButton } from '@/components/common/table/AddButton';
 import SearchInput from '@/components/common/table/SearchInput';
 import FilterOptions from '@/components/common/table/FilterOptions';
 import { HeaderInfoTablePage } from '@/components/common/table/HeaderInfoTablePage';
+import ModalWindow from '@/components/common/ModalWindow';
+import InventoryForm from '@/components/forms/inventory-form/InventoryForm';
+import InventoryFormProvider from '@/components/forms/inventory-form/InventoryFormProvider';
 const options = ['Todos', 'Disponible', 'No disponible'];
 
-
-
 const InventoryPage = () => {
+	const [modalCreateInventory, setModalCreateInventory] = useState(false);
+
+	const openModal = () => {
+		setModalCreateInventory(true);
+	};
+	const closeModal = () => {
+		setModalCreateInventory(false);
+	};
+
 	return (
 		<div>
 			<section className='container px-4 mx-auto'>
@@ -16,9 +27,14 @@ const InventoryPage = () => {
 					Gestión de inventario
 				</h1>
 				<div className='sm:flex sm:items-center sm:justify-between'>
-					<HeaderInfoTablePage title={"Elementos"} quantity={"6"} text='items activos' description='Estos items se han agregado los últimos 6 meses.'></HeaderInfoTablePage>
+					<HeaderInfoTablePage
+						title={'Elementos'}
+						quantity={'6'}
+						text='items activos'
+						description='Estos items se han agregado los últimos 6 meses.'
+					></HeaderInfoTablePage>
 					<div className='flex items-center mt-4 gap-x-3'>
-						<AddButton text={'Añadir elemento'}></AddButton>
+						<AddButton onClick={openModal} text={'Añadir elemento'}></AddButton>
 					</div>
 				</div>
 				<div className='mt-6 md:flex md:items-center md:justify-between'>
@@ -27,6 +43,18 @@ const InventoryPage = () => {
 				</div>
 				<TableInventory />
 			</section>
+
+			{modalCreateInventory && (
+				<ModalWindow
+					title='Crear nuevo elemento del inventario'
+					close={closeModal}
+					widthClass='w-fit'
+				>
+					<InventoryFormProvider>
+						<InventoryForm closeModal={closeModal} />
+					</InventoryFormProvider>
+				</ModalWindow>
+			)}
 		</div>
 	);
 };

@@ -3,11 +3,12 @@ import styles from '@/styles/Table/Table.module.css';
 
 interface AddButtonProps {
 	text: string;
+	onClick: () => void
 }
 
-const AddButton = ({ text }: AddButtonProps) => {
+const AddButton = ({ text, onClick }: AddButtonProps) => {
 	return (
-		<button className={styles.addButtonTable}>
+		<button onClick={onClick} className={styles.addButtonTable}>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				fill='none'
