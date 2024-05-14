@@ -17,7 +17,7 @@ interface IState {
 	isValidSameNameAttr: (attrName: string) => boolean
 }
 const defaultAdditionalAttr: IAdditionalAttr = {
-	attributes: ['hola', 'chao', 'coma'],
+	attributes: [],
 	listAttributes: [],
 };
 

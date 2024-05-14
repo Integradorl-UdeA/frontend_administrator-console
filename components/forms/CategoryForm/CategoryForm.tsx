@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect } from 'react';
 import InputSwitch from '@/components/common/InputSwitch';
-import { useController, useForm } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import AdditionalCatAttributes from './AdditionalCatAttributes';
 import { useCategoryForm } from '@/store/categoryFormStore';
@@ -21,7 +21,7 @@ const CategoryForm = ({ closeModal }: Props) => {
 		handleSubmit,
 		control,
 		formState: { errors },
-	} = useForm();
+	} = useFormContext();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
@@ -54,7 +54,7 @@ const CategoryForm = ({ closeModal }: Props) => {
 					<input
 						type=''
 						className='w-full rounded-lg py-1 px-3 text-lg focus:outline-greenTwo'
-						{...register('nombre', {
+						{...register('categoryName', {
 							required: {
 								value: true,
 								message: 'Debe escribir el nombre de la categoría',
@@ -64,7 +64,6 @@ const CategoryForm = ({ closeModal }: Props) => {
 					<div className='ml-10'>
 						<InputSwitch
 							label='Cuantificable'
-							control={control}
 							name='quantizable'
 						/>
 					</div>

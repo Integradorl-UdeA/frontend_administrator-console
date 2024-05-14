@@ -1,5 +1,4 @@
 'use client'
-import TableInventory from '@/components/common/TableInventory';
 import { AddButton } from '@/components/common/table/AddButton';
 import { HeaderInfoTablePage } from '@/components/common/table/HeaderInfoTablePage';
 import SearchInput from '@/components/common/table/SearchInput';
@@ -7,6 +6,7 @@ import React, { useState } from 'react';
 import FilterOptions from '@/components/common/table/FilterOptions';
 import ModalWindow from '@/components/common/ModalWindow';
 import CategoryForm from '@/components/forms/CategoryForm/CategoryForm';
+import CategoryFormProvider from '@/components/forms/CategoryForm/CategoryFormProvider';
 const options = ['Cuantificable', 'No cuantificable'];
 
 const CategoriesPage = () => {
@@ -48,7 +48,9 @@ const CategoriesPage = () => {
 					close={closeModal}
 					widthClass='w-fit'
 				>
+					<CategoryFormProvider>
 						<CategoryForm closeModal={closeModal} />
+					</CategoryFormProvider>
 				</ModalWindow>
 			)}
 		</div>
