@@ -10,16 +10,16 @@
 
 
 .logosContainer{
-    @apply flex items-center w-1/2 mt-6;
+    @apply flex items-center justify-center min-w-[300px] max-w-[500px] mt-6;
 }
 
-.sistemaslogoContainer{
+/* .sistemaslogoContainer{
     @apply flex justify-end w-1/2 h-24;
 }
 
 .udealogoContainer{
     @apply flex justify-start  w-1/2 h-24;
-}
+} */
 
 
 .formContainer{
@@ -28,7 +28,7 @@
 }
 
 .formContainerTwo{
-    @apply flex flex-col rounded-xl backdrop-blur-xl py-8 h-2/4 w-2/6 items-center justify-center;
+    @apply flex flex-col rounded-xl backdrop-blur-xl py-8 h-2/4 w-[90%] max-w-[500px] items-center justify-center;
 
     background:  rgba(255,255,255,0.30);
     box-shadow: 0 8px 32px 0 rgba(185, 187, 186, 0.182);
@@ -59,11 +59,11 @@
 }
 
 .label{
-    @apply  text-base text-[#666687];
+    @apply  text-base text-[1.2rem] font-medium text-[#666687];
 }
 
 .form{
-    @apply my-1 space-y-4 w-2/4;
+    @apply my-1 space-y-4 w-[90%];
 }
 
 .formSection{

@@ -90,19 +90,21 @@ function LoginForm() {
 				)}
 			</div>
 			<div className={styles.logosContainer}>
-				<div className={styles.sistemaslogoContainer}>
 					<img
 						src='/images/ig-sistemas.png'
 						alt='Logo departamento ingeniería de sistemas'
+						className='w-1/2 object-contain'
 					/>
-				</div>
-
-				<div className={styles.udealogoContainer}>
+				{/* <div className={styles.sistemaslogoContainer}>
+				</div> */}
 					<img
 						src='/images/ig-udea.png'
 						alt='Logo horizontal Universidad de Antioquia'
+						className='w-1/2 object-contain'
 					/>
-				</div>
+
+				{/* <div className={styles.udealogoContainer}>
+				</div> */}
 			</div>
 		</section>
 	);

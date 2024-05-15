@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import React from 'react';
 import { useGetContentful } from '@/api-hooks/contentful/useGetContentful';
 import { Spinner } from '@/components/common/Spinner';
 import styles from '@/styles/TopBar.module.css';
@@ -26,7 +27,7 @@ const TopBar = () => {
 			{isLoading && (
 				<Spinner color={'gray-300'} />
 			)}
-				<img src={data?.fields.photo.fields.file.url} alt='' className={styles.img} />
+				<img src={data?.fields.file.url} alt='' className={styles.img} />
 			</div>
 			<button
 				onClick={async () => {
