@@ -1,7 +1,10 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import styInputSwitch from '@/styles/common/InputSwitch.module.css';
-import { useController, useFormContext } from 'react-hook-form';
+import {
+	useController,
+	useFormContext,
+} from 'react-hook-form';
 
 interface Props {
 	label: string;
@@ -10,13 +13,14 @@ interface Props {
 	defaultVal?: boolean;
 }
 const InputSwitch = ({ label, name, defaultVal, disabled }: Props) => {
-	const {control, getValues} = useFormContext()
+	const { control, getValues } = useFormContext();
 	const [isChecked, setIsChecked] = useState(getValues(name) as boolean);
+
 	const { field } = useController({
 		name,
 		control,
-		defaultValue: (defaultVal ?? false) || false,
 	});
+
 	const toggle = () => {
 		setIsChecked((prev) => !(prev ?? false));
 	};
@@ -39,7 +43,7 @@ const InputSwitch = ({ label, name, defaultVal, disabled }: Props) => {
 				onClick={toggle}
 				className={containerClasses}
 				id={name}
-        disabled={disabled}
+				disabled={disabled}
 			>
 				<div className={`${styInputSwitch.slider} `}></div>
 			</button>
