@@ -15,7 +15,14 @@ const inter = Inter({ subsets: ['latin'] });
 interface RootLayoutProps {
 	children: React.ReactNode;
 }
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+	defaultOptions: {
+		queries: {
+			refetchOnWindowFocus: false, // default: true
+		},
+	},
+});
+
 const RootLayout = ({ children }: RootLayoutProps) => {
 	return (
 		<html lang='en'>
@@ -24,7 +31,7 @@ const RootLayout = ({ children }: RootLayoutProps) => {
 			</head>
 			<QueryClientProvider client={queryClient}>
 				<body className={`${inter.className} ${layoutStyles.bodyContainer}`}>
-				<ReactQueryDevtools initialIsOpen={false} />
+					<ReactQueryDevtools initialIsOpen={false} />
 					<SessionAuthProvider>
 						<SideNav />
 						<TopBar />

@@ -2,13 +2,17 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect } from 'react';
 import InputSwitch from '@/components/common/InputSwitch';
-import { useController, useForm } from 'react-hook-form';
+import { useController, useFormContext } from 'react-hook-form';
 import type { FieldValues, SubmitHandler } from 'react-hook-form';
 import AdditionalCatAttributes from './AdditionalCatAttributes';
 import { useCategoryForm } from '@/store/categoryFormStore';
 import { FaPlus } from 'react-icons/fa6';
 import { AiOutlineClose } from 'react-icons/ai';
 import FormError from '../errors-logs/FormError';
+import { postCreateCategory } from '@/api-hooks/category-api/createCategoryQuery';
+import { useSession } from 'next-auth/react';
+import type { ICategory } from '@/types/categoryTypes';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
 	closeModal?: () => void;
@@ -16,15 +20,29 @@ interface Props {
 const CategoryForm = ({ closeModal }: Props) => {
 	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
+	const clearAdditionalAttr = useCategoryForm(
+		(state) => state.clearAdditionalAttr,
+	);
 	const {
 		register,
 		handleSubmit,
 		control,
-		formState: { errors },
-	} = useForm();
+		reset,
+		formState,
+		getValues,
+		setValue,
+		watch,
+		formState: { errors, isSubmitSuccessful },
+	} = useFormContext();
+	const token = useSession().data?.token?.token;
+
+	const queryClient = useQueryClient()
+	const { mutate: createCategory } = postCreateCategory(token as string ,queryClient);
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
+		createCategory(data as ICategory);
+		clearAdditionalAttr();
 		closeModal != null && closeModal();
 	};
 
@@ -44,6 +62,22 @@ const CategoryForm = ({ closeModal }: Props) => {
 		listAttributeField.onChange(additionalAttr.listAttributes);
 	}, [additionalAttr]);
 
+	useEffect(() => {
+		if (isSubmitSuccessful) reset();
+	}, [reset, isSubmitSuccessful, formState]);
+
+	const isQuantizable = watch('quantizable');
+	if (isQuantizable as boolean) {
+		setValue('idFieldName', getValues('categoryName'));
+	}
+
+	const handleCategoryNameOnChange = (e: any) => {
+		if (isQuantizable as boolean) {
+			setValue('idFieldName', getValues('categoryName'));
+		}
+	};
+
+	console.log('isQuantiable: ', isQuantizable);
 	return (
 		<div className='flex flex-col items-center justify-center text-textColorOne'>
 			<form className='text-lg' onSubmit={handleSubmit(onSubmit)}>
@@ -54,26 +88,46 @@ const CategoryForm = ({ closeModal }: Props) => {
 					<input
 						type=''
 						className='w-full rounded-lg py-1 px-3 text-lg focus:outline-greenTwo'
-						{...register('nombre', {
+						{...register('categoryName', {
 							required: {
 								value: true,
 								message: 'Debe escribir el nombre de la categoría',
 							},
+							onChange: handleCategoryNameOnChange,
 						})}
 					/>
 					<div className='ml-10'>
-						<InputSwitch
-							label='Cuantificable'
-							control={control}
-							name='quantizable'
-						/>
+						<InputSwitch label='Cuantificable' name='quantizable' />
 					</div>
 				</div>
+
+				<div className='flex items-center my-4'>
+					<label className='mr-5' htmlFor='name'>
+						{(isQuantizable as boolean)
+							? 'ID de los items: '
+							: 'Campo de ID para los items:'}
+					</label>
+					<input
+						disabled={isQuantizable}
+						type='text'
+						className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
+						{...register('idFieldName', {
+							// TODO Cambiar el nombre cuando e realicen los cambios en los endpoint
+							required: {
+								value: true,
+								message: 'Debe llenar el campo',
+							},
+						})}
+					/>
+				</div>
+
 				<AdditionalCatAttributes />
-				{(errors.nombre != null) && 
+				{/* TODO Cambiar el nombre cuando se realicen los cambios en los endpoint */}
+				{(errors.categoryName != null || errors.idFieldName != null) && (
 					<div className='w-full flex items-center justify-center my-5'>
-						<FormError msg={errors.nombre?.message as string}/>
-					</div>}
+						<FormError msg='Debe llenar los campos' />
+					</div>
+				)}
 				{fieldFormStatus === 0 && (
 					<>
 						<hr className='border border-greenFour/50 border-solid' />
@@ -83,6 +137,7 @@ const CategoryForm = ({ closeModal }: Props) => {
 								type='button'
 								onClick={() => {
 									closeModal != null && closeModal();
+									clearAdditionalAttr();
 								}}
 							>
 								<AiOutlineClose className='text-white bg-red-500 rounded-full p-1 mr-2 text-2xl' />

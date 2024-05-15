@@ -14,8 +14,8 @@ export const getLinks = () => [
 		icon: HiArchiveBoxArrowDown,
 	},
 	{
-		label: 'Materiales',
-		route: '/materiales',
+		label: 'Categorías',
+		route: '/categorias',
 		icon: AiFillProfile,
 	},
 	{

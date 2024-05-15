@@ -15,11 +15,15 @@ interface IState {
 	isValidSameNameTextAttr: (attrName: string) => boolean
 	isValidSameNameListAttr: (attrName: string) => boolean
 	isValidSameNameAttr: (attrName: string) => boolean
+	clearAdditionalAttr: () => void
+	clearEditingAttr: () => void
 }
 const defaultAdditionalAttr: IAdditionalAttr = {
-	attributes: ['hola', 'chao', 'coma'],
+	attributes: [],
 	listAttributes: [],
 };
+
+const defaultEditingAttribute: null |string | IListAttr = ''
 
 export const useCategoryForm = create<IState>((set, get) => {
 	return {
@@ -126,5 +130,21 @@ export const useCategoryForm = create<IState>((set, get) => {
 		isValidSameNameAttr: (attrName: string) => {
 			return (get().isValidSameNameTextAttr(attrName) && get().isValidSameNameListAttr(attrName))
 		},
+
+		clearAdditionalAttr: () => {
+			set( state => ({
+				...state,
+				additionalAttr: defaultAdditionalAttr
+			}))
+		},
+
+		clearEditingAttr: () => {
+			set( state => ({
+				...state,
+				editingAttribute: defaultEditingAttribute
+			}))
+		}
 	};
+
+
 });
