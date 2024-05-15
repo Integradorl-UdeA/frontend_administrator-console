@@ -12,6 +12,7 @@ import FormError from '../errors-logs/FormError';
 import { postCreateCategory } from '@/api-hooks/category-api/createCategoryQuery';
 import { useSession } from 'next-auth/react';
 import type { ICategory } from '@/types/categoryTypes';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
 	closeModal?: () => void;
@@ -35,7 +36,8 @@ const CategoryForm = ({ closeModal }: Props) => {
 	} = useFormContext();
 	const token = useSession().data?.token?.token;
 
-	const { mutate: createCategory } = postCreateCategory(token as string);
+	const queryClient = useQueryClient()
+	const { mutate: createCategory } = postCreateCategory(token as string ,queryClient);
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
