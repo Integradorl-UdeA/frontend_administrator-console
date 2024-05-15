@@ -22,7 +22,6 @@ const CategoryForm = ({ closeModal }: Props) => {
 		control,
 		formState: { errors },
 	} = useFormContext();
-
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
 		closeModal != null && closeModal();
@@ -67,6 +66,21 @@ const CategoryForm = ({ closeModal }: Props) => {
 							name='quantizable'
 						/>
 					</div>
+				</div>
+				<div className='flex items-center my-4'>
+					<label className='mr-5' htmlFor='name'>
+						Campo de ID para los items:{' '}
+					</label>
+					<input
+						type='text'
+						className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
+						{...register('idFieldName', {
+							required: {
+								value: true,
+								message: 'Debe llenar el campo',
+							},
+						})}
+					/>
 				</div>
 				<AdditionalCatAttributes />
 				{(errors.nombre != null) && 
