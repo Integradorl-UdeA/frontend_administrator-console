@@ -1,15 +1,19 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Inter } from 'next/font/google';
-import React from 'react';
+import { useGetContentful } from '@/api-hooks/contentful/useGetContentful';
+import { Spinner } from '@/components/common/Spinner';
 import styles from '@/styles/TopBar.module.css';
+import { signOut, useSession } from 'next-auth/react';
+import { Inter } from 'next/font/google';
 import { GoSignOut } from 'react-icons/go';
-import { signOut , useSession } from 'next-auth/react';
 
 
 const inter = Inter({ subsets: ['latin'] });
 
 const TopBar = () => {
 	const userInfo = useSession().data?.user;
+	const {data, isLoading}  = useGetContentful(userInfo?.username);
+	 // Empty dependency array to run only once on mount
+
 	const role =
 		userInfo?.role === 'AUXADMI' ? 'Auxiliar Administrativo' : 'Jefe';
 	return (
@@ -19,7 +23,10 @@ const TopBar = () => {
 				<span>{role}</span>
 			</div>
 			<div>
-				<img src='/images/avatar.png' alt='' className={styles.img} />
+			{isLoading && (
+				<Spinner color={'gray-300'} />
+			)}
+				<img src={data?.fields.photo.fields.file.url} alt='' className={styles.img} />
 			</div>
 			<button
 				onClick={async () => {
@@ -34,3 +41,4 @@ const TopBar = () => {
 };
 
 export { TopBar };
+
