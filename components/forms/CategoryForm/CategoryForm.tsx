@@ -16,15 +16,19 @@ interface Props {
 const CategoryForm = ({ closeModal }: Props) => {
 	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
+	const clearAdditionalAttr = useCategoryForm((state) => state.clearAdditionalAttr);
 	const {
 		register,
 		handleSubmit,
 		control,
-		formState: { errors },
+		reset,
+		formState,
+		formState: { errors, isSubmitSuccessful },
 	} = useFormContext();
-	
+
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
+		clearAdditionalAttr()
 		closeModal != null && closeModal();
 	};
 
@@ -43,6 +47,10 @@ const CategoryForm = ({ closeModal }: Props) => {
 		attributesField.onChange(additionalAttr.attributes);
 		listAttributeField.onChange(additionalAttr.listAttributes);
 	}, [additionalAttr]);
+
+	useEffect(() => {
+		if (isSubmitSuccessful) reset();
+	}, [reset, isSubmitSuccessful, formState]);
 
 	return (
 		<div className='flex flex-col items-center justify-center text-textColorOne'>
@@ -97,6 +105,7 @@ const CategoryForm = ({ closeModal }: Props) => {
 								type='button'
 								onClick={() => {
 									closeModal != null && closeModal();
+									clearAdditionalAttr()
 								}}
 							>
 								<AiOutlineClose className='text-white bg-red-500 rounded-full p-1 mr-2 text-2xl' />
