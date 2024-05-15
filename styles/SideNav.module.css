@@ -1,6 +1,7 @@
 @font-face {
     font-family: 'lisfont';
     src: url('../fonts/Pixellari.ttf') format('truetype');
+	font-style: normal;
 }
 
 .nav {
