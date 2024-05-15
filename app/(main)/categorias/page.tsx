@@ -7,6 +7,7 @@ import FilterOptions from '@/components/common/table/FilterOptions';
 import ModalWindow from '@/components/common/ModalWindow';
 import CategoryForm from '@/components/forms/CategoryForm/CategoryForm';
 import CategoryFormProvider from '@/components/forms/CategoryForm/CategoryFormProvider';
+import TableCategory from '@/components/common/TableCategory';
 const options = ['Cuantificable', 'No cuantificable'];
 
 const CategoriesPage = () => {
@@ -40,6 +41,7 @@ const CategoriesPage = () => {
 					<FilterOptions options={options}></FilterOptions>
 					<SearchInput></SearchInput>
 				</div>
+					<TableCategory/>
 			</section>
 
 			{modalCreateCategory && (
