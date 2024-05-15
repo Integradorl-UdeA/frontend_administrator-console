@@ -9,6 +9,9 @@ import { useCategoryForm } from '@/store/categoryFormStore';
 import { FaPlus } from 'react-icons/fa6';
 import { AiOutlineClose } from 'react-icons/ai';
 import FormError from '../errors-logs/FormError';
+import { postCreateCategory } from '@/api-hooks/category-api/createCategoryQuery';
+import { useSession } from 'next-auth/react';
+import type { ICategory } from '@/types/categoryTypes';
 
 interface Props {
 	closeModal?: () => void;
@@ -16,7 +19,9 @@ interface Props {
 const CategoryForm = ({ closeModal }: Props) => {
 	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
-	const clearAdditionalAttr = useCategoryForm((state) => state.clearAdditionalAttr);
+	const clearAdditionalAttr = useCategoryForm(
+		(state) => state.clearAdditionalAttr,
+	);
 	const {
 		register,
 		handleSubmit,
@@ -25,10 +30,14 @@ const CategoryForm = ({ closeModal }: Props) => {
 		formState,
 		formState: { errors, isSubmitSuccessful },
 	} = useFormContext();
+	const token = useSession().data?.token?.token;
+	console.log('token', token)
+	const { mutate: createCategory } = postCreateCategory(token as string);
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
-		clearAdditionalAttr()
+		createCategory(data as ICategory)
+		clearAdditionalAttr();
 		closeModal != null && closeModal();
 	};
 
@@ -70,10 +79,7 @@ const CategoryForm = ({ closeModal }: Props) => {
 						})}
 					/>
 					<div className='ml-10'>
-						<InputSwitch
-							label='Cuantificable'
-							name='quantizable'
-						/>
+						<InputSwitch label='Cuantificable' name='quantizable' />
 					</div>
 				</div>
 				<div className='flex items-center my-4'>
@@ -83,7 +89,7 @@ const CategoryForm = ({ closeModal }: Props) => {
 					<input
 						type='text'
 						className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
-						{...register('idFieldName', {
+						{...register('idFieldName', { // TODO Cambiar el nombre cuando e realicen los cambios en los endpoint
 							required: {
 								value: true,
 								message: 'Debe llenar el campo',
@@ -92,10 +98,12 @@ const CategoryForm = ({ closeModal }: Props) => {
 					/>
 				</div>
 				<AdditionalCatAttributes />
-				{(errors.categoryName != null || errors.idFieldName != null) && 
+				 {/* TODO Cambiar el nombre cuando se realicen los cambios en los endpoint */}
+				{(errors.categoryName != null || errors.idFieldName != null) && ( 
 					<div className='w-full flex items-center justify-center my-5'>
-						<FormError msg='Debe llenar los campos'/>
-					</div>}
+						<FormError msg='Debe llenar los campos' />
+					</div>
+				)}
 				{fieldFormStatus === 0 && (
 					<>
 						<hr className='border border-greenFour/50 border-solid' />
@@ -105,7 +113,7 @@ const CategoryForm = ({ closeModal }: Props) => {
 								type='button'
 								onClick={() => {
 									closeModal != null && closeModal();
-									clearAdditionalAttr()
+									clearAdditionalAttr();
 								}}
 							>
 								<AiOutlineClose className='text-white bg-red-500 rounded-full p-1 mr-2 text-2xl' />
