@@ -12,10 +12,16 @@ interface Props {
 const ListFieldForm = ({ type, listAttr }: Props) => {
 	const isEditing = () => type === 1;
 	const defaultValue = isEditing()
-		? { name: (listAttr as IListAttr).name, list: (listAttr as IListAttr).list }
-		: { name: '', list: [] };
+		? {
+				name: (listAttr as IListAttr).name,
+				list: (listAttr as IListAttr).list.join(', '),
+		  }
+		: { name: '', list: '' };
 
-	const [listAttribute, setListAttribute] = useState<IListAttr>(defaultValue);
+	const [listAttributeForm, setListAttributeForm] = useState<{
+		name: string;
+		list: string;
+	}>(defaultValue);
 
 	const addListAttribute = useCategoryForm((state) => state.addListAttribute);
 	const editListAttribute = useCategoryForm((state) => state.editListAttribute);
@@ -30,14 +36,13 @@ const ListFieldForm = ({ type, listAttr }: Props) => {
 	const [errorMsg, setErrorMsg] = useState<string>('');
 
 	const isValidForm = () => {
-		console.log('isValidForm');
-		if (!isValidSameNameAttr(listAttribute.name)) {
-			console.log('pasó por acá');
-			setErrorMsg(`Ya existe un campo llamado "${listAttribute.name}"`);
-			return false;
+		if(!isEditing()){	
+			if (!isValidSameNameAttr(listAttributeForm.name)) {
+				setErrorMsg(`Ya existe un campo llamado "${listAttributeForm.name}"`);
+				return false;
+			}
 		}
-		if (listAttribute.name === '' || listAttribute.list.length === 0) {
-			console.log('PAsó por vacío');
+		if (listAttributeForm.name === '' || listAttributeForm.list === '') {
 			setErrorMsg(`No puede dejar campos vacíos`);
 			return false;
 		}
@@ -45,12 +50,14 @@ const ListFieldForm = ({ type, listAttr }: Props) => {
 	};
 
 	const handleSubmit = () => {
-		console.log('handleSubmit');
 		if (!isValidForm()) {
-			console.log('Pasó por acá');
 			setError(true);
 			return;
 		}
+		const listAttribute = {
+			name: listAttributeForm.name,
+			list: listStringToArray(listAttributeForm.list),
+		};
 		type === 0
 			? addListAttribute(listAttribute)
 			: editListAttribute(listAttribute);
@@ -63,17 +70,14 @@ const ListFieldForm = ({ type, listAttr }: Props) => {
 			.replace(/\s*,\s*/g, ',')
 			.split(',');
 
-	const listArrayToString = (list: string[]) => list.join(', ');
-
 	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-		if(error) setError(false)
-		let { name, value }: { name: string; value: string | string[] } = e.target;
+		if (error) setError(false);
+		const { name, value } = e.target;
 
-		if (name === 'list') value = listStringToArray(value);
-		setListAttribute({
-			...listAttribute,
+		setListAttributeForm((prev) => ({
+			...prev,
 			[name]: value,
-		});
+		}));
 	};
 
 	return (
@@ -91,7 +95,7 @@ const ListFieldForm = ({ type, listAttr }: Props) => {
 						type='text'
 						placeholder='Nuevo campo'
 						name='name'
-						value={listAttribute.name}
+						value={listAttributeForm.name}
 						onChange={handleChange}
 					/>
 				</div>
@@ -104,7 +108,7 @@ const ListFieldForm = ({ type, listAttr }: Props) => {
 						type='text'
 						placeholder='Ej: Manzana, Narnaja, Mandarina ...'
 						name='list'
-						value={listArrayToString(listAttribute.list)}
+						value={listAttributeForm.list}
 						onChange={handleChange}
 					/>
 				</div>
