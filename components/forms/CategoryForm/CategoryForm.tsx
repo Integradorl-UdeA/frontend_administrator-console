@@ -22,6 +22,7 @@ const CategoryForm = ({ closeModal }: Props) => {
 		control,
 		formState: { errors },
 	} = useFormContext();
+	
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
 		closeModal != null && closeModal();
@@ -83,9 +84,9 @@ const CategoryForm = ({ closeModal }: Props) => {
 					/>
 				</div>
 				<AdditionalCatAttributes />
-				{(errors.nombre != null) && 
+				{(errors.categoryName != null || errors.idFieldName != null) && 
 					<div className='w-full flex items-center justify-center my-5'>
-						<FormError msg={errors.nombre?.message as string}/>
+						<FormError msg='Debe llenar los campos'/>
 					</div>}
 				{fieldFormStatus === 0 && (
 					<>
