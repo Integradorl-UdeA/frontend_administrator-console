@@ -1,5 +1,5 @@
-import client  from '../utils/Contentful';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import client from '../../utils/Contentful';
 
 const useGetContentful = (username: string | undefined) => {
     const [data, setData] = useState(null);

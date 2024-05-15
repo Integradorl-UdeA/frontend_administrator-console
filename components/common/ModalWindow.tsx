@@ -7,7 +7,7 @@ interface Props {
   children: React.ReactNode,
   title: string
   close: () => void,
-  widthClass: string
+  widthClass?: string
 }
 const ModalWindow = ({ children, title, close, widthClass}: Props) => {
   return (

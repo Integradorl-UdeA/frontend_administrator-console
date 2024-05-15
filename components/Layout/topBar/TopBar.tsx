@@ -1,11 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Inter } from 'next/font/google';
-import React from 'react';
-import styles from '@/styles/TopBar.module.css';
-import { GoSignOut } from 'react-icons/go';
-import { signOut, useSession } from 'next-auth/react';
-import { useGetContentful } from '@/hooks/useGetContentful';
+import { useGetContentful } from '@/api-hooks/contentful/useGetContentful';
 import { Spinner } from '@/components/common/Spinner';
+import styles from '@/styles/TopBar.module.css';
+import { signOut, useSession } from 'next-auth/react';
+import { Inter } from 'next/font/google';
+import { GoSignOut } from 'react-icons/go';
 
 
 const inter = Inter({ subsets: ['latin'] });
@@ -42,3 +41,4 @@ const TopBar = () => {
 };
 
 export { TopBar };
+
