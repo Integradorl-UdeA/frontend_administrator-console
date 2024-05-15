@@ -46,11 +46,11 @@ function LoginForm() {
 					<img
 						src='/images/avatar_login.png'
 						alt='avatar logo pinguino'
-						className='w-16'
+						className='w-[70px]'
 					/>
 				</span>
 				<span className={styles.tipografyLogo}>&lt;hello lis/&gt;</span>
-				<span className={styles.label}>Inicia sesión o regístrate</span>
+				<span className={styles.label}>Inicia sesión</span>
 
 				<form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
 					<div className={styles.formSection}>

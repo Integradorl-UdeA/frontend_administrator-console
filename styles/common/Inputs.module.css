@@ -1,5 +1,5 @@
 .inputText , .inputPassword{
-    @apply rounded-xl py-3 px-2 text-sm m-0.5 w-full;
+    @apply rounded-xl py-3 px-4 text-sm m-0.5 w-full;
 }
 
 .inputText{

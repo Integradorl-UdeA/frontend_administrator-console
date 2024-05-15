@@ -27,15 +27,15 @@
 }
 
 .formContainerTwo{
-    @apply flex flex-col backdrop-blur-xl py-8 h-2/4 w-2/6 items-center justify-center;
-    border-radius: 10px;
+    @apply flex flex-col rounded-xl backdrop-blur-xl py-8 h-2/4 w-2/6 items-center justify-center;
+
     background:  rgba(255,255,255,0.30);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    box-shadow: 0 8px 32px 0 rgba(185, 187, 186, 0.182);
    
 
 }
 .tipografyLogo{
-    @apply font-bold text-[45px] mt-1 text-[#112E4A];
+    @apply font-bold text-[42px] mt-1 text-[#112E4A];
     font-family: 'lisfont';
 
 }
@@ -58,11 +58,11 @@
 }
 
 .label{
-    @apply mt-1 text-base text-[#666687];
+    @apply  text-base text-[#666687];
 }
 
 .form{
-    @apply my-1  w-2/4;
+    @apply my-1 space-y-4 w-2/4;
 }
 
 .formSection{
