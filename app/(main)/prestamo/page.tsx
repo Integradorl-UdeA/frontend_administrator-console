@@ -15,8 +15,8 @@ const LoanPage = () => {
 				</h1>
 				<div className='sm:flex sm:items-center sm:justify-between'>
 					<HeaderInfoTablePage title={"Préstamos"} quantity={"6"} text='préstamos activos' description='Estos préstamos se han realizado en los últimos 6 meses.'></HeaderInfoTablePage>
-					<div className='flex items-center mt-4 gap-x-3'>
-						<AddButton text={'Añadir préstamo'}></AddButton>
+					<div className='flex item s-center mt-4 gap-x-3'>
+						<AddButton onClick={() => {}} text={'Añadir préstamo'}></AddButton>
 					</div>
 				</div>
 				<div className='mt-6 md:flex md:items-center md:justify-between'>
