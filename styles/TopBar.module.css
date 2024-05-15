@@ -8,7 +8,7 @@
 }
 
 .img{
-    @apply w-16;
+    @apply w-16 rounded-full;
 }
 
 .iconSignOut{

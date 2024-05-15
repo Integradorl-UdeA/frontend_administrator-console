@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'lisfont';
+    src: url('../fonts/Pixellari.ttf') format('truetype');
+	font-style: normal;
+}
+
 .nav {
 	@apply w-[200px] max-w-md h-full space-y-6 pb-3 flex flex-col items-center;
 	background-color: var(--color-green1);
@@ -11,10 +17,11 @@
 }
 
 .logoContainer {
-	@apply w-[60%] flex flex-col items-center;
+	@apply w-[60%] mt-16 flex flex-col items-center gap-4;
 }
 .containerLogoTitle {
-	@apply font-bold text-3xl text-whiteBonds;
+	@apply font-bold text-4xl text-center text-white;
+	font-family: 'lisfont';
 }
 .ul{
 	@apply list-none space-y-5;
