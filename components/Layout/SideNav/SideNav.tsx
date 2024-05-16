@@ -1,8 +1,6 @@
 import { NavLinks } from './NavLinks';
-import { Inter } from 'next/font/google';
 import React from 'react';
 import styles from '@/styles/SideNav.module.css';
-const inter = Inter({ subsets: ['latin'] });
 
 const SideNav = () => {
 	return (

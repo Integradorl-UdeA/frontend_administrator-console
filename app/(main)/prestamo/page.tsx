@@ -1,3 +1,4 @@
+'use client'
 import React from 'next';
 import TableLoan from '@/components/common/TableLoan';
 import { AddButton } from '@/components/common/table/AddButton';
