@@ -10,7 +10,7 @@ const Table = ({ column, children }: GeneralTableProps) => {
 		<table className='min-w-full divide-y divide-gray-200'>
 			<thead className='bg-gray-50'>
 				<tr>
-					{column.map((column, index) => (
+					{column?.map((column, index) => (
 						<th
 							scope='col'
 							className={`px-${

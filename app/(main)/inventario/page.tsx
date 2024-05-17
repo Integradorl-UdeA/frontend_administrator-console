@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { Suspense, useState } from 'react';
 import TableInventory from '@/components/common/TableInventory';
 import { AddButton } from '@/components/common/table/AddButton';
 import SearchInput from '@/components/common/table/SearchInput';
@@ -19,7 +19,6 @@ const InventoryPage = () => {
 	const closeModal = () => {
 		setModalCreateInventory(false);
 	};
-
 	return (
 		<div>
 			<section className='container px-4 mx-auto'>
@@ -41,7 +40,9 @@ const InventoryPage = () => {
 					<FilterOptions options={options}></FilterOptions>
 					<SearchInput></SearchInput>
 				</div>
-				<TableInventory />
+				<Suspense>
+					<TableInventory />
+				</Suspense>
 			</section>
 
 			{modalCreateInventory && (
