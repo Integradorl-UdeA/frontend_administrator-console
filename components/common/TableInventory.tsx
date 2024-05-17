@@ -7,6 +7,7 @@ import { getItemsTableHeaders } from '@/api-hooks/inventory-api/getItemTableHead
 import { useSession } from 'next-auth/react';
 import { getItemsByPage } from '@/api-hooks/inventory-api/getItemsByPage';
 import { useQueryClient } from '@tanstack/react-query';
+import { headers } from 'next/headers';
 
 const TableInventory = () => {
 	const token = useSession().data?.token?.token;
@@ -51,7 +52,6 @@ const TableInventory = () => {
 		}
 	};
 
-	console.log(itemsPage?.items)
 	if (isErrorHeaders) return <p>Header Error: {errorHeaders.message}</p>;
 	if (isErrorItems) return <p>Item Error: {errorItems.message}</p>;
 	if (isLoadingItems) return <p> Cargandoooo </p>;

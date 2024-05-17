@@ -8,6 +8,7 @@ export const getLoanTableHeaders = (token: string) => {
 			const data: string[] = await (
 				await loanTemplate(token).get('/tableHeaders/')
 			).data;
+            data.push("Acciones")
 			return data;
 		},
 	});
