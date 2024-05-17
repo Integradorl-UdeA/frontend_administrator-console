@@ -4,13 +4,13 @@ import { IoClose } from 'react-icons/io5';
 import { useModalContext } from './modal-window-context';
 
 interface Props {
-	onClose: () => void;
+	onClose?: () => void;
 }
 const CloseModal = ({onClose}: Props) => {
 	const { closeModal } = useModalContext();
 
 	const onClick = () => {
-        onClose()
+        onClose !== undefined && onClose()
         closeModal()
     };
 	return (
