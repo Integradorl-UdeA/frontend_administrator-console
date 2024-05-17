@@ -31,7 +31,7 @@ const TopBar = () => {
 			</div>
 			<button
 				onClick={async () => {
-					await signOut();
+					await signOut({callbackUrl: "/login"});
 				}}
 				className={styles.btnSignOut}
 			>

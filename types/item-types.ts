@@ -26,3 +26,20 @@ export interface IItemFormData{
     quantity?: 0
     attributes: Record<string, string>
 }
+
+export interface IItemTableResponse{
+    id: string
+    state: string
+    category: string
+    wallet: string
+    attributes: string[]
+    quantizable: boolean
+}
+
+export interface IItemPerPageResponse{
+	totalPages: number
+	currentPage: number
+	items: IItemTableResponse[]
+	totalElements: number
+
+}

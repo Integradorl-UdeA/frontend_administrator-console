@@ -10,14 +10,13 @@ const QuantizableItemForm = () => {
     const {categoryName} = useInventoryForm(state => state.selectedCategory)
 
 	const token = useSession().data?.token?.token
-	const {data: item, isLoading, isError, error} = getItemById(token as string, categoryName)
+	const {data: item, isLoading} = getItemById(token as string, categoryName)
 	const { register } = useFormContext();
 	useEffect(() => {
 		setItemExist(item !== undefined)
 	}, [item])
 
 	if(isLoading) return <p>Is Loading...</p>
-	if(isError) return <p>Error: {error.message}</p>
 	return (
 		<form>
 			{itemExist ? (

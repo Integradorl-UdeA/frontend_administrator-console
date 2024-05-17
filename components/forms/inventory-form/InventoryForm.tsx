@@ -94,6 +94,7 @@ const InventoryForm = ({ closeModal }: InventoryFormProps) => {
 							className=' flex items-center justify-center bg-white py-2 px-3 rounded-full font-medium shadow-lg hover:bg-greenThree/10'
 							type='button'
 							onClick={() => {
+								console.log("clickeado")
 								setFormState(1);
 							}}
 						>
