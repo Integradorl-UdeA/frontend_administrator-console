@@ -5,9 +5,9 @@ import { AddButton } from '@/components/common/table/AddButton';
 import SearchInput from '@/components/common/table/SearchInput';
 import FilterOptions from '@/components/common/table/FilterOptions';
 import { HeaderInfoTablePage } from '@/components/common/table/HeaderInfoTablePage';
-import ModalWindow from '@/components/common/ModalWindow';
 import InventoryForm from '@/components/forms/inventory-form/InventoryForm';
 import InventoryFormProvider from '@/components/forms/inventory-form/InventoryFormProvider';
+import ModalWindowProvider from '@/components/common/ModalWindow/ModalWindowProvider';
 const options = ['Todos', 'Disponible', 'No disponible'];
 
 const InventoryPage = () => {
@@ -45,15 +45,15 @@ const InventoryPage = () => {
 			</section>
 
 			{modalCreateInventory && (
-				<ModalWindow
+				<ModalWindowProvider
 					title='Crear nuevo elemento del inventario'
-					close={closeModal}
+					closeModal={closeModal}
 					widthClass='w-fit'
 				>
 					<InventoryFormProvider>
-						<InventoryForm closeModal={closeModal} />
+						<InventoryForm/>
 					</InventoryFormProvider>
-				</ModalWindow>
+				</ModalWindowProvider>
 			)}
 		</div>
 	);

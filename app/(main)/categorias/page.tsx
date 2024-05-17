@@ -4,7 +4,7 @@ import { HeaderInfoTablePage } from '@/components/common/table/HeaderInfoTablePa
 import SearchInput from '@/components/common/table/SearchInput';
 import React, { useState } from 'react';
 import FilterOptions from '@/components/common/table/FilterOptions';
-import ModalWindow from '@/components/common/ModalWindow';
+import ModalWindow from '@/components/common/ModalWindow/ModalWindow';
 import CategoryForm from '@/components/forms/CategoryForm/CategoryForm';
 import CategoryFormProvider from '@/components/forms/CategoryForm/CategoryFormProvider';
 import TableCategory from '@/components/common/TableCategory';

@@ -21,12 +21,10 @@ import type { IItem, IItemFormData } from '@/types/item-types';
 import QuantizableItemForm from './QuantizableItemForm';
 import { useSession } from 'next-auth/react';
 import { postCreateItem } from '@/api-hooks/inventory-api/createItemQuery';
+import { useModalContext } from '@/components/common/ModalWindow/modal-window-context';
 
-interface InventoryFormProps {
-	closeModal: () => void;
-}
-
-const InventoryForm = ({ closeModal }: InventoryFormProps) => {
+const InventoryForm = () => {
+	const {closeModal} = useModalContext()
 	const selectedCategory = useInventoryForm((state) => state.selectedCategory);
 	const formState = useInventoryForm((state) => state.formState);
 	const setFormState = useInventoryForm((state) => state.setFormState);
