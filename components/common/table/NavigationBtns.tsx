@@ -1,33 +1,23 @@
 import React from 'react';
 import NextPrevButton from './NextPrevButton';
-import { useQueryClient } from '@tanstack/react-query';
 interface Props {
 	totalPages: number;
 	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 	currentPage: number;
-	queryKey: string;
 }
 const NavigationBtns = ({
 	totalPages,
 	setCurrentPage,
 	currentPage,
-	queryKey,
 }: Props) => {
-	const queryClient = useQueryClient();
 	const goToNextPage = () => {
 		if (totalPages !== undefined && currentPage < totalPages - 1) {
 			setCurrentPage((prev) => prev + 1);
-			queryClient.refetchQueries({ queryKey: [queryKey] }).catch((error) => {
-				console.error('Error invalidating queries:', error);
-			});
 		}
 	};
 	const goToPreviousPage = () => {
 		if (currentPage > 0) {
 			setCurrentPage((prev) => prev - 1);
-			queryClient.refetchQueries({ queryKey: [queryKey] }).catch((error) => {
-				console.error('Error invalidating queries:', error);
-			});
 		}
 	};
 

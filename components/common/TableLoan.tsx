@@ -1,16 +1,17 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TableRowLoan } from './table/TableRowLoan';
 import { Table } from './table/Table';
 import { getLoanPerPage } from '@/api-hooks/loan-api/getLoanPerPageQuery';
 import { useSession } from 'next-auth/react';
 import { getLoanTableHeaders } from '@/api-hooks/loan-api/getLoanTableHeaders';
 import NavigationBtns from './table/NavigationBtns';
+import { useQueryClient } from '@tanstack/react-query';
 
 const TableLoan = () => {
 	const token = useSession().data?.token?.token;
 	const [currentPage, setCurrentPage] = useState<number>(0);
-
+	const queryClient = useQueryClient()
 	const {
 		data: loanPage,
 		isLoading: isLoadingLoan,
@@ -22,6 +23,13 @@ const TableLoan = () => {
 		isError: isErrorHeaders,
 		error: errorHeaders,
 	} = getLoanTableHeaders(token as string);
+
+	useEffect(() => {
+		const refetch = async () =>{
+			await queryClient.refetchQueries({queryKey: ['items-per-page']})
+		}
+		refetch().catch((error) => {console.log('Error', error)})
+	}, [currentPage])
 
 	const totalPages = loanPage?.totalPages;
 
@@ -60,7 +68,6 @@ const TableLoan = () => {
 					totalPages={totalPages as number}
 					setCurrentPage={setCurrentPage}
 					currentPage={currentPage}
-					queryKey='loan-per-page'
 				/>
 			</div>
 		</div>
