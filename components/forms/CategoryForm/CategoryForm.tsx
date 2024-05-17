@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import React, { useEffect } from 'react';
 import InputSwitch from '@/components/common/InputSwitch';
 import { useController, useFormContext } from 'react-hook-form';
@@ -13,11 +12,10 @@ import { postCreateCategory } from '@/api-hooks/category-api/createCategoryQuery
 import { useSession } from 'next-auth/react';
 import type { ICategory } from '@/types/categoryTypes';
 import { useQueryClient } from '@tanstack/react-query';
+import { useModalContext } from '@/components/common/ModalWindow/modal-window-context';
 
-interface Props {
-	closeModal?: () => void;
-}
-const CategoryForm = ({ closeModal }: Props) => {
+const CategoryForm = () => {
+	const { closeModal } = useModalContext();
 	const additionalAttr = useCategoryForm((state) => state.additionalAttr);
 	const fieldFormStatus = useCategoryForm((state) => state.formFieldStatus);
 	const clearAdditionalAttr = useCategoryForm(
@@ -36,11 +34,13 @@ const CategoryForm = ({ closeModal }: Props) => {
 	} = useFormContext();
 	const token = useSession().data?.token?.token;
 
-	const queryClient = useQueryClient()
-	const { mutate: createCategory } = postCreateCategory(token as string ,queryClient);
+	const queryClient = useQueryClient();
+	const { mutate: createCategory } = postCreateCategory(
+		token as string,
+		queryClient,
+	);
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
-		console.log(data);
 		createCategory(data as ICategory);
 		clearAdditionalAttr();
 		closeModal != null && closeModal();
@@ -77,7 +77,6 @@ const CategoryForm = ({ closeModal }: Props) => {
 		}
 	};
 
-	console.log('isQuantiable: ', isQuantizable);
 	return (
 		<div className='flex flex-col items-center justify-center text-textColorOne'>
 			<form className='text-lg' onSubmit={handleSubmit(onSubmit)}>
