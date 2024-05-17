@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { AddButton } from '@/components/common/table/AddButton';
 import { HeaderInfoTablePage } from '@/components/common/table/HeaderInfoTablePage';
 import SearchInput from '@/components/common/table/SearchInput';
@@ -8,13 +8,13 @@ import ModalWindow from '@/components/common/ModalWindow/ModalWindow';
 import CategoryForm from '@/components/forms/CategoryForm/CategoryForm';
 import CategoryFormProvider from '@/components/forms/CategoryForm/CategoryFormProvider';
 import TableCategory from '@/components/common/TableCategory';
+import ModalWindowProvider from '@/components/common/ModalWindow/ModalWindowProvider';
 const options = ['Cuantificable', 'No cuantificable'];
 
 const CategoriesPage = () => {
 	const [modalCreateCategory, setModalCreateCategory] = useState(false);
 
 	const openModal = () => {
-		console.log("Clickeado")
 		setModalCreateCategory(true);
 	};
 	const closeModal = () => {
@@ -34,29 +34,32 @@ const CategoriesPage = () => {
 						description='Categorías disponibles'
 					></HeaderInfoTablePage>
 					<div className='flex items-center mt-4 gap-x-3'>
-						<AddButton onClick={openModal} text={'Añadir categoría'}></AddButton>
+						<AddButton
+							onClick={openModal}
+							text={'Añadir categoría'}
+						></AddButton>
 					</div>
 				</div>
 				<div className='mt-6 md:flex md:items-center md:justify-between'>
 					<FilterOptions options={options}></FilterOptions>
 					<SearchInput></SearchInput>
 				</div>
-					<TableCategory/>
+				<TableCategory />
 			</section>
 
 			{modalCreateCategory && (
-				<ModalWindow
+				<ModalWindowProvider
 					title='Crear nuevo elemento del inventario'
-					close={closeModal}
+					closeModal={closeModal}
 					widthClass='w-fit'
 				>
 					<CategoryFormProvider>
-						<CategoryForm closeModal={closeModal} />
+						<CategoryForm />
 					</CategoryFormProvider>
-				</ModalWindow>
+				</ModalWindowProvider>
 			)}
 		</div>
 	);
 };
 
-export default CategoriesPage
+export default CategoriesPage;
