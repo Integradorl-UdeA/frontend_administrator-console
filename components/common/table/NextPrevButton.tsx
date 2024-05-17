@@ -12,13 +12,13 @@ interface NextPrevButtonProps {
 }
 
 const NextPrevButton = ({ onClick, disabled, text, d, svg }: NextPrevButtonProps) => {
-    const isNext = text === 'Siguiente'; // Verifica si el texto es 'Siguiente'
+  const isNext = text === 'Siguiente'; // Verifica si el texto es 'Siguiente'
   
     return (
       <button
         onClick={onClick}
         disabled={disabled}
-        className={`${styles.nextPrevPageTable}`}
+        className={disabled ? `${styles.nextPrevPageTable} brightness-75` : `${styles.nextPrevPageTable}` }
       >
         {isNext ? <span>{text}</span> : null}
         <svg

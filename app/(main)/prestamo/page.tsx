@@ -1,10 +1,11 @@
-'use client'
+'use client';
 import React from 'next';
 import TableLoan from '@/components/common/TableLoan';
 import { AddButton } from '@/components/common/table/AddButton';
 import SearchInput from '@/components/common/table/SearchInput';
 import FilterOptions from '@/components/common/table/FilterOptions';
 import { HeaderInfoTablePage } from '@/components/common/table/HeaderInfoTablePage';
+import { Suspense } from 'react';
 const options = ['Todos', 'Activo', 'Vencido', 'Devuelto'];
 
 const LoanPage = () => {
@@ -15,7 +16,12 @@ const LoanPage = () => {
 					Gestión de préstamos
 				</h1>
 				<div className='sm:flex sm:items-center sm:justify-between'>
-					<HeaderInfoTablePage title={"Préstamos"} quantity={"6"} text='préstamos activos' description='Estos préstamos se han realizado en los últimos 6 meses.'></HeaderInfoTablePage>
+					<HeaderInfoTablePage
+						title={'Préstamos'}
+						quantity={'6'}
+						text='préstamos activos'
+						description='Estos préstamos se han realizado en los últimos 6 meses.'
+					></HeaderInfoTablePage>
 					<div className='flex item s-center mt-4 gap-x-3'>
 						<AddButton onClick={() => {}} text={'Añadir préstamo'}></AddButton>
 					</div>
@@ -24,7 +30,9 @@ const LoanPage = () => {
 					<FilterOptions options={options}></FilterOptions>
 					<SearchInput></SearchInput>
 				</div>
-				<TableLoan />
+				<Suspense fallback={<p>Cargando Tabla...</p>}>
+					<TableLoan />
+				</Suspense>
 			</section>
 		</div>
 	);
