@@ -1,33 +1,17 @@
 'use client';
-import React, { useState, Suspense } from 'react';
-import { getInventary } from '@/services/getInventary';
+import React, { useState } from 'react';
 import { TableRowInventory } from './table/TableRowInventory';
 import { Table } from './table/Table';
 import NextPrevButton from './table/NextPrevButton';
 import { getItemsTableHeaders } from '@/api-hooks/inventory-api/getItemTableHeaders';
 import { useSession } from 'next-auth/react';
 import { getItemsByPage } from '@/api-hooks/inventory-api/getItemsByPage';
-
-const inventory = getInventary();
+import { useQueryClient } from '@tanstack/react-query';
 
 const TableInventory = () => {
 	const token = useSession().data?.token?.token;
-
-	const [currentPage, setCurrentPage] = useState(1);
-	const itemsPerPage = 5; // Número de elementos por página
-
-
-	// Función para ir a la página anterior
-	const goToPreviousPage = () => {
-		setCurrentPage((prevPage) => Math.max(prevPage - 1, 1));
-	};
-
-	// Función para ir a la página siguiente
-	const goToNextPage = () => {
-		setCurrentPage((prevPage) =>
-			Math.min(prevPage + 1, Math.ceil(inventory.length / itemsPerPage)),
-		);
-	};
+	const queryClient = useQueryClient();
+	const [currentPage, setCurrentPage] = useState<number>(0);
 
 	const {
 		data: tableHeaders,
@@ -39,8 +23,35 @@ const TableInventory = () => {
 		isLoading: isLoadingItems,
 		isError: isErrorItems,
 		error: errorItems,
-	} = getItemsByPage(token as string);
+	} = getItemsByPage(token as string, currentPage);
 
+	const totalPages = itemsPage?.totalPages;
+
+	const invalidateQuery = async () => {
+		try {
+			await queryClient.refetchQueries({ queryKey: ['items-per-page'] });
+		} catch (error) {
+			console.error('Error invalidating queries:', error);
+		}
+	};
+	const goToNextPage = () => {
+		if (totalPages !== undefined && currentPage < totalPages - 1) {
+			setCurrentPage((prev) => prev + 1);
+			invalidateQuery().catch((error) => {
+				console.error('Error invalidating queries:', error);
+			});
+		}
+	};
+	const goToPreviousPage = () => {
+		if (currentPage > 0) {
+			setCurrentPage((prev) => prev - 1);
+			invalidateQuery().catch((error) => {
+				console.error('Error invalidating queries:', error);
+			});
+		}
+	};
+
+	console.log(itemsPage?.items)
 	if (isErrorHeaders) return <p>Header Error: {errorHeaders.message}</p>;
 	if (isErrorItems) return <p>Item Error: {errorItems.message}</p>;
 	if (isLoadingItems) return <p> Cargandoooo </p>;
@@ -70,14 +81,14 @@ const TableInventory = () => {
 				<div className='text-sm text-gray-500'>
 					Página{' '}
 					<span className='font-medium text-gray-700'>
-						{currentPage} de {Math.ceil(inventory.length / itemsPerPage)}
+						{currentPage + 1} de {totalPages}
 					</span>
 				</div>
 
 				<div className='flex items-center mt-4 gap-x-4 sm:mt-0'>
 					<NextPrevButton
 						onClick={goToPreviousPage}
-						disabled={currentPage === 1}
+						disabled={currentPage === 0}
 						text={'Anterior'}
 						d={'M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18'}
 						svg={'http://www.w3.org/2000/svg'}
@@ -85,9 +96,7 @@ const TableInventory = () => {
 
 					<NextPrevButton
 						onClick={goToNextPage}
-						disabled={
-							currentPage === Math.ceil(inventory.length / itemsPerPage)
-						}
+						disabled={currentPage + 1 === totalPages}
 						text={'Siguiente'}
 						d={'M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3'}
 						svg={'http://www.w3.org/2000/svg'}

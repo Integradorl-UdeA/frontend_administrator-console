@@ -1,22 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import getInventoryTemplate from './inventory-template';
-import type { IItemTableResponse } from '@/types/item-types';
+import type {  IItemPerPageResponse } from '@/types/item-types';
 
-interface IItemPerPageResponse{
-	totalPages: number
-	currentPage: number
-	items: IItemTableResponse[]
-	totalElements: number
-
-}
-export const getItemsByPage = (token: string) => {
+export const getItemsByPage = (token: string, page: number) => {
 	const getItemsByPageQuery = useQuery({
-		queryKey: ['item'],
+		queryKey: ['items-per-page'],
 		queryFn: async () => {
 			const data: IItemPerPageResponse = await (
 				await getInventoryTemplate(token).get('/tableRegisters', {
 					params: {
-						page: 0,
+						page,
 						size: 10,
 						sort: []
 					},

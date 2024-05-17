@@ -35,3 +35,11 @@ export interface IItemTableResponse{
     attributes: string[]
     quantizable: boolean
 }
+
+export interface IItemPerPageResponse{
+	totalPages: number
+	currentPage: number
+	items: IItemTableResponse[]
+	totalElements: number
+
+}
