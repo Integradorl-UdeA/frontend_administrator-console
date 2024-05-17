@@ -1,15 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import getInventoryTemplate from './inventory-template';
+import inventoryTemplate from './inventory-template';
 
 export const getItemsTableHeaders = (token: string) => {
-	const getItemsTanbleHeaderQuery = useQuery({
+	const getItemsTableHeadersQuery = useQuery({
 		queryKey: ['item-table-header'],
 		queryFn: async () => {
 			const data: string[] = await (
-				await getInventoryTemplate(token).get('/tableHeaders/')
+				await inventoryTemplate(token).get('/tableHeaders/')
 			).data;
 			return data;
 		},
 	});
-	return getItemsTanbleHeaderQuery;
+	return getItemsTableHeadersQuery;
 };

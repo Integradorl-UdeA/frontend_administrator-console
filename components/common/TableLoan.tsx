@@ -1,6 +1,5 @@
 'use client';
 import React, { useState } from 'react';
-import { getLoan } from '@/services/getLoan';
 import { TableRowLoan } from './table/TableRowLoan';
 import { Table } from './table/Table';
 import NextPrevButton from './table/NextPrevButton';
@@ -9,7 +8,6 @@ import { useSession } from 'next-auth/react';
 import { getLoanTableHeaders } from '@/api-hooks/loan-api/getLoanTableHeaders';
 import { useQueryClient } from '@tanstack/react-query';
 
-const loan = getLoan();
 
 const TableLoan = () => {
 	const token = useSession().data?.token?.token;

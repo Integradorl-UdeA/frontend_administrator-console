@@ -5,7 +5,7 @@ import { Table } from './table/Table';
 import NextPrevButton from './table/NextPrevButton';
 import { getItemsTableHeaders } from '@/api-hooks/inventory-api/getItemTableHeaders';
 import { useSession } from 'next-auth/react';
-import { getItemsByPage } from '@/api-hooks/inventory-api/getItemsByPage';
+import { getItemsPerPage } from '@/api-hooks/inventory-api/getItemsPerPage';
 import { useQueryClient } from '@tanstack/react-query';
 
 const TableInventory = () => {
@@ -23,31 +23,28 @@ const TableInventory = () => {
 		isLoading: isLoadingItems,
 		isError: isErrorItems,
 		error: errorItems,
-	} = getItemsByPage(token as string, currentPage);
+	} = getItemsPerPage(token as string, currentPage);
 
 	const totalPages = itemsPage?.totalPages;
 
-	const invalidateQuery = async () => {
-		try {
-			await queryClient.refetchQueries({ queryKey: ['items-per-page'] });
-		} catch (error) {
-			console.error('Error invalidating queries:', error);
-		}
-	};
 	const goToNextPage = () => {
 		if (totalPages !== undefined && currentPage < totalPages - 1) {
 			setCurrentPage((prev) => prev + 1);
-			invalidateQuery().catch((error) => {
-				console.error('Error invalidating queries:', error);
-			});
+			queryClient
+				.refetchQueries({ queryKey: ['items-per-page'] })
+				.catch((error) => {
+					console.error('Error invalidating queries:', error);
+				});
 		}
 	};
 	const goToPreviousPage = () => {
 		if (currentPage > 0) {
 			setCurrentPage((prev) => prev - 1);
-			invalidateQuery().catch((error) => {
-				console.error('Error invalidating queries:', error);
-			});
+			queryClient
+				.refetchQueries({ queryKey: ['items-per-page'] })
+				.catch((error) => {
+					console.error('Error invalidating queries:', error);
+				});
 		}
 	};
 
