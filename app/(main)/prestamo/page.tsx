@@ -6,13 +6,13 @@ import SearchInput from '@/components/common/table/SearchInput';
 import FilterOptions from '@/components/common/table/FilterOptions';
 import { HeaderInfoTablePage } from '@/components/common/table/HeaderInfoTablePage';
 import { Suspense, useState } from 'react';
-import ModalWindow from '@/components/common/ModalWindow';
 import LoanFormProvider from '@/components/forms/loan-form/LoanFormProvider';
 import LoanForm from '@/components/forms/loan-form/LoanForm';
+import ModalWindowProvider from '@/components/common/ModalWindow/ModalWindowProvider';
 const options = ['Todos', 'Activo', 'Vencido', 'Devuelto'];
 
 const LoanPage = () => {
-	const [isOpen, setIsOpen] = useState(false);
+	const [isOpen, setIsOpen] = useState(true);
 	const openModal = () => {
 		setIsOpen(true);
 	};
@@ -35,7 +35,12 @@ const LoanPage = () => {
 						description='Estos préstamos se han realizado en los últimos 6 meses.'
 					></HeaderInfoTablePage>
 					<div className='flex item s-center mt-4 gap-x-3'>
-						<AddButton onClick={() => {openModal()}} text={'Añadir préstamo'}></AddButton>
+						<AddButton
+							onClick={() => {
+								openModal();
+							}}
+							text={'Añadir préstamo'}
+						></AddButton>
 					</div>
 				</div>
 				<div className='mt-6 md:flex md:items-center md:justify-between'>
@@ -46,11 +51,14 @@ const LoanPage = () => {
 					<TableLoan />
 				</Suspense>
 				{isOpen && (
-					<LoanFormProvider>
-						<ModalWindow close={closeModal} title='Realizar un préstamo'>
+					<ModalWindowProvider
+						closeModal={closeModal}
+						title='Realizar un préstamo'
+					>
+						<LoanFormProvider>
 							<LoanForm />
-						</ModalWindow>
-					</LoanFormProvider>
+						</LoanFormProvider>
+					</ModalWindowProvider>
 				)}
 			</section>
 		</div>

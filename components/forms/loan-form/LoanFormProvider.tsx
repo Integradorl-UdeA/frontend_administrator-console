@@ -9,7 +9,7 @@ const defaultValue: IDTOLoanPost = {
 	itemId: '',
 	borrowerUser: '',
 	lenderUser: '',
-	loanType: '',
+	loanType: 'GENERAL',
 	observation: '',
 	quantity: 0,
 	returnDate: '',
