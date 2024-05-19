@@ -12,7 +12,14 @@ const TableCategory = () => {
 		isError,
 		error,
 	} = getAllCategories(token as string);
-	const cols = ['id', 'Nombre', 'Campo clave', 'Atributos texto', 'Atributos lista', 'Funciones'];
+	const cols = [
+		'id',
+		'Nombre',
+		'Campo clave',
+		'Atributos texto',
+		'Atributos lista',
+		'Funciones',
+	];
 
 	if (isLoading) return <p>...Cargando</p>;
 	if (isError) return <p>Error: {error.message}</p>;
@@ -23,9 +30,10 @@ const TableCategory = () => {
 					<div className='overflow-hidden border border-gray-200 md:rounded-lg'>
 						<Table column={cols}>
 							{categories?.map((cat) => (
-								<tr key={cat.id}>
-									<TableRowCategory category={cat}></TableRowCategory>
-								</tr>
+								<TableRowCategory
+									key={cat.id}
+									category={cat}
+								></TableRowCategory>
 							))}
 						</Table>
 					</div>

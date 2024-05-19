@@ -11,7 +11,7 @@ import { useQueryClient } from '@tanstack/react-query';
 const TableLoan = () => {
 	const token = useSession().data?.token?.token;
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const queryClient = useQueryClient()
+	const queryClient = useQueryClient();
 	const {
 		data: loanPage,
 		isLoading: isLoadingLoan,
@@ -25,11 +25,13 @@ const TableLoan = () => {
 	} = getLoanTableHeaders(token as string);
 
 	useEffect(() => {
-		const refetch = async () =>{
-			await queryClient.refetchQueries({queryKey: ['items-per-page']})
-		}
-		refetch().catch((error) => {console.log('Error', error)})
-	}, [currentPage])
+		const refetch = async () => {
+			await queryClient.refetchQueries({ queryKey: ['items-per-page'] });
+		};
+		refetch().catch((error) => {
+			console.log('Error', error);
+		});
+	}, [currentPage]);
 
 	const totalPages = loanPage?.totalPages;
 
@@ -46,9 +48,10 @@ const TableLoan = () => {
 						<div className='overflow-hidden border border-gray-200 md:rounded-lg'>
 							<Table column={headers as string[]}>
 								{loanPage?.items.map((loan) => (
-									<tr key={loan.loanId}>
-										<TableRowLoan loanInfo={loan}></TableRowLoan>
-									</tr>
+									<TableRowLoan
+										key={loan.loanId}
+										loanInfo={loan}
+									></TableRowLoan>
 								))}
 							</Table>
 						</div>

@@ -13,7 +13,7 @@ interface TableRowProps {
 
 const TableRowLoan = ({ loanInfo }: Readonly<TableRowProps>) => {
 	return (
-		<>
+		<tr>
 			<td className='px-4 text-sm font-medium whitespace-nowrap'>
 				<p className='font-medium text-gray-800'>{loanInfo.loanId}</p>
 			</td>
@@ -54,7 +54,7 @@ const TableRowLoan = ({ loanInfo }: Readonly<TableRowProps>) => {
 				<ActionButton
 					icon={BiEdit}
 					onClick={() => {
-						console.log('Edit',loanInfo.loanId);
+						console.log('Edit', loanInfo.loanId);
 					}}
 					className='bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-1 px-2 rounded mr-2'
 				/>
@@ -66,7 +66,7 @@ const TableRowLoan = ({ loanInfo }: Readonly<TableRowProps>) => {
 					className='bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded'
 				/>
 			</td>
-		</>
+		</tr>
 	);
 };
 

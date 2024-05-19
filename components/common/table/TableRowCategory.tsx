@@ -12,7 +12,7 @@ interface TableRowProps {
 
 const TableRowCategory = ({ category }: Readonly<TableRowProps>) => {
 	return (
-		<>
+		<tr>
 			<td className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
 				<div>
 					<h2 className='font-medium text-gray-800'>{category.id}</h2>
@@ -58,7 +58,7 @@ const TableRowCategory = ({ category }: Readonly<TableRowProps>) => {
 					className='bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded'
 				/>
 			</td>
-		</>
+		</tr>
 	);
 };
 

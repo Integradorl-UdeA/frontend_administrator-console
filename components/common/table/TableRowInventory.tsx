@@ -6,14 +6,13 @@ import LabelState from './LabelState';
 import ActionButton from './ActionButton';
 import type { IItemTableResponse } from '@/types/item-types';
 
-
 interface TableRowProps {
 	itemTable: IItemTableResponse;
 }
 
 const TableRowInventory = ({ itemTable }: Readonly<TableRowProps>) => {
 	return (
-		<>
+		<tr>
 			<td className='px-4 py-4 text-sm font-medium whitespace-nowrap'>
 				<div>
 					<h2 className='font-medium text-gray-800'>{itemTable.id}</h2>
@@ -63,7 +62,7 @@ const TableRowInventory = ({ itemTable }: Readonly<TableRowProps>) => {
 					className='bg-red-500 hover:bg-red-600 text-white font-semibold py-1 px-2 rounded'
 				/>
 			</td>
-		</>
+		</tr>
 	);
 };
 
