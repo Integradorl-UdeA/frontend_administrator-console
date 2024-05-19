@@ -1,3 +1,4 @@
+import { getCurrentDate } from '@/lib/getCurrentDate';
 import type { IDTOLoanPost } from '@/types/loan-types';
 import React, { type ReactNode } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -12,7 +13,7 @@ const defaultValue: IDTOLoanPost = {
 	loanType: 'GENERAL',
 	observation: '',
 	quantity: 0,
-	returnDate: '',
+	returnDate: getCurrentDate(),
 };
 
 const LoanFormProvider = ({children}: Props) => {
