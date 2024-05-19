@@ -10,7 +10,7 @@ export const getItemsPerPage = (token: string, page: number) => {
 				await getInventoryTemplate(token).get('/tableRegisters', {
 					params: {
 						page,
-						size: 1,
+						size: 10,
 						sort: []
 					},
 				})
