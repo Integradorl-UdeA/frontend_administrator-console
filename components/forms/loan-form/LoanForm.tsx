@@ -10,6 +10,9 @@ import { useModalContext } from '@/components/common/ModalWindow/modal-window-co
 import { AiOutlineClose } from 'react-icons/ai';
 import { FaPlus } from 'react-icons/fa6';
 import btnStyles from '@/styles/common/button-styles.module.css';
+import { IoSearchSharp } from 'react-icons/io5';
+import { useLoanForm } from '@/store/loan-form-store';
+import LendedItemSelection from './LendedItemSelection';
 
 const LoanForm = () => {
 	const {
@@ -19,17 +22,21 @@ const LoanForm = () => {
 		formState,
 		formState: { errors, isSubmitSuccessful },
 	} = useFormContext();
-
 	const { closeModal } = useModalContext();
+	const formSection = useLoanForm((state) => state.formSection);
+	const setFormSection = useLoanForm((state) => state.setFormSection);
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
+		setFormSection(0);
 		closeModal();
 	};
 
 	useEffect(() => {
 		if (isSubmitSuccessful) reset();
 	}, [isSubmitSuccessful, reset, formState]);
+
+	if (formSection === 1) return <LendedItemSelection />;
 
 	return (
 		<>
@@ -40,16 +47,27 @@ const LoanForm = () => {
 						<label className='mr-5' htmlFor='name'>
 							ID del Item:
 						</label>
-						<input
-							type='text'
-							className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
-							{...register('itemId', {
-								required: {
-									value: true,
-									message: 'Debe llenar el campo',
-								},
-							})}
-						/>
+						<div className='flex'>
+							<input
+								type='text'
+								className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
+								{...register('itemId', {
+									required: {
+										value: true,
+										message: 'Debe llenar el campo',
+									},
+								})}
+							/>
+							<button
+								type='button'
+								onClick={() => {
+									setFormSection(1);
+								}}
+								className={`${btnStyles.btn} bg-blue-600 text-white rounded-full ml-2`}
+							>
+								<IoSearchSharp />
+							</button>
+						</div>
 						{errors.itemId != null && (
 							<FormError msg={errors.itemId.message as string} />
 						)}
@@ -153,7 +171,7 @@ const LoanForm = () => {
 						className={btnStyles.btnCancel}
 						type='button'
 						onClick={() => {
-							reset()
+							reset();
 							closeModal();
 						}}
 					>
@@ -170,6 +188,7 @@ const LoanForm = () => {
 					</button>
 				</div>
 			</form>
+			{}
 		</>
 	);
 };
