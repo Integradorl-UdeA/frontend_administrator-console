@@ -1,22 +1,36 @@
 import CloseModal from '@/components/common/ModalWindow/CloseModal';
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
 	type FieldValues,
 	type SubmitHandler,
 	useFormContext,
 } from 'react-hook-form';
 import FormError from '../errors-logs/FormError';
+import { useModalContext } from '@/components/common/ModalWindow/modal-window-context';
+import { AiOutlineClose } from 'react-icons/ai';
+import { FaPlus } from 'react-icons/fa6';
+import btnStyles from '@/styles/common/button-styles.module.css';
 
 const LoanForm = () => {
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		reset,
+		formState,
+		formState: { errors, isSubmitSuccessful },
 	} = useFormContext();
+
+	const { closeModal } = useModalContext();
 
 	const onSubmit: SubmitHandler<FieldValues> = (data) => {
 		console.log(data);
+		closeModal();
 	};
+
+	useEffect(() => {
+		if (isSubmitSuccessful) reset();
+	}, [isSubmitSuccessful, reset, formState]);
+
 	return (
 		<>
 			<CloseModal />
@@ -54,11 +68,11 @@ const LoanForm = () => {
 								},
 								validate: {
 									equalZero: (value) => {
-										if(value === 0) return 'Debe ser diferente de cero'
-										return true
+										if (value === 0) return 'Debe ser diferente de cero';
+										return true;
 									},
 								},
-								valueAsNumber: true
+								valueAsNumber: true,
 							})}
 						/>
 						{errors.quantity != null && (
@@ -134,8 +148,27 @@ const LoanForm = () => {
 						/>
 					</div>
 				</div>
-
-				<button type='submit'>Melo</button>
+				<div className=' flex justify-between mt-8'>
+					<button
+						className={btnStyles.btnCancel}
+						type='button'
+						onClick={() => {
+							reset()
+							closeModal();
+						}}
+					>
+						<AiOutlineClose
+							className={`text-white bg-red-500 ${btnStyles.btnIcon}`}
+						/>
+						Cancelar
+					</button>
+					<button className={btnStyles.btnSubmit} type='submit'>
+						<FaPlus
+							className={`text-white bg-greenThree ${btnStyles.btnIcon}`}
+						/>
+						Realizar Préstamo
+					</button>
+				</div>
 			</form>
 		</>
 	);

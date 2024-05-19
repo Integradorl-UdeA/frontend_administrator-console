@@ -27,8 +27,6 @@ const config: Config = {
 				secondary: '#2ecc71',
 				whiteDirty: '#d3d3d3b0',
 				grayPotato: '#444444e3'
-				
-				// Puedes agregar más colores según tus necesidades
 			},
 		},
 	},
