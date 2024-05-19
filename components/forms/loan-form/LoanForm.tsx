@@ -40,7 +40,6 @@ const LoanForm = () => {
 
 	return (
 		<>
-			<CloseModal />
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className='flex justify-between'>
 					<div className='flex m-4 flex-col flex-1 justify-center h-full'>
