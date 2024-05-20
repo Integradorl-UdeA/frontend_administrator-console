@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import type { IItemTableResponse } from '@/types/item-types';
 import { useLoanForm } from '@/store/loan-form-store';
 

@@ -1,4 +1,3 @@
-import CloseModal from '@/components/common/ModalWindow/CloseModal';
 import React, { useEffect } from 'react';
 import {
 	type FieldValues,
