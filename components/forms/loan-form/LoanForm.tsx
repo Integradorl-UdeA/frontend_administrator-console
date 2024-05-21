@@ -6,12 +6,13 @@ import {
 } from 'react-hook-form';
 import FormError from '../errors-logs/FormError';
 import { useModalContext } from '@/components/common/ModalWindow/modal-window-context';
-import { AiOutlineClose } from 'react-icons/ai';
 import { FaPlus } from 'react-icons/fa6';
 import btnStyles from '@/styles/common/button-styles.module.css';
 import { IoSearchSharp } from 'react-icons/io5';
 import { useLoanForm } from '@/store/loan-form-store';
 import LendedItemSelection from './LendedItemSelection';
+import BorrowerSelection from './BorrowerSelection';
+import { IoMdArrowRoundBack } from 'react-icons/io';
 
 const LoanForm = () => {
 	const {
@@ -19,6 +20,7 @@ const LoanForm = () => {
 		handleSubmit,
 		reset,
 		formState,
+		getValues,
 		formState: { errors, isSubmitSuccessful },
 	} = useFormContext();
 	const { closeModal } = useModalContext();
@@ -35,9 +37,10 @@ const LoanForm = () => {
 		if (isSubmitSuccessful) reset();
 	}, [isSubmitSuccessful, reset, formState]);
 
-	if (formSection === 1) return <LendedItemSelection />;
+	if(formSection === 0) return <BorrowerSelection/>
+	if (formSection === 2) return <LendedItemSelection />;
+	if (formSection === 1) return (
 
-	return (
 		<>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<div className='flex justify-between'>
@@ -59,7 +62,7 @@ const LoanForm = () => {
 							<button
 								type='button'
 								onClick={() => {
-									setFormSection(1);
+									setFormSection(2);
 								}}
 								className={`${btnStyles.btn} bg-blue-600 text-white rounded-full ml-2`}
 							>
@@ -101,16 +104,7 @@ const LoanForm = () => {
 						<label className='mr-5' htmlFor='name'>
 							Nombre de usuario del Prestatario:
 						</label>
-						<input
-							type='text'
-							className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
-							{...register('borrowerUser', {
-								required: {
-									value: true,
-									message: 'Debe llenar el campo',
-								},
-							})}
-						/>
+						<p>{getValues('borrowerUser')}</p>
 						{errors.borrowerUser != null && (
 							<FormError msg={errors.borrowerUser.message as string} />
 						)}
@@ -169,14 +163,13 @@ const LoanForm = () => {
 						className={btnStyles.btnCancel}
 						type='button'
 						onClick={() => {
-							reset();
-							closeModal();
+							setFormSection(0)
 						}}
 					>
-						<AiOutlineClose
+						<IoMdArrowRoundBack
 							className={`text-white bg-red-500 ${btnStyles.btnIcon}`}
 						/>
-						Cancelar
+						Volver
 					</button>
 					<button className={btnStyles.btnSubmit} type='submit'>
 						<FaPlus
@@ -188,7 +181,7 @@ const LoanForm = () => {
 			</form>
 			{}
 		</>
-	);
+	)
 };
 
 export default LoanForm;
