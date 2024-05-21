@@ -87,7 +87,7 @@ const LoanForm = () => {
 								},
 								validate: {
 									equalZero: (value) => {
-										if (value === 0) return 'Debe ser diferente de cero';
+										if (value <= 0) return 'Debe ser mayor que cero';
 										return true;
 									},
 								},
