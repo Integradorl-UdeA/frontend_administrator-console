@@ -6,6 +6,7 @@ import btnStyles from '@/styles/common/button-styles.module.css';
 import { AiOutlineClose } from 'react-icons/ai';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import { useLoanForm } from '@/store/loan-form-store';
+import CloseModal from '@/components/common/ModalWindow/CloseModal';
 
 const BorrowerSelection = () => {
 	const setFormSection = useLoanForm((state) => state.setFormSection);
@@ -24,9 +25,15 @@ const BorrowerSelection = () => {
 		if (isValid) setFormSection(1);
 	};
     console.log()
-    
+
 	return (
 		<div>
+            <CloseModal
+					onClose={() => {
+						reset();
+						setFormSection(0);
+					}}
+			/>
 			<div className='flex flex-col m-4 flex-1 justify-center'>
 				<label className='mr-5' htmlFor='name'>
 					Nombre de usuario del Prestatario:
