@@ -27,7 +27,7 @@ const LendedItemSelection = () => {
 	const handleSelectItem = () => {
 		setValue('itemId', selectedItemId);
 		setSelectedItemId('');
-		setFormSection(0);
+		setFormSection(1);
 	};
 
 	return (
@@ -55,7 +55,7 @@ const LendedItemSelection = () => {
 					type='button'
 					className={`${btnStyles.btn} bg-white hover:bg-blue-700/10`}
 					onClick={() => {
-						setFormSection(0);
+						setFormSection(1);
 					}}
 				>
 					<IoMdArrowRoundBack
