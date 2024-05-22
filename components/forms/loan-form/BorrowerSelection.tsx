@@ -7,6 +7,8 @@ import { AiOutlineClose } from 'react-icons/ai';
 import { IoMdArrowRoundForward } from 'react-icons/io';
 import { useLoanForm } from '@/store/loan-form-store';
 import CloseModal from '@/components/common/ModalWindow/CloseModal';
+import { useSession } from 'next-auth/react';
+import { getUserExist } from '@/api-hooks/users-api/lis-user-api/validateUserExistQuery';
 
 const BorrowerSelection = () => {
 	const setFormSection = useLoanForm((state) => state.setFormSection);
@@ -19,19 +21,21 @@ const BorrowerSelection = () => {
 		trigger,
 		getValues,
 	} = useFormContext();
-	const flag = true;
+	const token = useSession().data?.token?.token;
+
+	const { refetch } = getUserExist(token as string, getValues('borrowerUser'));
+
 	const handleNext = async () => {
 		await trigger('borrowerUser');
 		if (isValid) {
-			if (flag) {
-				setFormSection(1);
-			} else {
-				setUserExist(true);
-			}
+			const refetchResult = await refetch();
+
+			if (refetchResult.isError) setUserExist(true);
+			else setFormSection(1);
 		}
 	};
-	
-	setModalWidthClass('w-1/3')
+
+	setModalWidthClass('w-1/3');
 
 	return (
 		<div>
@@ -64,7 +68,7 @@ const BorrowerSelection = () => {
 				<>
 					<p>
 						El usuario con username <b>{getValues('borrowerUser')}</b> no
-						existe. Verifique que esté bien escrito o pulse {' '}
+						existe. Verifique que esté bien escrito o pulse{' '}
 						<button
 							type='button'
 							onClick={() => {

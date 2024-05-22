@@ -18,18 +18,18 @@ const LendedItemSelection = () => {
 	const selectedItemId = useLoanForm((state) => state.selectedItemId);
 	const setSelectedItemId = useLoanForm((state) => state.setSelectedItemId);
 
-	setModalTitle('Seleccione el item a prestar');
-	setModalWidthClass('w-10/12');
-
+	
 	const tableHeaders = ['ID', 'Categoría', 'Atributos'];
 	const { data: itemsPage } = getItemsPerPage(token as string, 0);
-
+	
 	const handleSelectItem = () => {
 		setValue('itemId', selectedItemId);
 		setSelectedItemId('');
 		setFormSection(1);
 	};
-
+	
+	setModalTitle('Seleccione el item a prestar');
+	setModalWidthClass('w-10/12');
 	return (
 		<div>
 			<div className=' flex flex-col mt-6'>
