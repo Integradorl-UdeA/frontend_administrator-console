@@ -1,6 +1,6 @@
 import {create} from 'zustand'
 
-type TFormSection =  0 | 1 | 2;
+type TFormSection =  0 | 1 | 2 | 3;
 interface ILoanFormStore{
     formSection: TFormSection 
     setFormSection: (formSection:TFormSection) => void

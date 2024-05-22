@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import FormError from '../errors-logs/FormError';
 import { useFormContext } from 'react-hook-form';
 import { useModalContext } from '@/components/common/ModalWindow/modal-window-context';
@@ -10,36 +10,45 @@ import CloseModal from '@/components/common/ModalWindow/CloseModal';
 
 const BorrowerSelection = () => {
 	const setFormSection = useLoanForm((state) => state.setFormSection);
-	const { closeModal } = useModalContext();
+	const { closeModal, setModalWidthClass } = useModalContext();
+	const [userExist, setUserExist] = useState(false);
 	const {
 		register,
 		formState: { isValid, errors },
 		reset,
-        trigger,
-        getValues
+		trigger,
+		getValues,
 	} = useFormContext();
-
+	const flag = true;
 	const handleNext = async () => {
-		// TODO Validate the if user exist (It is made in the back)
-        await trigger('borrowerUser')
-		if (isValid) setFormSection(1);
+		await trigger('borrowerUser');
+		if (isValid) {
+			if (flag) {
+				setFormSection(1);
+			} else {
+				setUserExist(true);
+			}
+		}
 	};
-    console.log()
+
+	useEffect( () => {
+		setModalWidthClass('w-1/3')
+	}, [])
 
 	return (
 		<div>
-            <CloseModal
-					onClose={() => {
-						reset();
-						setFormSection(0);
-					}}
+			<CloseModal
+				onClose={() => {
+					reset();
+					setFormSection(0);
+				}}
 			/>
 			<div className='flex flex-col m-4 flex-1 justify-center'>
 				<label className='mr-5' htmlFor='name'>
 					Nombre de usuario del Prestatario:
 				</label>
 				<input
-                    defaultValue={getValues('borrowerUser')}
+					defaultValue={getValues('borrowerUser')}
 					type='text'
 					className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
 					{...register('borrowerUser', {
@@ -53,6 +62,24 @@ const BorrowerSelection = () => {
 					<FormError msg={errors.borrowerUser.message as string} />
 				)}
 			</div>
+			{userExist && (
+				<>
+					<p>
+						El usuario con username <b>{getValues('borrowerUser')}</b> no
+						existe. Verifique que esté bien escrito o pulse {' '}
+						<button
+							type='button'
+							onClick={() => {
+								setFormSection(3);
+							}}
+							className='inline font-bold text-greenTwo underline '
+						>
+							aquí
+						</button>{' '}
+						para crear un nuevo usuario.
+					</p>
+				</>
+			)}
 			<div className=' flex justify-between mt-8'>
 				<button
 					className={btnStyles.btnCancel}

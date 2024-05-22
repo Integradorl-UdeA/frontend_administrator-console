@@ -14,6 +14,8 @@ import LendedItemSelection from './LendedItemSelection';
 import BorrowerSelection from './BorrowerSelection';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import CloseModal from '@/components/common/ModalWindow/CloseModal';
+import LisUserFormOnLoan from '../lis-user-form/LisUserFormOnLoan';
+import LisUserFormProvider from '../lis-user-form/LisUserFormProvider';
 
 const LoanForm = () => {
 	const {
@@ -40,6 +42,12 @@ const LoanForm = () => {
 
 	if (formSection === 0) return <BorrowerSelection />;
 	if (formSection === 2) return <LendedItemSelection />;
+	if (formSection === 3)
+		return (
+			<LisUserFormProvider>
+				<LisUserFormOnLoan />
+			</LisUserFormProvider>
+		);
 	if (formSection === 1)
 		return (
 			<>
