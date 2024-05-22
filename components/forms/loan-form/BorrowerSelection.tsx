@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import FormError from '../errors-logs/FormError';
 import { useFormContext } from 'react-hook-form';
 import { useModalContext } from '@/components/common/ModalWindow/modal-window-context';
@@ -30,10 +30,8 @@ const BorrowerSelection = () => {
 			}
 		}
 	};
-
-	useEffect( () => {
-		setModalWidthClass('w-1/3')
-	}, [])
+	
+	setModalWidthClass('w-1/3')
 
 	return (
 		<div>

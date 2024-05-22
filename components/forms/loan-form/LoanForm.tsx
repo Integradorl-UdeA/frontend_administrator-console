@@ -26,7 +26,8 @@ const LoanForm = () => {
 		getValues,
 		formState: { errors, isSubmitSuccessful },
 	} = useFormContext();
-	const { closeModal } = useModalContext();
+	const { closeModal, setModalWidthClass } = useModalContext();
+	setModalWidthClass('w-3/4')
 	const formSection = useLoanForm((state) => state.formSection);
 	const setFormSection = useLoanForm((state) => state.setFormSection);
 
@@ -39,6 +40,8 @@ const LoanForm = () => {
 	useEffect(() => {
 		if (isSubmitSuccessful) reset();
 	}, [isSubmitSuccessful, reset, formState]);
+
+	setModalWidthClass('w-3/5')
 
 	if (formSection === 0) return <BorrowerSelection />;
 	if (formSection === 2) return <LendedItemSelection />;

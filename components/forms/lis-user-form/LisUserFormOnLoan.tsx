@@ -9,8 +9,10 @@ import FormError from '../errors-logs/FormError';
 import { FaPlus } from 'react-icons/fa6';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { useLoanForm } from '@/store/loan-form-store';
+import { useModalContext } from '@/components/common/ModalWindow/modal-window-context';
 
 const LisUserFormOnLoan = () => {
+	const {setModalWidthClass, setModalTitle} = useModalContext()
 	const {
 		register,
 		formState,
@@ -28,6 +30,9 @@ const LisUserFormOnLoan = () => {
 	useEffect(() => {
 		if (isSubmitSuccessful) reset();
 	}, [formState, reset, isSubmitSuccessful]);
+
+	setModalTitle("Crear un nuevo usuario")
+	setModalWidthClass('w-4/6')
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className='flex justify-between'>
