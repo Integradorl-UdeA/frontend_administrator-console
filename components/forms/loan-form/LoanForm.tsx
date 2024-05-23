@@ -12,6 +12,10 @@ import { IoSearchSharp } from 'react-icons/io5';
 import { useLoanForm } from '@/store/loan-form-store';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import CloseModal from '@/components/common/ModalWindow/CloseModal';
+import { getSessionToken } from '@/api-hooks/getSessionToken';
+import { useQueryClient } from '@tanstack/react-query';
+import { createLoan } from '@/api-hooks/loan-api/createLoan';
+import type { IDTOLoanPost } from '@/types/loan-types';
 
 const LoanForm = () => {
 	const {
@@ -24,9 +28,15 @@ const LoanForm = () => {
 	} = useFormContext();
 	const { closeModal, setModalWidthClass } = useModalContext();
 	const setFormSection = useLoanForm((state) => state.setFormSection);
+	const token = getSessionToken()
+	const queryClient = useQueryClient()
+	const {error, mutateAsync: mutationCreateLoan} = createLoan(token, queryClient)
+	console.log("Error: ", error)
 
-	const onSubmit: SubmitHandler<FieldValues> = (data) => {
+	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		console.log(data);
+		await mutationCreateLoan(data as IDTOLoanPost)
+		if(error !== null) return
 		setFormSection(0);
 		closeModal();
 	};
@@ -163,6 +173,7 @@ const LoanForm = () => {
 						/>
 					</div>
 				</div>
+				{error !== null && (<p>Error: {error.message}</p>)}
 				<div className=' flex justify-between mt-8'>
 					<button
 						className={btnStyles.btnCancel}
