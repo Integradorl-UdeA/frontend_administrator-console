@@ -1,5 +1,5 @@
 import { useLoanForm } from '@/store/loan-form-store';
-import React from 'react';
+import React, { useEffect } from 'react';
 import btnStyles from '@/styles/common/button-styles.module.css';
 import { TiTick } from 'react-icons/ti';
 import { IoMdArrowRoundBack } from 'react-icons/io';
@@ -18,18 +18,19 @@ const LendedItemSelection = () => {
 	const selectedItemId = useLoanForm((state) => state.selectedItemId);
 	const setSelectedItemId = useLoanForm((state) => state.setSelectedItemId);
 
-	
 	const tableHeaders = ['ID', 'Categoría', 'Atributos'];
 	const { data: itemsPage } = getItemsPerPage(token as string, 0);
-	
+
 	const handleSelectItem = () => {
 		setValue('itemId', selectedItemId);
 		setSelectedItemId('');
 		setFormSection(1);
 	};
-	
-	setModalTitle('Seleccione el item a prestar');
-	setModalWidthClass('w-10/12');
+
+	useEffect(() => {
+		setModalTitle('Seleccione el item a prestar');
+		setModalWidthClass('w-10/12');
+	}, []);
 	return (
 		<div>
 			<div className=' flex flex-col mt-6'>

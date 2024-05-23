@@ -7,12 +7,12 @@ import FilterOptions from '@/components/common/table/FilterOptions';
 import { HeaderInfoTablePage } from '@/components/common/table/HeaderInfoTablePage';
 import { Suspense, useState } from 'react';
 import LoanFormProvider from '@/components/forms/loan-form/LoanFormProvider';
-import LoanForm from '@/components/forms/loan-form/LoanForm';
 import ModalWindowProvider from '@/components/common/ModalWindow/ModalWindowProvider';
+import LoanFormNavigation from '@/components/forms/loan-form/LoanFormNavigation';
 const options = ['Todos', 'Activo', 'Vencido', 'Devuelto'];
 
 const LoanPage = () => {
-	const [isOpen, setIsOpen] = useState(true);
+	const [isOpen, setIsOpen] = useState(false);
 	const openModal = () => {
 		setIsOpen(true);
 	};
@@ -56,7 +56,7 @@ const LoanPage = () => {
 						title='Realizar un préstamo'
 					>
 						<LoanFormProvider>
-							<LoanForm />
+							<LoanFormNavigation />
 						</LoanFormProvider>
 					</ModalWindowProvider>
 				)}

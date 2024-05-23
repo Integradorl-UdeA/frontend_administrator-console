@@ -31,8 +31,11 @@ const LisUserFormOnLoan = () => {
 		if (isSubmitSuccessful) reset();
 	}, [formState, reset, isSubmitSuccessful]);
 
-	setModalTitle("Crear un nuevo usuario")
-	setModalWidthClass('w-4/6')
+	
+	useEffect(() => {
+		setModalTitle("Crear un nuevo usuario")
+		setModalWidthClass('w-4/6')
+	}, [])
 	return (
 		<form onSubmit={handleSubmit(onSubmit)}>
 			<div className='flex justify-between'>
