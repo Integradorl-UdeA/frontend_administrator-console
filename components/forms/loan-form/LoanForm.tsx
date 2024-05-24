@@ -26,25 +26,26 @@ const LoanForm = () => {
 		getValues,
 		formState: { errors, isSubmitSuccessful },
 	} = useFormContext();
-	const { closeModal, setModalWidthClass } = useModalContext();
+
 	const setFormSection = useLoanForm((state) => state.setFormSection);
+
 	const token = getSessionToken()
 	const queryClient = useQueryClient()
 	const {error, mutateAsync: mutationCreateLoan} = createLoan(token, queryClient)
-	console.log("Error: ", error)
-
+	
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		console.log(data);
 		await mutationCreateLoan(data as IDTOLoanPost)
 		if(error !== null) return
 		setFormSection(0);
 		closeModal();
 	};
-
+	
 	useEffect(() => {
 		if (isSubmitSuccessful) reset();
 	}, [isSubmitSuccessful, reset, formState]);
+	
 
+	const { closeModal, setModalWidthClass } = useModalContext();
 	useEffect( () => {
 		setModalWidthClass('w-3/5');
 	}, [])
