@@ -20,7 +20,7 @@ const LendedItemSelection = () => {
 	const selectedItemId = useLoanForm((state) => state.selectedItemId);
 	const setSelectedItemId = useLoanForm((state) => state.setSelectedItemId);
 
-	const tableHeaders = ['ID', 'Categoría', 'Atributos'];
+	const tableHeaders = ['ID', 'Categoría', 'Atributos', 'Cant disponible'];
 	const {data: items} = getAllItems(token)
 	const {data: categories} = getAllCategories(token)
 

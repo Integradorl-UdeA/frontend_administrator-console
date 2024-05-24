@@ -51,6 +51,9 @@ const ItemSelectionTableRow = ({ item, category }: Readonly<LoanTableRowProps>) 
 					</p>
 				</div>
 			</td>
+			<td className='px-12 py-4 text-sm font-medium whitespace-nowrap'>
+				{item.total}
+			</td>
 		</tr>
 	);
 };
