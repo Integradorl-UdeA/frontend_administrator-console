@@ -11,6 +11,7 @@ export const createLoan = (token: string ,queryClient: QueryClient) => {
         },
         onSuccess: async () => {
             await queryClient.invalidateQueries({queryKey: ['loan']})
+            await queryClient.invalidateQueries({queryKey: ['loan-per-page']})
         }
     })
     return createLoanMutation
