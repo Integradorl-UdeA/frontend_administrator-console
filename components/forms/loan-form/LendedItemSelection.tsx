@@ -21,11 +21,13 @@ const LendedItemSelection = () => {
 	const setSelectedItemId = useLoanForm((state) => state.setSelectedItemId);
 
 	const tableHeaders = ['ID', 'Categoría', 'Atributos', 'Cant disponible'];
-	const {data: items} = getAllItems(token)
-	const {data: categories} = getAllCategories(token)
+	const { data: items } = getAllItems(token);
+	const { data: categories } = getAllCategories(token);
 
-	const lendableItems = items?.filter( item => item.lendable)
-	console.log("Lendable Items: ", lendableItems)
+	const lendableItems = items?.filter(
+		(item) => item.lendable && item.state === 'AVAILABLE',
+	);
+	console.log('Lendable Items: ', lendableItems);
 
 	const handleSelectItem = () => {
 		setValue('itemId', selectedItemId);
@@ -39,23 +41,32 @@ const LendedItemSelection = () => {
 	}, []);
 	return (
 		<div>
+			<p>Seleccione el item que desea prestar haciendo click sobre él</p>
 			<div className=' flex flex-col mt-6'>
 				<div className='-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8'>
 					<div className='inline-block min-w-full py-2 align-middle md:px-6 lg:px-8'>
 						<div className='overflow-hidden border border-gray-200 md:rounded-lg'>
-							<Table column={tableHeaders}>
-								{lendableItems?.map((item) => {
-									const category = categories?.filter(cat => item.categoryId === cat.id)[0]
-									return (
-										<Suspense key={item.itemId}>
-											<ItemSelectionTableRow
-												category={category as ICategory}
-												item={item}
-											></ItemSelectionTableRow>
-										</Suspense>
-									);
-								})}
-							</Table>
+							{lendableItems?.length === 0 ? (
+								<div className='flex w-full justify-center p-4 rounded-md bg-greenFour/40'>
+									<p className='font-semibold text-textColorOne'>No hay items para prestar disponibles</p>
+								</div>
+							) : (
+								<Table column={tableHeaders}>
+									{lendableItems?.map((item) => {
+										const category = categories?.filter(
+											(cat) => item.categoryId === cat.id,
+										)[0];
+										return (
+											<Suspense key={item.itemId}>
+												<ItemSelectionTableRow
+													category={category as ICategory}
+													item={item}
+												></ItemSelectionTableRow>
+											</Suspense>
+										);
+									})}
+								</Table>
+							)}
 						</div>
 					</div>
 				</div>

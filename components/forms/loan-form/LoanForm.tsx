@@ -31,11 +31,11 @@ const LoanForm = () => {
 
 	const token = getSessionToken()
 	const queryClient = useQueryClient()
-	const {error, mutateAsync: mutationCreateLoan} = createLoan(token, queryClient)
+	const {error, isError, mutateAsync: mutationCreateLoan} = createLoan(token, queryClient)
 	
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		await mutationCreateLoan(data as IDTOLoanPost)
-		if(error !== null) return
+		if(isError !== null) return
 		setFormSection(0);
 		closeModal();
 	};
