@@ -78,9 +78,12 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 					/>
 				</div>
 			)}
+			<div className='flex items-center '>
+
+			<label htmlFor="">Cartera: </label>
 			<select
 				disabled={type === 'READONLY'}
-				className='w-full rounded-lg py-2 px-3 text-base focus:outline-greenTwo'
+				className='w-full rounded-lg py-2 px-3 ml-6 text-base focus:outline-greenTwo'
 				{...register('wallet', {
 					required: {
 						value: true,
@@ -92,11 +95,12 @@ const ItemFormFields = ({ defaultItem, type }: UseFormProps) => {
 					Seleccione
 				</option>
 				{getWallets().map((wall, i) => (
-					<option value={wall.apiKey} key={i}>
+					<option value={wall.htmlText} key={i}>
 						{wall.htmlText}
 					</option>
 				))}
 			</select>
+			</div>
 			{attributes.map((attr, index) => (
 				<div key={attr + index} className='flex items-center my-4'>
 					<label className='mr-5' htmlFor='name'>

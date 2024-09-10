@@ -4,7 +4,7 @@ export const formUniqueItemToApiReq = (formData: IItemFormData) => {
 	const { itemId, attributes, categoryId, lendable, wallet } = formData;
 
 	const quantity = 1;
-	const state = 'AVAILABLE'; // TODO ¿Es lendable?
+	const state = 'Disponible'; // TODO ¿Es lendable?
 	const objectAttributes = recordAttrToAttrInterface(attributes);
 
 	const apiData: IItem = {
@@ -53,7 +53,7 @@ export const formCuantiItemToApiPost = (formData: IItemFormData) => {
 		wallet,
 		quantity,
 	} = formData;
-    const state = 'AVAILABLE'
+    const state = 'Disponible'
     const attributes = recordAttrToAttrInterface(formDataAttributes)
     const apiData: IItem = {
         attributes,
