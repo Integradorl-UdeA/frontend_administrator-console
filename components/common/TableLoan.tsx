@@ -7,6 +7,10 @@ import { useSession } from 'next-auth/react';
 import { getLoanTableHeaders } from '@/api-hooks/loan-api/getLoanTableHeaders';
 import NavigationBtns from './table/NavigationBtns';
 import { useQueryClient } from '@tanstack/react-query';
+import ModalWindowProvider from './ModalWindow/ModalWindowProvider';
+import { useLoanTable } from '@/store/loan-table-store';
+import LoanCard from '../Loan/LoanCard';
+import type { ILoan } from '@/types/loan-types';
 
 const TableLoan = () => {
 	const token = useSession().data?.token?.token;
@@ -23,6 +27,7 @@ const TableLoan = () => {
 		isError: isErrorHeaders,
 		error: errorHeaders,
 	} = getLoanTableHeaders(token as string);
+
 
 	useEffect(() => {
 		const refetch = async () => {
@@ -73,6 +78,18 @@ const TableLoan = () => {
 					currentPage={currentPage}
 				/>
 			</div>
+			{/* {isOpen && (
+				<ModalWindowProvider
+					closeModal={() => {
+						setIsOpen(false);
+					}}
+					title='Realizar un préstamo'
+				>
+					<>
+						<LoanCard loan={selectedLoan as ILoan}></LoanCard>
+					</>
+				</ModalWindowProvider>
+			)} */}
 		</div>
 	);
 };

@@ -40,6 +40,7 @@ const InventoryForm = () => {
 	} = useFormContext();
 
 	const token = useSession().data?.token?.token;
+	console.log(token)
 
 	const { mutate: createItem } = postCreateItem(token as string);
 
@@ -50,6 +51,7 @@ const InventoryForm = () => {
 		} else {
 			item = formUniqueItemToApiReq(data as IItemFormData);
 		}
+		console.log(item)
 		createItem(item as IItem);
 
 		setFormState(0);

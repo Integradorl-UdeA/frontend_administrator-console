@@ -4,21 +4,23 @@ import CloseModal from '../common/ModalWindow/CloseModal';
 import { useModalContext } from '../common/ModalWindow/modal-window-context';
 import { TbPointFilled } from 'react-icons/tb';
 import btnStyles from '@/styles/common/button-styles.module.css';
-import { BiEdit } from 'react-icons/bi';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { utfToDateTime } from '@/lib/utfToDateTime';
+
 
 interface Props {
 	loan: ILoan;
 }
 const LoanCard = ({ loan }: Props) => {
-	const { setModalWidthClass } = useModalContext();
+	const { setModalWidthClass, closeModal } = useModalContext();
 	const isActive =
 		loan.loanState === 'ACTIVE'
 			? 'text-greenOne bg-greenFour'
 			: 'text-red-900 bg-red-400/50';
-	const [returnDate, returnTime] = utfToDateTime(loan.returnDate)
-	const [loanDate, loanTime] = utfToDateTime(loan.loanDate)
+	const [returnDate, returnTime] = utfToDateTime(loan.returnDate);
+	const [loanDate, loanTime] = utfToDateTime(loan.loanDate);
+
+
 	useEffect(() => {
 		setModalWidthClass('w-1/2');
 	}, []);
@@ -35,7 +37,7 @@ const LoanCard = ({ loan }: Props) => {
 					</p>
 				</div>
 				<div>
-					<span>Préstamo: </span>
+					<span>Id Préstamo: </span>
 					<span className='font-semibold'>{loan.loanId}</span>
 				</div>
 				<div>
@@ -44,7 +46,7 @@ const LoanCard = ({ loan }: Props) => {
 				</div>
 				<div className='mt-4 grid grid-rows-2 grid-cols-2 gap-y-2 gap-x-3'>
 					<div className='flex flex-col'>
-						<span className='font-semibold'>Prestatario:</span>
+						<span className='font-semibold'>Prestador:</span>
 						<span className=''>{loan.lenderUser}</span>
 					</div>
 					<div className='flex flex-col'>
@@ -53,32 +55,23 @@ const LoanCard = ({ loan }: Props) => {
 					</div>
 					<div className='flex flex-col'>
 						<span className='font-semibold'>Fecha de Préstamo:</span>
-						<span>{loanDate} | {loanTime}</span>
+						<span>
+							{loanDate} | {loanTime}
+						</span>
 					</div>
 					<div className='flex flex-col'>
 						<span className='font-semibold'>Fecha de devolución:</span>
-						<span>{returnDate} | {returnTime}</span>
+						<span>
+							{returnDate} | {returnTime}
+						</span>
 					</div>
 				</div>
-				{loan.loanState === 'ACTIVE' && (
-					<button
-						className={`${btnStyles.btn} mt-4 w-full bg-greenThree text-white font-semibold`}
-					>
-						Marcar como devuelto
-					</button>
-				)}
 				<div className='mt-7 flex justify-between mb-5'>
-					<button className={`${btnStyles.btn} bg-red-600 text-white`}>
+					<button className={`${btnStyles.btn} bg-red-600 text-white`}
+					onClick={closeModal}>
 						{' '}
 						<IoMdArrowRoundBack className={`${btnStyles.btnIcon}`} /> Volver
 					</button>
-					<div className='flex'>
-						<button className={`${btnStyles.btn} bg-blue-600 text-white`}>
-							{' '}
-							<BiEdit className={`${btnStyles.btnIcon}`} />
-							Editar
-						</button>
-					</div>
 				</div>
 			</div>
 		</>

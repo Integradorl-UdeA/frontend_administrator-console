@@ -3,7 +3,6 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
 
-
 interface ILoginJWTPayload {
 	id: string;
 	role: string;
@@ -40,7 +39,7 @@ const handler = NextAuth({
 					if (user.error === true) throw user;
 					return user;
 				} catch (error: any) {
-					throw (Boolean((error.response?.data))) || error.message;
+					throw Boolean(error.response?.data) || error.message;
 				}
 			},
 		}),
@@ -50,20 +49,22 @@ const handler = NextAuth({
 			return { ...token, ...user };
 		},
 		async session({ session, token }) {
-			const { name, username, id, role } = jwtDecode<ILoginJWTPayload>(token.token as string);
+			const { name, username, id, role } = jwtDecode<ILoginJWTPayload>(
+				token.token as string,
+			);
 			session.user = {
 				name,
 				username,
 				id,
-				role
-			}
+				role,
+			};
 			session.token = token;
 			return session;
 		},
 	},
-		session: {
-		strategy: "jwt",
-		maxAge: 60 * 60 * 2	
+	session: {
+		strategy: 'jwt',
+		maxAge: 60 * 60 * 2,
 	},
 	secret: process.env.NEXTAUTH_SECRET,
 	pages: {

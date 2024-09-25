@@ -6,25 +6,33 @@ import type { ILoan, ILoanTableInfo } from '@/types/loan-types';
 import { FaSearchPlus } from 'react-icons/fa';
 import btnStyles from '@/styles/common/button-styles.module.css';
 import { getSessionToken } from '@/api-hooks/getSessionToken';
-import ModalWindowProvider from '../ModalWindow/ModalWindowProvider';
-import LoanCard from '@/components/Loan/LoanCard';
 import { getLoanById } from '@/api-hooks/loan-api/getLoanByIdQuery';
+import { useLoanTable } from '@/store/loan-table-store';
 interface TableRowProps {
 	loanInfo: ILoanTableInfo;
 }
 
 const TableRowLoan = ({ loanInfo }: Readonly<TableRowProps>) => {
 	const token = getSessionToken();
-	const [isOpenModal, setIsOpenModal] = useState(false);
-	const [loanCompleteInfo, setLoanCompleteInfo] = useState<ILoan>();
-	
 
-	const { refetch } = getLoanById(token, loanInfo.loanId.toString());
+	
+	
+	const selectedLoanId = useLoanTable((state) => state.selectedLoanId);
+	const setSelectedLoanId = useLoanTable((state) => state.setSelectedLoanId);
+	const setSelectedLoan = useLoanTable((state) => state.setSelectedLoan);
+	const setLoanInfoModal = useLoanTable((state) => state.setLoanInfoModal);
+	
+	const { data, isSuccess } = getLoanById(token, selectedLoanId);
+
 	const handleWatchMore = async () => {
-		const {data: loan} = await refetch();
-		setLoanCompleteInfo(loan as ILoan)
-		setIsOpenModal(true);
-	};
+		setSelectedLoanId(loanInfo.loanId);
+		if(isSuccess){
+			setLoanInfoModal(true)
+			setSelectedLoan(data)
+			console.log()
+		}
+	};	
+
 	return (
 		<>
 			<tr>
@@ -74,9 +82,6 @@ const TableRowLoan = ({ loanInfo }: Readonly<TableRowProps>) => {
 					</button>
 				</td>
 			</tr>
-			{isOpenModal && <ModalWindowProvider closeModal={ () => {setIsOpenModal(false)}}>
-					<LoanCard loan={loanCompleteInfo as ILoan}/>
-				</ModalWindowProvider>}
 		</>
 	);
 };

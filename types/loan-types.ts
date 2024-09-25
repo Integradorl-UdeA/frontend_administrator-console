@@ -37,3 +37,9 @@ export interface ILoan{
     observation: string
     loanState: string
 }
+
+export interface IReturnLoanPost{
+	loanId: number,
+	lenderUser: string
+	observation: string
+} 
