@@ -12,7 +12,6 @@ import { useModalContext } from '@/components/common/ModalWindow/modal-window-co
 import { getSessionToken } from '@/api-hooks/getSessionToken';
 import { returnLoan } from '@/api-hooks/loan-api/returnLoanQuery';
 import type { IReturnLoanPost } from '@/types/loan-types';
-import { useQueryClient } from '@tanstack/react-query';
 
 interface Props {
 	loanId: number;
@@ -22,14 +21,10 @@ const ReturnLoanForm = ({ loanId }: Props) => {
 
 	const { closeModal } = useModalContext();
 	const token = getSessionToken();
-	const { mutate: mutationReturnLoan, isSuccess } = returnLoan(token);
-	const queryClient = useQueryClient();
+	const { mutate: mutationReturnLoan } = returnLoan(token);
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		mutationReturnLoan(data as IReturnLoanPost);
-		if (isSuccess) {
-			
-		}
 		closeModal();
 	};
 	return (

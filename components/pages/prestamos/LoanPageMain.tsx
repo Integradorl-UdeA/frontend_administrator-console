@@ -11,8 +11,6 @@ import ModalWindowProvider from '@/components/common/ModalWindow/ModalWindowProv
 import LoanFormNavigation from '@/components/forms/loan-form/LoanFormNavigation';
 import { useLoanTable } from '@/store/loan-table-store';
 import LoanCard from '@/components/Loan/LoanCard';
-import type { ILoan } from '@/types/loan-types';
-import CloseModal from '@/components/common/ModalWindow/CloseModal';
 import ReturnLoanFormProvider from '@/components/forms/return-loan-form/ReturnLoanFormProvider';
 import ReturnLoanForm from '@/components/forms/return-loan-form/ReturnLoanForm';
 
