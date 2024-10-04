@@ -13,6 +13,8 @@ import { useLoanTable } from '@/store/loan-table-store';
 import LoanCard from '@/components/Loan/LoanCard';
 import type { ILoan } from '@/types/loan-types';
 import CloseModal from '@/components/common/ModalWindow/CloseModal';
+import ReturnLoanFormProvider from '@/components/forms/return-loan-form/ReturnLoanFormProvider';
+import ReturnLoanForm from '@/components/forms/return-loan-form/ReturnLoanForm';
 
 const options = ['Todos', 'Activo', 'Vencido', 'Devuelto'];
 
@@ -26,9 +28,12 @@ const LoanPageMain = () => {
 		setIsOpen(false);
 	};
 
-	const loanInfoModal = useLoanTable((state) => state.loanInfoModal);
 	const setLoanInfoModal = useLoanTable((state) => state.setLoanInfoModal);
 	const selectedLoan = useLoanTable((state) => state.selectedLoan);
+	const returnLoanModal = useLoanTable((state) => state.returnLoanModal);
+	const setReturnLoanModal = useLoanTable((state) => state.setReturnLoanModal);
+	const selectedLoanId = useLoanTable((state) => state.selectedLoanId);
+	const loanInfoModal = useLoanTable((state) => state.loanInfoModal);
 
 	useEffect(() => {
 		console.log('SE actualizó Selected Loan:', selectedLoan);
@@ -73,17 +78,29 @@ const LoanPageMain = () => {
 						</LoanFormProvider>
 					</ModalWindowProvider>
 				)}
-				{loanInfoModal && (
-					<ModalWindowProvider
-						closeModal={() => {
-							setLoanInfoModal(false);
-						}}
-						title='Préstamo'
-					>
-						{selectedLoan !== null && <LoanCard loan={selectedLoan} />}
-					</ModalWindowProvider>
-				)}
 			</section>
+			{loanInfoModal && (
+				<ModalWindowProvider
+					closeModal={() => {
+						setLoanInfoModal(false);
+					}}
+					title='Préstamo'
+				>
+					{selectedLoan !== null && <LoanCard loan={selectedLoan} />}
+				</ModalWindowProvider>
+			)}
+			{returnLoanModal && (
+				<ModalWindowProvider
+					closeModal={() => {
+						setReturnLoanModal(false);
+					}}
+					title='Retornar préstamo'
+				>
+					<ReturnLoanFormProvider>
+						<ReturnLoanForm loanId={selectedLoanId}/>
+					</ReturnLoanFormProvider>
+				</ModalWindowProvider>
+			)}
 		</div>
 	);
 };
