@@ -27,7 +27,6 @@ const LendedItemSelection = () => {
 	const lendableItems = items?.filter(
 		(item) => item.lendable && item.state === 'AVAILABLE',
 	);
-	console.log('Lendable Items: ', lendableItems);
 
 	const handleSelectItem = () => {
 		setValue('itemId', selectedItemId);

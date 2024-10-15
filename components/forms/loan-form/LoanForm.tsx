@@ -35,9 +35,10 @@ const LoanForm = () => {
 	
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		await mutationCreateLoan(data as IDTOLoanPost)
-		if(isError !== null) return
-		setFormSection(0);
-		closeModal();
+		if(isError !== null){
+			setFormSection(0);
+			closeModal();
+		}
 	};
 	
 	useEffect(() => {
