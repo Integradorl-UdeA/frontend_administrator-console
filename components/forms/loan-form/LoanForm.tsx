@@ -13,7 +13,6 @@ import { useLoanForm } from '@/store/loan-form-store';
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import CloseModal from '@/components/common/ModalWindow/CloseModal';
 import { getSessionToken } from '@/api-hooks/getSessionToken';
-import { useQueryClient } from '@tanstack/react-query';
 import { createLoan } from '@/api-hooks/loan-api/createLoan';
 import type { IDTOLoanPost } from '@/types/loan-types';
 
@@ -30,12 +29,12 @@ const LoanForm = () => {
 	const setFormSection = useLoanForm((state) => state.setFormSection);
 
 	const token = getSessionToken();
-	const queryClient = useQueryClient();
+	
 	const {
 		error,
 		isError,
 		mutateAsync: mutationCreateLoan,
-	} = createLoan(token, queryClient);
+	} = createLoan(token);
 
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
 		await mutationCreateLoan(data as IDTOLoanPost);
