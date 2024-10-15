@@ -29,27 +29,30 @@ const LoanForm = () => {
 
 	const setFormSection = useLoanForm((state) => state.setFormSection);
 
-	const token = getSessionToken()
-	const queryClient = useQueryClient()
-	const {error, isError, mutateAsync: mutationCreateLoan} = createLoan(token, queryClient)
-	
+	const token = getSessionToken();
+	const queryClient = useQueryClient();
+	const {
+		error,
+		isError,
+		mutateAsync: mutationCreateLoan,
+	} = createLoan(token, queryClient);
+
 	const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-		await mutationCreateLoan(data as IDTOLoanPost)
-		if(isError !== null){
+		await mutationCreateLoan(data as IDTOLoanPost);
+		if (isError !== null) {
 			setFormSection(0);
 			closeModal();
 		}
 	};
-	
+
 	useEffect(() => {
 		if (isSubmitSuccessful) reset();
 	}, [isSubmitSuccessful, reset, formState]);
-	
 
 	const { closeModal, setModalWidthClass } = useModalContext();
-	useEffect( () => {
+	useEffect(() => {
 		setModalWidthClass('w-3/5');
-	}, [])
+	}, []);
 
 	return (
 		<>
@@ -175,12 +178,13 @@ const LoanForm = () => {
 						/>
 					</div>
 				</div>
-				{error !== null && (<p>Error: {error.message}</p>)}
+				{error !== null && <p>Error: {error.message}</p>}
 				<div className=' flex justify-between mt-8'>
 					<button
 						className={btnStyles.btnCancel}
 						type='button'
 						onClick={() => {
+							reset();
 							setFormSection(0);
 						}}
 					>
