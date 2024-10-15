@@ -11,6 +11,7 @@ export interface IItem{
     state: string
     quantity: number | undefined
     attributes: IItemAttributes[]
+    total?:number
 }
 
 export interface IItemAttributes{

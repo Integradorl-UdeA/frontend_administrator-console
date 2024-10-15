@@ -11,7 +11,8 @@ export const getItemById = (token: string, id: string) => {
             const data:IItem = await (await getInventoryTemplate(token).get(`${id}`)).data
             return data
         },
-        retry: false
+        retry: false,
+        enabled: false
     })
     return getItemByIdQuery
 }

@@ -11,7 +11,7 @@ import { useQueryClient } from '@tanstack/react-query';
 const TableInventory = () => {
 	const token = useSession().data?.token?.token;
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const queryClient = useQueryClient()
+	const queryClient = useQueryClient();
 	const {
 		data: tableHeaders,
 		isError: isErrorHeaders,
@@ -25,12 +25,14 @@ const TableInventory = () => {
 	} = getItemsPerPage(token as string, currentPage);
 
 	useEffect(() => {
-		const refetch = async () =>{
-			await queryClient.refetchQueries({queryKey: ['items-per-page']})
-		}
-		refetch().catch((error) => {console.log('Error', error)})
-	}, [currentPage])
-	
+		const refetch = async () => {
+			await queryClient.refetchQueries({ queryKey: ['items-per-page'] });
+		};
+		refetch().catch((error) => {
+			console.log('Error', error);
+		});
+	}, [currentPage]);
+
 	const totalPages = itemsPage?.totalPages;
 
 	if (isErrorHeaders) return <p>Header Error: {errorHeaders.message}</p>;
@@ -45,11 +47,10 @@ const TableInventory = () => {
 							<Table column={tableHeaders as string[]}>
 								{itemsPage?.items?.map((itemTable) => {
 									return (
-										<tr key={itemTable.id}>
-											<TableRowInventory
-												itemTable={itemTable}
-											></TableRowInventory>
-										</tr>
+										<TableRowInventory
+											key={itemTable.id}
+											itemTable={itemTable}
+										></TableRowInventory>
 									);
 								})}
 							</Table>

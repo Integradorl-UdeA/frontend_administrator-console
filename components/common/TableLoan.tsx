@@ -8,10 +8,11 @@ import { getLoanTableHeaders } from '@/api-hooks/loan-api/getLoanTableHeaders';
 import NavigationBtns from './table/NavigationBtns';
 import { useQueryClient } from '@tanstack/react-query';
 
+
 const TableLoan = () => {
 	const token = useSession().data?.token?.token;
 	const [currentPage, setCurrentPage] = useState<number>(0);
-	const queryClient = useQueryClient()
+	const queryClient = useQueryClient();
 	const {
 		data: loanPage,
 		isLoading: isLoadingLoan,
@@ -24,12 +25,15 @@ const TableLoan = () => {
 		error: errorHeaders,
 	} = getLoanTableHeaders(token as string);
 
+
 	useEffect(() => {
-		const refetch = async () =>{
-			await queryClient.refetchQueries({queryKey: ['items-per-page']})
-		}
-		refetch().catch((error) => {console.log('Error', error)})
-	}, [currentPage])
+		const refetch = async () => {
+			await queryClient.refetchQueries({ queryKey: ['items-per-page'] });
+		};
+		refetch().catch((error) => {
+			console.log('Error', error);
+		});
+	}, [currentPage]);
 
 	const totalPages = loanPage?.totalPages;
 
@@ -46,9 +50,10 @@ const TableLoan = () => {
 						<div className='overflow-hidden border border-gray-200 md:rounded-lg'>
 							<Table column={headers as string[]}>
 								{loanPage?.items.map((loan) => (
-									<tr key={loan.loanId}>
-										<TableRowLoan loanInfo={loan}></TableRowLoan>
-									</tr>
+									<TableRowLoan
+										key={loan.loanId}
+										loanInfo={loan}
+									></TableRowLoan>
 								))}
 							</Table>
 						</div>
@@ -70,6 +75,18 @@ const TableLoan = () => {
 					currentPage={currentPage}
 				/>
 			</div>
+			{/* {isOpen && (
+				<ModalWindowProvider
+					closeModal={() => {
+						setIsOpen(false);
+					}}
+					title='Realizar un préstamo'
+				>
+					<>
+						<LoanCard loan={selectedLoan as ILoan}></LoanCard>
+					</>
+				</ModalWindowProvider>
+			)} */}
 		</div>
 	);
 };
