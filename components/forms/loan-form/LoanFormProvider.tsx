@@ -8,8 +8,6 @@ interface Props {
 	children: ReactNode;
 }
 
-
-
 const LoanFormProvider = ({children}: Props) => {
 	const username = useSession().data?.user.username
 	
