@@ -68,12 +68,12 @@ const CategoryForm = () => {
 
 	const isQuantizable = watch('quantizable');
 	if (isQuantizable as boolean) {
-		setValue('idFieldName', getValues('categoryName'));
+		setValue('idItemField', getValues('categoryName'));
 	}
 
 	const handleCategoryNameOnChange = (e: any) => {
 		if (isQuantizable as boolean) {
-			setValue('idFieldName', getValues('categoryName'));
+			setValue('idItemField', getValues('categoryName'));
 		}
 	};
 
@@ -110,8 +110,7 @@ const CategoryForm = () => {
 						disabled={isQuantizable}
 						type='text'
 						className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
-						{...register('idFieldName', {
-							// TODO Cambiar el nombre cuando e realicen los cambios en los endpoint
+						{...register('id|ItemField', {
 							required: {
 								value: true,
 								message: 'Debe llenar el campo',
@@ -121,8 +120,7 @@ const CategoryForm = () => {
 				</div>
 
 				<AdditionalCatAttributes />
-				{/* TODO Cambiar el nombre cuando se realicen los cambios en los endpoint */}
-				{(errors.categoryName != null || errors.idFieldName != null) && (
+				{(errors.categoryName != null || errors.idItemField != null) && (
 					<div className='w-full flex items-center justify-center my-5'>
 						<FormError msg='Debe llenar los campos' />
 					</div>
