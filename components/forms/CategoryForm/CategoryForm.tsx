@@ -110,7 +110,7 @@ const CategoryForm = () => {
 						disabled={isQuantizable}
 						type='text'
 						className='w-full rounded-lg py-1 px-3 text-base focus:outline-greenTwo'
-						{...register('id|ItemField', {
+						{...register('idItemField', {
 							required: {
 								value: true,
 								message: 'Debe llenar el campo',
