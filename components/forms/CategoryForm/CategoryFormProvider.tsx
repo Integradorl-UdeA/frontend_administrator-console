@@ -9,7 +9,7 @@ interface Props{
 const defaultCategoryFormData: ICategory = {
     categoryName: '',
     attributes: [],
-    idFieldName: '', // TODO Cambiar el nombre cuando e realicen los cambios en los endpoint
+    idItemField: '',
     listAttributes: [],
     quantizable: false
 }
